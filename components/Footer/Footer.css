@@ -1,0 +1,16 @@
+ul.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    background-color: #333;
+    list-style: none;
+}
+
+ul.footer li {
+    margin-right: 10px;
+    color: white;
+}
+
+ul.footer li:hover {
+    color: orange;
+}

@@ -1,0 +1,30 @@
+.navbar {
+    display: flex;
+    justify-content: space-around;
+    padding: 0 20px;
+    background-color: #333;
+}
+
+.navbar li:hover {
+    color: orange;
+}
+
+.navbar li:hover .nav-hover {
+    display: block;
+    background-color: transparent;
+}
+
+.navbar .nav-hover {
+    display: none;
+    position: absolute;
+    background-color: white;
+    padding: 1rem;
+}
+
+.navbar .nav-hover li:hover {
+    color: orange;
+}
+
+.navbar .nav-hover li {
+    color: white;
+}
