@@ -1,10 +1,8 @@
 'use client'
 import GoogleButton from "react-google-button";
 import { signIn, signOut } from 'next-auth/react'
-export default function Home() {
+export default function page() {
   return (
-    <>
-      <h1>HOME</h1>
-    </>
+    <GoogleButton onClick={() => signIn('google')} />
   )
 }
