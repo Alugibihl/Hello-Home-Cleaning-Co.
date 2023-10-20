@@ -1,10 +1,15 @@
 'use client'
-import GoogleButton from "react-google-button";
-import { signIn, signOut } from 'next-auth/react'
+import { data } from "browserslist";
+import { useSession } from "next-auth/react"
 export default function Home() {
-  return (
-    <>
-      <h1>HOME</h1>
-    </>
+  const {status, data} = useSession();
+  console.log(status, data)
+
+  return (status === 'authenticated' &&
+    <div>
+      <img src={data.user.image}/>
+      <h1>{data.user.name}</h1>
+      <h2>{data.user.email}</h2>
+    </div>
   )
 }
