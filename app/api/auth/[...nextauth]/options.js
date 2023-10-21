@@ -10,6 +10,11 @@ export const options = {
             clientSecret: process.env.GOOGLE_CLIENT_SECRET
         })
     ],
+    callbacks: {
+        session: async(session, user) => session
+
+
+    },
     adapter: MongoDBAdapter(clientPromise),
     secret: process.env.NEXTAUTH_SECRET,
 }
