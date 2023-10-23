@@ -12,8 +12,6 @@ export const options = {
     ],
     callbacks: {
         session: async(session, user) => session
-
-
     },
     adapter: MongoDBAdapter(clientPromise),
     secret: process.env.NEXTAUTH_SECRET,
