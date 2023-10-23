@@ -10,6 +10,10 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    phoneNum: {
+        type: Number,
+        required: true
+    },
     appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }]
 }, { timestamps: true });
 
