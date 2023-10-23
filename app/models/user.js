@@ -10,8 +10,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    },
-    {timestamps: true }
-);
+    appointments: [{ type: Schema.Types.ObjectId, ref: 'Appointment' }]
+}, { timestamps: true });
+
 const User = models.User || mongoose.model('User', userSchema);
+
 export default User;
