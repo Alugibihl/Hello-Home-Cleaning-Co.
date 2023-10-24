@@ -2,11 +2,12 @@
 import { useSession } from "next-auth/react";
 import { useState } from "react";
 
-async function createAppointment({ name, date, phone }) {
+async function createAppointment({ name, date, phone, userId }) {
+    console.log("CREATE APPT: ", userId)
   const res = await fetch("/api/appointments", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, date, phone }),
+    body: JSON.stringify({ name, date, phone, userId }),
     cache: "no-store",
   });
   if (res.ok) {
@@ -21,7 +22,7 @@ export default function Page() {
   const [date, setDate] = useState();
   const [phone, setPhone] = useState();
 
-  const userId = session.data.user.id;
+  const userId = session.data?.user?.id;
   console.log(userId)
 
   const handleSubmit = async (e) => {

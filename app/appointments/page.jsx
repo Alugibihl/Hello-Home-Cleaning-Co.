@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 async function fetchAppointments() {
   const res = await fetch("http://localhost:3000/api/appointments", {
     cache: "no-store",
@@ -10,10 +12,16 @@ async function fetchAppointments() {
 export default async function Page() {
   const { appointments } = await fetchAppointments();
 
+
+
   return (
     <div>
       {appointments.map((app) => (
-        <h1 key={app._id}>{app.name} - {app._id}</h1>
+        <Link key={app._id} href={`/appointments/${app._id}`}>
+          <h1>
+            {app.name} - {app._id}
+          </h1>
+        </Link>
       ))}
     </div>
   );
