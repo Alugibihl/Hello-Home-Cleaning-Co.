@@ -1,5 +1,6 @@
 import { Inter } from 'next/font/google'
 import './globals.css'
+import Head from 'next/head'
 import { NextAuthProvider } from './Providers'
 import Navbar from '@/components/Navbar/Navbar'
 import Footer from '@/components/Footer/Footer'
@@ -17,6 +18,11 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <NextAuthProvider>
+          <Head>
+            <link rel="icon" href="/favicon.ico" />
+            <title>{metadata.title}</title>
+            {/* Add other common meta tags here */}
+          </Head>
           <Navbar />
           {children}
           <Footer />
