@@ -15,13 +15,14 @@ import User from "@/app/models/user";
 // import { connectMongoDB } from "@/libs/mongodb";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoClient } from "mongodb"
+import { Collection } from "mongoose";
 
 if (!process.env.MONGODB_URI) {
   throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
 }
 
 const uri = process.env.MONGODB_URI;
-const options = {}
+const options = { session: Collection.session }
 
 let client;
 let clientPromise;
