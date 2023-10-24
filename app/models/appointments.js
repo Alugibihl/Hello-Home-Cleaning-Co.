@@ -13,6 +13,10 @@ const appointmentSchema = new Schema({
         type: Number,
         required: true
     },
+    userId: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true });
 
 const Appointment = mongoose.models.Appointment || mongoose.model('Appointment', appointmentSchema);

@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import { useState } from "react";
 
 async function createAppointment({ name, date, phone }) {
@@ -15,13 +16,17 @@ async function createAppointment({ name, date, phone }) {
 }
 
 export default function Page() {
+  const session = useSession();
   const [name, setName] = useState();
   const [date, setDate] = useState();
   const [phone, setPhone] = useState();
 
+  const userId = session.data.user.id;
+  console.log(userId)
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const appointment = await createAppointment({ name, date, phone });
+    const appointment = await createAppointment({ name, date, phone, userId });
     console.log(appointment);
   };
 
