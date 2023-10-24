@@ -1,5 +1,5 @@
 import User from "@/app/models/user";
-import clientPromise, { connectMongoDB } from "@/lib/mongodb";
+import clientPromise, { connectMongoDB } from "@/libs/mongodb";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 

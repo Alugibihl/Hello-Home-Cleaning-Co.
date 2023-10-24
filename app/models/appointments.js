@@ -1,4 +1,4 @@
-import mongoose, { Schema, models } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const appointmentSchema = new Schema({
     name: {
@@ -13,10 +13,8 @@ const appointmentSchema = new Schema({
         type: Number,
         required: true
     },
-
-    user: { type: Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 
-const Appointment = models.Appointment || mongoose.model('Appointment', appointmentSchema);
+const Appointment = mongoose.models.Appointment || mongoose.model('Appointment', appointmentSchema);
 
 export default Appointment;
