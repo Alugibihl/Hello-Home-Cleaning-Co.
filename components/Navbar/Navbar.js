@@ -30,6 +30,9 @@ const Navbar = () => {
           </ol>
         </li>
         <li>
+          <Link href="/requestQuote">Request a Quote</Link>
+        </li>
+        <li>
           <Link href="/faq">FAQ</Link>
         </li>
       </ul>
