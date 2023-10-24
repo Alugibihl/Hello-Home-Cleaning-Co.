@@ -6,9 +6,9 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
     try {
-        const { name, date, phoneNum } = await request.json()
+        const { name, date, phone } = await request.json()
         await connectMongoDB();
-        await Appointment.create({ name, date, phoneNum });
+        await Appointment.create({ name, date, phone });
         return NextResponse.json({ message: "Appointment Created", status: 201 });
     } catch (error) {
         return NextResponse.json({ error: "Appointment creation failed", status: 500 });
