@@ -21,7 +21,6 @@ export default function RootLayout({ children }) {
           <Head>
             <link rel="icon" href="/favicon.ico" />
             <title>{metadata.title}</title>
-            {/* Add other common meta tags here */}
           </Head>
           <Navbar />
           {children}

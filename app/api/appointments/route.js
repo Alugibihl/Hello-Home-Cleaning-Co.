@@ -34,3 +34,11 @@ export async function PUT(request) {
         return NextResponse.json({ error: "Appointment update failed", status: 500 });
     }
 }
+export async function DELETE(request) {
+    try {
+
+    }
+    catch (error) {
+        return NextResponse.json({error: "Failed to delete appointment", status: 500})
+    }
+}
