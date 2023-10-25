@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
 import User from "@/app/models/user";
 import { connectMongoDB } from "@/libs/mongodb";
-import { NextResponse } from "next/server";
+import { NextResponse, userAgent } from "next/server";
 
 export async function POST(request) {
     const body = await request.json();
@@ -26,6 +26,5 @@ export async function POST(request) {
         hashedPassword,
     })
 
-
-    NextResponse.json(newUser);
+    return NextResponse.json(newUser);
 }
