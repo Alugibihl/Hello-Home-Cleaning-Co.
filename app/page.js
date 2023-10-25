@@ -9,15 +9,11 @@ export default function Home() {
   console.log(session);
   const data = session.data;
 
-  return session.status === 'authenticated' ?
-    (<div>
-      <img src={data.user.image} />
-      <h1>{data.user.name}</h1>
-      <h2>{data.user.email}</h2>
-      <button onClick={() => signOut('google')}>Sign Out</button>
+  return (
+    <div>
+      <button>Sign In</button>
+      <button>Sign Up</button>
     </div>
+  )
 
-    ) : (
-      <GoogleButton onClick={() => signIn('google')} />
-    )
 }
