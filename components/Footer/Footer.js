@@ -16,7 +16,7 @@ const Footer = () => {
           <Link href="/signIn">Log In</Link>
         </li>
         <li>
-          <Link href="/appointments/create">Book Now</Link>
+          <Link href="/appointments/create">Request a quote</Link>
         </li>
       </ul>
     </nav>
