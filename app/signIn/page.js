@@ -1,10 +1,13 @@
 'use client'
 import GoogleButton from "react-google-button";
-import { signIn, signOut } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 export default function Page() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  const session = useSession();
+  const router = useRouter();
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -14,7 +17,7 @@ export default function Page() {
     }
     signIn('credentials', data);
   }
-
+  if (session.status === 'authenticated') router.push('/');
   return (
     <form onSubmit={handleSubmit}>
       <input
