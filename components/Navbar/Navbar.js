@@ -1,6 +1,6 @@
-import Link from 'next/link';
-import React from 'react';
-import './Navbar.css'
+import Link from "next/link";
+import React from "react";
+import "./Navbar.css";
 
 const Navbar = () => {
   return (
@@ -13,7 +13,7 @@ const Navbar = () => {
           <Link href="/about">Who we are</Link>
         </li>
         <li>
-          <Link href="/schedule">Book Now</Link>
+          <Link href="/appointments/create">Book Now</Link>
         </li>
         <li className="group relative">
           <div>Services</div>
