@@ -11,7 +11,7 @@ export default function Home() {
 
   return (
     <div>
-      <button>Sign In</button>
+      <button onClick={() => signIn()}>Sign In</button>
       <button>Sign Up</button>
     </div>
   )

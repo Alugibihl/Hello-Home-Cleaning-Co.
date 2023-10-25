@@ -36,7 +36,7 @@ export const options = {
     }),
   ],
   pages: {
-    signIn: "/",
+    signIn: "/signIn",
   },
   debug: process.env.NODE_ENV === "development",
   session: {
