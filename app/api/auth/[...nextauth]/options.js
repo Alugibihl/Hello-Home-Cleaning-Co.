@@ -8,10 +8,12 @@ import bcrypt from "bcrypt";
 
 export const options = {
   providers: [
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_CLIENT_ID,
-    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    // }),
+    //     GoogleProvider({
+    //       clientId: process.env.GOOGLE_CLIENT_ID,
+    //       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    //     },
+    //       // async authorize
+    // ),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -20,33 +22,38 @@ export const options = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          throw new Error("Invalid Credentials");
+          // throw new Error("Invalid Credentials");
+          return null
         }
         await connectMongoDB();
         const user = await User.findOne({ email: credentials.email });
         if (!user || !user?.hashedPassword) {
-          throw new Error("Invalid Credentials");
+          // throw new Error("Invalid Credentials");
+          return null
         }
         const isCorrectPassword = await bcrypt.compare(
           credentials.password,
           user.hashedPassword
         );
         console.log("USER: ", user);
-        if (!isCorrectPassword) throw new Error("Invalid Credentials");
+        if (!isCorrectPassword) {
+          // throw new Error("Invalid Credentials");
+          return null
+        }
         return user;
       },
     }),
   ],
   pages: {
-    signIn: "/signIn",
+    // signIn: "/signIn",
   },
   debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",
   },
   callbacks: {
-    async jwt({token, user, session}) {
-      console.log("jwt callback", {token, user, session});
+    async jwt({ token, user, session }) {
+      console.log("jwt callback", { token, user, session });
       if (user) {
         return {
           ...token,
@@ -59,7 +66,7 @@ export const options = {
       return token;
     },
     async session({ session, user, token }) {
-    //   console.log("SESSION: ", session, user ,token);
+      //   console.log("SESSION: ", session, user ,token);
       session.user.id = token.id;
       session.user.role = token.role;
       session.user.phone = token.phone;
@@ -67,6 +74,6 @@ export const options = {
       return session;
     },
   },
-//   adapter: MongoDBAdapter(clientPromise),
+  //   adapter: MongoDBAdapter(clientPromise),
   secret: process.env.NEXTAUTH_SECRET,
 };
