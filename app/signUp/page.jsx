@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import Dialog from "@/components/Dialog";
 const style = "appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 
 const SignupPage = () => {
@@ -72,8 +73,8 @@ const SignupPage = () => {
         }
     };
 
-    return (
-      <div>
+    const signUp = (
+      <dialog open className="bg-teal-600">
         <h1>Sign Up</h1>
         <form onSubmit={handleSubmit}>
           <input
@@ -129,8 +130,9 @@ const SignupPage = () => {
           />
           <button type="submit">Sign Up</button>
         </form>
-      </div>
-    );
+      </dialog>
+  )
+  return <Dialog component={signUp} />
 };
 
 export default SignupPage;
