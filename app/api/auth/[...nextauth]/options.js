@@ -45,9 +45,25 @@ export const options = {
     strategy: "jwt",
   },
   callbacks: {
+    async jwt({token, user, session}) {
+      console.log("jwt callback", {token, user, session});
+      if (user) {
+        return {
+          ...token,
+          id: user._id,
+          address: user.address,
+          role: user.role,
+          phone: user.phone
+        }
+      }
+      return token;
+    },
     async session({ session, user, token }) {
     //   console.log("SESSION: ", session, user ,token);
-      session.user.id = token.sub;
+      session.user.id = token.id;
+      session.user.role = token.role;
+      session.user.phone = token.phone;
+      session.user.address = token.address;
       return session;
     },
   },

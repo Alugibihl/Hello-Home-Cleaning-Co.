@@ -2,7 +2,6 @@ import { connectMongoDB } from "@/libs/mongodb";
 import Appointment from "@/app/models/appointments";
 import { NextResponse } from "next/server";
 import User from "@/app/models/user";
-import Appointment from "@/app/models/appointments";
 
 export async function GET(request, { params }) {
   try {
