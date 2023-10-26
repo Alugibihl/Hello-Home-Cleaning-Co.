@@ -29,6 +29,7 @@ export default function AddTeamMember() {
         e.preventDefault();
         const teamMember = await createMemeber({ name, img, about });
         console.log(teamMember)
+        router.refresh();
         // router.push("/about");
     };
 

@@ -1,8 +1,6 @@
-import AddTeamMember from "@/components/AddTeamMember/AddTeamM/AddTeamMember";
+import TeamMemberList from "@/components/TeamMember/TeamMemberList";
 
 export default function Page() {
-    return (
-        <AddTeamMember />
-
-    )
+    return (<TeamMemberList />)
+ 
 }
