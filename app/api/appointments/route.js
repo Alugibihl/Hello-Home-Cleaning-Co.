@@ -7,13 +7,8 @@ import { AuthOptions } from "next-auth";
 
 
 export async function POST(request) {
-    // const data = await getServerSession(AuthOptions);
-    console.group("helllllloooooooooooo woooooooorrrlllllllllllldddd")
     const headers = request.headers.get("authorization");
-    console.group("helllllloooooooooooo woooooooorrrlllllllllllldddd22222222222", headers)
     const user = JSON.parse(headers);
-    console.group("helllllloooooooooooo woooooooorrrlllllllllllldddd3333333333333333", user)
-    // return NextResponse.json({ message: JSON.stringify(user) })
     console.log("user", user, "id", user.id)
     try {
         const { name, date, phone, address, stories, rooms, pets, noTouch, focus, allergies, frequency, refSource } = await request.json()
