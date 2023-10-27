@@ -12,7 +12,6 @@ export default function RequestQuoteForm() {
 
     const onSubmit = async (e) => {
         e.preventDefault()
-        // console.log(firstName, lastName, desiredService)
         try {
             const res = await fetch('/api/requestQuote', {
                 method: "POST",
@@ -57,7 +56,7 @@ export default function RequestQuoteForm() {
                 type="tel"
                 id="phone"
                 name="phone"
-                pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 placeholder="Phone"
             />
             <input

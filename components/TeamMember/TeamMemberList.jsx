@@ -36,7 +36,7 @@ export default async function TeamMemberList() {
                         <h2 className="font-bold text-2xl">{t.name}</h2>
                         <img
                             src={t.img}
-                            className="border-radius-5px"
+                            // className=""
                             alt={t.name}
                         // onError={(e) => { e.currentTarget.src = blankProfile }}
                         >
@@ -45,9 +45,9 @@ export default async function TeamMemberList() {
                     </div>
 
                     <div className="flex gap-2">
-                        {/* <Link href={`//${t._id}`}>
+                        <Link href={`/meettheteam/edit/${t._id}`}>
                             <HiPencilAlt size={24} />
-                        </Link> */}
+                        </Link>
                         <DeleteTeamMemberButton id={t._id} />
                     </div>
                 </div>
