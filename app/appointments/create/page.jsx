@@ -3,12 +3,40 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-async function createAppointment({ name, date, phone, userId }) {
+async function createAppointment({
+  name,
+  date,
+  phone,
+  userId,
+  address,
+  stories,
+  rooms,
+  pets,
+  noTouch,
+  focus,
+  allergies,
+  frequency,
+  refSource,
+}) {
   console.log("CREATE APPT: ", userId);
   const res = await fetch("/api/appointments", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, date, phone, userId }),
+    body: JSON.stringify({
+      name,
+      date,
+      phone,
+      userId,
+      address,
+      stories,
+      rooms,
+      pets,
+      noTouch,
+      focus,
+      allergies,
+      frequency,
+      refSource,
+    }),
     cache: "no-store",
   });
   if (res.ok) {
@@ -29,7 +57,23 @@ export default function Page() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const appointment = await createAppointment({ name, date, phone, userId });
+    const frequency = document.querySelector("#frequency").value;
+    const appointment = await createAppointment({
+      name,
+      date,
+      phone,
+      userId,
+      address,
+      stories,
+      rooms,
+      pets,
+      noTouch,
+      focus,
+      allergies,
+      frequency,
+      refSource,
+    });
+
     console.log(appointment);
     router.push("/appointments");
   };
@@ -82,6 +126,17 @@ export default function Page() {
             onChange={(e) => setPhone(e.target.value)}
             classNameName="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           />
+          <input
+            type="select"
+            id="frequency"
+            name="frequency"
+            classNameName="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+          >
+            <option value="2">Every 2 weeks</option>
+            <option value="3">Every 3 weeks</option>
+            <option value="4">Every 4 weeks</option>
+            <option value="none">None</option>
+          </input>
         </div>
       </div>
       <button classNameName="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">

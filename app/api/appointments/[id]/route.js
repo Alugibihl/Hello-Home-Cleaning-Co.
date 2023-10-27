@@ -16,9 +16,9 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
     try {
         const { id } = params;
-        const { newName: name, newDate: date, newPhoneNum: phoneNum } = await request.json()
+        const { newName: name, newDate: date, newPhoneNum: phoneNum, newAddress: address, newStories: stories, newRooms: rooms, newPets: pets, newNoTouch: noTouch, newFocus: focus, newAllergies: allergies, newFrequency: frequency, newRefSource: refSource } = await request.json()
         await connectMongoDB();
-        await Appointment.findByIdAndUpdate(id, { name, date, phoneNum });
+        await Appointment.findByIdAndUpdate(id, { name, date, phoneNum, address, stories, rooms, pets, noTouch, focus, allergies, frequency, refSource });
         return NextResponse.json({ message: "Appointment Successfully Updated", status: 201 });
     } catch (error) {
         return NextResponse.json({ error: "Appointment update failed", status: 500 });

@@ -10,9 +10,9 @@ export async function POST(request) {
     const data = await getServerSession(AuthOptions);
 
     try {
-        const { name, date, phone, userId } = await request.json()
+        const { name, date, phone, userId,  address, stories, rooms, pets, noTouch, focus, allergies, frequency, refSource } = await request.json()
         await connectMongoDB();
-        await Appointment.create({ name, date, phone, userId });
+        await Appointment.create({ name, date, phone, userId, address, stories, rooms, pets, noTouch, focus, allergies, frequency, refSource });
         return NextResponse.json({ message: "Appointment Created", status: 201 });
     } catch (error) {
         return NextResponse.json({ error: "Appointment creation failed", status: 500 });

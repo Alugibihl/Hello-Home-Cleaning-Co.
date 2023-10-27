@@ -16,7 +16,46 @@ const appointmentSchema = new Schema({
     userId: {
         type: String,
         required: true
+    },
+    address: {
+        type: String,
+        required: true
+    },
+    stories: {
+        type: String,
+        required: true,
+    },
+    rooms: {
+        type: String,
+        required: true
+    },
+    pets: {
+        type: String,
+        required: true
+    },
+    noTouch: {
+        type: String,
+        default: "None"
+    },
+    focus: {
+        type: String,
+        default: "None"
+    },
+    allergies: {
+        type: Boolean,
+        default: false,
+    },
+    frequency: {
+        type: String,
+        enum: ["2", "3", "4", "none"],
+        default: "none"
+    },
+    refSource: {
+        type: String,
+        required: true
     }
+
+
 }, { timestamps: true });
 
 const Appointment = mongoose.models.Appointment || mongoose.model('Appointment', appointmentSchema);
