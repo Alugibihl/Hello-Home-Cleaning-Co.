@@ -1,21 +1,23 @@
 import Link from "next/link";
 import React from "react";
-import "./Navbar.css";
+// import "./Navbar.css";
 
 const Navbar = () => {
   return (
-    <nav>
-      <ul className="navbar">
-        <li>
-          <Link href="/">Home "should be the logo"</Link>
+    <nav className="flex items-center justify-between">
+      <Link href="/"><img src="hhlogo.png" className="w-56 m-6 ml-20"></img></Link>
+      <ul className="flex font-roboto font-bold text-base mr-12">
+        
+        <li className="mx-6">
+          <Link href="/">HOME</Link>
         </li>
-        <li>
-          <Link href="/about">Who we are</Link>
+        <li className="mx-6">
+          <Link href="/about">ABOUT</Link>
         </li>
-        <li>
-          <Link href="/appointments/create">Book Now</Link>
+        <li className="mx-6">
+          <Link href="/faq">FAQ</Link>
         </li>
-        <li className="group relative">
+        {/* <li className="group relative">
           <div>Services</div>
           <ol className="nav-hover">
             <li>
@@ -28,12 +30,12 @@ const Navbar = () => {
               <Link href="/contact">Request a Quote</Link>
             </li>
           </ol>
+        </li> */}
+        <li className="mx-6">
+          <Link href="/appointments/create">REQUEST QUOTE</Link>
         </li>
-        <li>
-          <Link href="/requestQuote">Request a Quote</Link>
-        </li>
-        <li>
-          <Link href="/faq">FAQ</Link>
+        <li className="mx-6">
+          <Link href="/signIn">LOGIN</Link>
         </li>
       </ul>
     </nav>
