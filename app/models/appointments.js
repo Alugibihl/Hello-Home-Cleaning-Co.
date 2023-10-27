@@ -53,8 +53,11 @@ const appointmentSchema = new Schema({
     refSource: {
         type: String,
         required: true
+    },
+    scheduled: {
+        type: Boolean,
+        default: false
     }
-
 
 }, { timestamps: true });
 

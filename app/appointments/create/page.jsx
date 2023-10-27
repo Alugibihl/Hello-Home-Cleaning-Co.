@@ -2,8 +2,12 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import axios from "axios";
+import { getServerSession } from "next-auth";
+// import { options } from "../../api/auth/[...nextauth]/options";
 
 async function createAppointment({
+  session,
   name,
   date,
   phone,
@@ -19,8 +23,9 @@ async function createAppointment({
   refSource,
 }) {
   console.log("CREATE APPT: ", userId);
-  const res = await fetch("/api/appointments", {
-    method: "POST",
+  axios.defaults.headers.common["Authorization"] = `${JSON.stringify(session)}`;
+  console.log("THIS IS MY SESSION", session);
+  const res = await axios.post("http://localhost:3000/api/appointments", {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       name,
@@ -66,7 +71,10 @@ export default function Page() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("session", session);
     const appointment = await createAppointment({
+      session: session.data.user,
       name,
       date,
       phone,
@@ -94,7 +102,7 @@ export default function Page() {
             className="block text-gray-700 text-s font-bold mb-2"
             htmlFor="grid-name"
           >
-            Name
+            Full Name
           </label>
           <input
             value={name}
@@ -158,7 +166,7 @@ export default function Page() {
             className="block text-gray-700 text-s font-bold mb-2"
             htmlFor="grid-stories"
           >
-            Stories
+            How many stories does your home have?
           </label>
           <input
             value={stories}
@@ -174,7 +182,7 @@ export default function Page() {
             className="block text-gray-700 text-s font-bold mb-2"
             htmlFor="grid-rooms"
           >
-            Rooms
+            How many bedrooms and bathrooms?
           </label>
           <input
             value={rooms}
@@ -190,7 +198,8 @@ export default function Page() {
             className="block text-gray-700 text-s font-bold mb-2"
             htmlFor="grid-pets"
           >
-            Pets
+            Do you have any Pets? If so are they going to be put away during the
+            appointment?
           </label>
           <input
             value={pets}
@@ -206,7 +215,7 @@ export default function Page() {
             className="block text-gray-700 text-s font-bold mb-2"
             htmlFor="grid-noTouch"
           >
-            No Touch
+            Any area you would like us to avoid?
           </label>
           <input
             value={noTouch}
@@ -222,7 +231,7 @@ export default function Page() {
             className="block text-gray-700 text-s font-bold mb-2"
             htmlFor="grid-focus"
           >
-            Focus
+            Any areas you would like us to focus on?
           </label>
           <input
             value={focus}
@@ -238,7 +247,7 @@ export default function Page() {
             className="block text-gray-700 text-s font-bold mb-2"
             htmlFor="grid-allergies"
           >
-            Allergies
+            Any allergies to Clove, Cinnamon, or Orange?
           </label>
           <input
             type="checkbox"
@@ -253,7 +262,7 @@ export default function Page() {
             className="block text-gray-700 text-s font-bold mb-2"
             htmlFor="grid-frequency"
           >
-            Frequency
+            How frequently are you looking have cleanings?
           </label>
           <select
             id="frequency"
@@ -275,7 +284,7 @@ export default function Page() {
             className="block text-gray-700 text-s font-bold mb-2"
             htmlFor="grid-refSource"
           >
-            Reference Source
+            Where did you hear about us?
           </label>
           <input
             value={refSource}
