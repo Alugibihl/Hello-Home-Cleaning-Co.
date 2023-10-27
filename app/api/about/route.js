@@ -4,7 +4,11 @@ import { options } from "../auth/[...nextauth]/options";
 
 export async function GET(request) {
   const headers = request.headers.get("authorization");
-  const { user } = JSON.parse(headers);
+  try {
+    const { user } = JSON.parse(headers);
+    return NextResponse.json({message: JSON.stringify(user)})
+  } catch(error) {
+    return NextResponse.json({ message: "Unauthorized" });
+  }
 
-  return NextResponse.json({ message: JSON.stringify(user) });
 }

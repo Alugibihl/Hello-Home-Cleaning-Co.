@@ -6,7 +6,6 @@ import { options } from "../api/auth/[...nextauth]/options";
 
 async function getAbout() {
     const session = await getServerSession(options);
-
     axios.defaults.headers.common[
       "Authorization"
     ] = `${JSON.stringify(session)}`;
