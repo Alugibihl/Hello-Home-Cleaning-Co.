@@ -2,11 +2,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-async function createMemeber({ name, img, about }) {
-    const res = await fetch("/api/teammembers", {
-        method: "POST",
+async function editMember(id, { newName, newImg, newAbout }) {
+
+    const res = await fetch(`/api/teammembers/${id}`, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, img, about }),
+        body: JSON.stringify({ newName, newImg, newAbout }),
     });
     if (res.ok) {
         const teamMember = await res.json();
@@ -14,19 +15,17 @@ async function createMemeber({ name, img, about }) {
     }
 }
 
-export default function AddTeamMember() {
-    const [name, setName] = useState();
-    const [img, setImg] = useState();
-    const [about, setAbout] = useState();
+export default function EditTeamMember({ id, name, img, about }) {
+    const [newName, setNewName] = useState(name);
+    const [newImg, setNewImg] = useState(img);
+    const [newAbout, setNewAbout] = useState(about);
 
     const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const teamMember = await createMemeber({ name, img, about });
-        console.log(teamMember)
-        router.refresh();
-        // router.push("/about");
+        await editMember(id, { newName, newImg, newAbout });
+        router.push("/meettheteam");
     };
 
     return (
@@ -39,9 +38,9 @@ export default function AddTeamMember() {
                         <input
                             autoComplete="on"
                             name="name"
-                            value={name}
+                            value={newName}
                             type="text"
-                            onChange={(e) => setName(e.target.value)}
+                            onChange={(e) => setNewName(e.target.value)}
                             className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         />
                     </label>
@@ -56,9 +55,9 @@ export default function AddTeamMember() {
                         Profile Picture
                         <input
                             name="img"
-                            value={img}
+                            value={newImg}
                             type="text"
-                            onChange={(e) => setImg(e.target.value)}
+                            onChange={(e) => setNewImg(e.target.value)}
                             className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         />
                     </label>
@@ -72,16 +71,16 @@ export default function AddTeamMember() {
                         About
                         <textarea
                             name="about"
-                            value={about}
+                            value={newAbout}
                             type="text"
-                            onChange={(e) => setAbout(e.target.value)}
+                            onChange={(e) => setNewAbout(e.target.value)}
                             className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         />
                     </label>
                 </div>
             </div>
             <button className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Create Team Member
+                Edit Team Member
             </button>
         </form>
     );

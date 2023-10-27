@@ -6,7 +6,6 @@ export default function DeleteTeamMemberButton({ id }) {
     const router = useRouter()
 
     const deleteMemeber = async () => {
-        console.log(id, 'front')
         try {
 
             const res = await fetch(`/api/teammembers?id=${id}`, {
