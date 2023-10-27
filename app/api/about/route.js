@@ -3,7 +3,8 @@ import { getServerSession } from "next-auth";
 import { options } from "../auth/[...nextauth]/options";
 
 export async function GET(request) {
-    const session = await getServerSession(options);
-    console.log("SESSION: ", session)
-    return NextResponse.json({ message: "HERE" });
+  const headers = request.headers.get("authorization");
+  const { user } = JSON.parse(headers);
+
+  return NextResponse.json({ message: JSON.stringify(user) });
 }
