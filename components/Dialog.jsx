@@ -1,4 +1,4 @@
-import React from "react";
+import r
 import { useEffect, useRef, useState } from "react";
 
 export default function Dialog({ component, closeModal, children }) {
@@ -11,7 +11,7 @@ export default function Dialog({ component, closeModal, children }) {
         setIsOpen(false);
       }
     };
-    document.createEventListener("click", closeMenu);
+    document.addEventListener("click", closeMenu);
     return () => {
       document.removeEventListener("click", closeMenu);
     };
