@@ -11,7 +11,7 @@ export default function Dialog({ component, closeModal, children }) {
         setIsOpen(false);
       }
     };
-    document.createEventListener("click", closeMenu);
+    document.addEventListener("click", closeMenu);
     return () => {
       document.removeEventListener("click", closeMenu);
     };
