@@ -1,6 +1,4 @@
-// export default function Middleware() {
-//     // console.log("mw")
-// };
-export default function getUser() {
+import { NextResponse } from "next/server";
+export default function getUser(request) {
 
 }

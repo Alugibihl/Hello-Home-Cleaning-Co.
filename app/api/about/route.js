@@ -5,5 +5,5 @@ import { options } from "../auth/[...nextauth]/options";
 export async function GET(request) {
     const session = await getServerSession(options);
     console.log("SESSION: ", session)
-    return NextResponse.json({ message: request });
+    return NextResponse.json({ message: "HERE" });
 }
