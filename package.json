@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.2",
+    "bcrypt": "^5.1.1",
+    "form-data": "^4.0.0",
+    "mailgun.js": "^9.3.0",
     "mongodb": "^6.2.0",
     "mongoose": "^7.6.3",
     "next": "13.5.6",
@@ -17,7 +20,8 @@
     "nodemailer": "^6.9.6",
     "react": "^18",
     "react-dom": "^18",
-    "react-google-button": "^0.7.2"
+    "react-google-button": "^0.7.2",
+    "react-icons": "^4.11.0"
   },
   "devDependencies": {
     "autoprefixer": "^10",

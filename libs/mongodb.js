@@ -1,17 +1,18 @@
-// import mongoose from 'mongoose';
+import mongoose from 'mongoose';
 
-// export const connectMongoDB = async() => {
-//     try {
-//         await mongoose.connect(process.env.MONGODB_URI)
-//     } catch(error) {
-//         console.log("Error connecting to db", error);
-//     }
-// }
+export const connectMongoDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI)
+    console.log("Connected to MongoDB")
+  } catch (error) {
+    console.log("Error connecting to db", error);
+  }
+}
 // This approach is taken from https://github.com/vercel/next.js/tree/canary/examples/with-mongodb
 
 
 import User from "@/app/models/user";
-import { connectMongoDB } from "@/lib/mongodb";
+// import { connectMongoDB } from "@/libs/mongodb";
 import GoogleProvider from "next-auth/providers/google";
 import { MongoClient } from "mongodb"
 import { Collection } from "mongoose";
