@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
 import { getServerSession } from "next-auth";
+import InputFeild from "@/components/InputField";
 // import { options } from "../../api/auth/[...nextauth]/options";
 
 async function createAppointment({
@@ -22,9 +23,7 @@ async function createAppointment({
   frequency,
   refSource,
 }) {
-  console.log("CREATE APPT: ", userId);
-  axios.defaults.headers.common["Authorization"] = `${JSON.stringify(session)}`;
-  console.log("THIS IS MY SESSION", session);
+
   const res = await axios.post("http://localhost:3000/api/appointments", {
     name,
     date,
@@ -65,7 +64,7 @@ export default function Page() {
   const router = useRouter();
   console.log(userId);
 
-  if (!session || !session.data?.user) router.push('/');
+  if (!session || !session.data?.user) router.push("/");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -91,154 +90,58 @@ export default function Page() {
     console.log(appointment);
     router.push("/appointments");
   };
-
+  console.log(name);
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-lg ml-6">
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block text-gray-700 text-s font-bold mb-2"
-            htmlFor="grid-name"
-          >
-            Full Name
-          </label>
-          <input
-            value={name}
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block text-gray-700 text-s font-bold mb-2"
-            htmlFor="grid-date"
-          >
-            Date
-          </label>
-          <input
-            value={date}
-            type="date"
-            onChange={(e) => setDate(e.target.value)}
-            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block text-gray-700 text-s font-bold mb-2"
-            htmlFor="grid-phone"
-          >
-            Phone Number
-          </label>
-          <input
-            value={phone}
-            type="text"
-            onChange={(e) => setPhone(e.target.value)}
-            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block text-gray-700 text-s font-bold mb-2"
-            htmlFor="grid-address"
-          >
-            Address
-          </label>
-          <input
-            value={address}
-            type="text"
-            onChange={(e) => setAddress(e.target.value)}
-            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block text-gray-700 text-s font-bold mb-2"
-            htmlFor="grid-stories"
-          >
-            How many stories does your home have?
-          </label>
-          <input
-            value={stories}
-            type="text"
-            onChange={(e) => setStories(e.target.value)}
-            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block text-gray-700 text-s font-bold mb-2"
-            htmlFor="grid-rooms"
-          >
-            How many bedrooms and bathrooms?
-          </label>
-          <input
-            value={rooms}
-            type="text"
-            onChange={(e) => setRooms(e.target.value)}
-            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block text-gray-700 text-s font-bold mb-2"
-            htmlFor="grid-pets"
-          >
-            Do you have any Pets? If so are they going to be put away during the
-            appointment?
-          </label>
-          <input
-            value={pets}
-            type="text"
-            onChange={(e) => setPets(e.target.value)}
-            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block text-gray-700 text-s font-bold mb-2"
-            htmlFor="grid-noTouch"
-          >
-            Any area you would like us to avoid?
-          </label>
-          <input
-            value={noTouch}
-            type="text"
-            onChange={(e) => setNoTouch(e.target.value)}
-            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
-        </div>
-      </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block text-gray-700 text-s font-bold mb-2"
-            htmlFor="grid-focus"
-          >
-            Any areas you would like us to focus on?
-          </label>
-          <input
-            value={focus}
-            type="text"
-            onChange={(e) => setFocus(e.target.value)}
-            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
-        </div>
-      </div>
+      <InputFeild
+        label="Full Name"
+        type="text"
+        value={name}
+        setValue={setName}
+      />
+      <InputFeild label="Date" type="date" value={date} setValue={setDate} />
+      <InputFeild
+        label="Phone Number"
+        type="text"
+        value={phone}
+        setValue={setPhone}
+      />
+      <InputFeild
+        label="Address"
+        type="text"
+        value={address}
+        setValue={setAddress}
+      />
+      <InputFeild
+        label="How many stories does your home have?"
+        type="text"
+        value={stories}
+        setValue={setStories}
+      />
+      <InputFeild
+        label="How many bedrooms and bathrooms?"
+        type="text"
+        value={rooms}
+        setValue={setRooms}
+      />
+      <InputFeild
+        label="Do you have any Pets?"
+        type="text"
+        value={pets}
+        setValue={setPets}
+      />
+      <InputFeild
+        label="Any areas you would like us to avoid?"
+        type="text"
+        value={noTouch}
+        setValue={setNoTouch}
+      />
+      <InputFeild
+        label="Any areas you would like us to focus on?"
+        type="text"
+        value={focus}
+        setValue={setFocus}
+      />
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label
@@ -276,25 +179,32 @@ export default function Page() {
           </select>
         </div>
       </div>
-      <div className="flex flex-wrap -mx-3 mb-6">
-        <div className="w-full px-3">
-          <label
-            className="block text-gray-700 text-s font-bold mb-2"
-            htmlFor="grid-refSource"
-          >
-            Where did you hear about us?
-          </label>
-          <input
-            value={refSource}
-            type="text"
-            onChange={(e) => setRefSource(e.target.value)}
-            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-          />
-        </div>
-      </div>
+      <InputFeild
+        label="Where did you hear about us?"
+        type="text"
+        value={refSource}
+        setValue={setRefSource}
+      />
       <button className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
         Create Appointment
       </button>
     </form>
   );
 }
+
+//   <div className="flex flex-wrap -mx-3 mb-6">
+//     <div className="w-full px-3">
+//       <label
+//         className="block text-gray-700 text-s font-bold mb-2"
+//         htmlFor="grid-refSource"
+//       >
+//         Where did you hear about us?
+//       </label>
+//       <input
+//         value={refSource}
+//         type="text"
+//         onChange={(e) => setRefSource(e.target.value)}
+//         className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+//       />
+//     </div>
+//   </div>}

@@ -8,7 +8,7 @@ import { options } from "../../auth/[...nextauth]/options";
 export async function GET(request, { params }) {
   const { user } = await getServerSession(options);
   const { id } = params;
-//   if (id !== user.id) return NextResponse.json({ message: "Unauthorized" });
+  //   if (id !== user.id) return NextResponse.json({ message: "Unauthorized" });
   try {
     await connectMongoDB();
     const appointment = await Appointment.findById(id);
@@ -22,49 +22,53 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
-  try {
-    const { id } = params;
-    const {
-      newName: name,
-      newDate: date,
-      newPhoneNum: phoneNum,
-      newAddress: address,
-      newStories: stories,
-      newRooms: rooms,
-      newPets: pets,
-      newNoTouch: noTouch,
-      newFocus: focus,
-      newAllergies: allergies,
-      newFrequency: frequency,
-      newRefSource: refSource,
-      newScheduled: scheduled,
-    } = await request.json();
-    await connectMongoDB();
-    await Appointment.findByIdAndUpdate(id, {
-      name,
-      date,
-      phoneNum,
-      address,
-      stories,
-      rooms,
-      pets,
-      noTouch,
-      focus,
-      allergies,
-      frequency,
-      refSource,
-      scheduled,
-    });
+  const { id } = params;
+  console.log(
+    "______________________ PUT REQUEST _______________________\n\n",
+    id
+  );
+  const {
+    name,
+    date,
+    phone,
+    address,
+    stories,
+    rooms,
+    pets,
+    noTouch,
+    focus,
+    allergies,
+    frequency,
+    refSource,
+  } = await request.json();
+
+  await connectMongoDB();
+  const app = await Appointment.findByIdAndUpdate(id, {
+    name,
+    date,
+    phone,
+    address,
+    stories,
+    rooms,
+    pets,
+    noTouch,
+    focus,
+    allergies,
+    frequency,
+    refSource,
+  });
+  console.log("APPOINTMENT UPDATED: ", app);
+  if (app) {
     return NextResponse.json({
       message: "Appointment Successfully Updated",
       status: 201,
     });
-  } catch (error) {
-    return NextResponse.json({
-      error: "Appointment update failed",
-      status: 500,
-    });
   }
+
+  return NextResponse.json({
+    error: "Appointment update failed",
+    status: 500,
+  });
 }
 export async function DELETE(request, { params }) {
   try {
