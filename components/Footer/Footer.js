@@ -4,7 +4,7 @@ import FooterLink from "./FooterLink";
 
 const Footer = () => {
   return (
-    <nav
+    <footer
       className="bg-500
              text-white
              text-center
@@ -20,7 +20,7 @@ const Footer = () => {
         <FooterLink label={"Request a Quote"} link={"/appointments/create"} />
         <FooterLink label={"Meet The Team"} link={"/team"} />
       </ul>
-    </nav>
+    </footer>
   );
 };
 
