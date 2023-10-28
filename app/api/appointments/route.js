@@ -3,12 +3,13 @@ import Appointment from "@/app/models/appointments";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { options } from "../auth/[...nextauth]/options";
+import { redirect } from "next/dist/server/api-utils";
 
 export async function POST(request) {
-  const headers = request.headers.get("authorization");
-  const user = JSON.parse(headers);
-  console.log("user", user, "id", user.id);
 
+  const { user } = await getServerSession(options);
+  console.log("SESSION: ", user);
+  if (!user) return redirect('/')
   const {
     name,
     date,
@@ -23,18 +24,7 @@ export async function POST(request) {
     frequency,
     refSource,
   } = await request.json();
-  console.log("name", name);
-  console.log("date", date);
-  console.log("phone", phone);
-  console.log("address", address);
-  console.log("stories", stories);
-  console.log("rooms", rooms);
-  console.log("pets", pets);
-  console.log("noTouch", noTouch);
-  console.log("focus", focus);
-  console.log("allergies", allergies);
-  console.log("frequency", frequency);
-  console.log("refSource", refSource);
+
   await connectMongoDB();
   const appointment = await Appointment.create({
     name,
@@ -62,10 +52,9 @@ export async function POST(request) {
 
 export async function GET(request) {
   const session = await getServerSession(options);
-  console.log(
-    "----------session___________________________________________",
-    session
-  );
+  console.log("SESSION: ", session)
+  if (!session || session.user.role !== 'admin') return redirect('/');
+
   try {
     await connectMongoDB();
     const appointments = await Appointment.find();

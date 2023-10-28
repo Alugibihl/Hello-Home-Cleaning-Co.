@@ -1,7 +1,7 @@
 import { Inter, Roboto } from "next/font/google";
 import "./globals.css";
 import Head from "next/head";
-import { NextAuthProvider } from "./Providers";
+import SessionProvider from "./SessionProivder";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import { useSession } from "next-auth/react";
@@ -25,7 +25,7 @@ export default async function RootLayout({ children }) {
   const session = await getServerSession(options);
   return (
     <html lang="en" className={'${inter.className} ${roboto.className}'}>
-      <NextAuthProvider>
+      <SessionProvider session={session}>
         <body>
           <Head>
             <link rel="icon" href="/favicon.ico" />
@@ -35,7 +35,7 @@ export default async function RootLayout({ children }) {
           {children}
           <Footer />
         </body>
-      </NextAuthProvider>
+      </SessionProvider>
     </html>
   );
 }

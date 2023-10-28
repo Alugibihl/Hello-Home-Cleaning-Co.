@@ -1,3 +1,5 @@
+"use client"
+import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 // import "./Navbar.css";
@@ -33,16 +35,17 @@ const Navbar = ({ session }) => {
             </li>
           </ol>
         </li> */}
-        <li className="mx-6">
+        {session && <li className="mx-6">
           <Link href="/appointments/create">REQUEST QUOTE</Link>
-        </li>
+        </li>}
         <li className="mx-6">
           {!session ? (
-            <Link href="/signIn">LOGIN</Link>
+            <button onClick={signIn}>Sign In</button>
           ) : (
             <div>
               <p>{session.user.name}</p>
               <p>{session.user.email}</p>
+              <button onClick={signOut}>Sign Out</button>
             </div>
           )}
         </li>

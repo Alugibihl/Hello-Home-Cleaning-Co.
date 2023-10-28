@@ -10,7 +10,7 @@ export default function Home() {
   console.log(session);
   const data = session.data;
 
-  return session.status !== "authenticated" ? (
+  return (
     <div>
       <button
         className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -18,23 +18,12 @@ export default function Home() {
       >
         Sign In
       </button>
-      {/* <button
-        className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-        onClick={() => newUser()}
-      >
-        Sign Up
-      </button> */}
       <Link
         className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
         href={"/signUp"}
       >
         Sign Up
       </Link>
-    </div>
-  ) : (
-    <div>
-      <h1>{data.user.name}</h1>
-      <button onClick={() => signOut()}>Log out</button>
     </div>
   );
 }

@@ -1,48 +1,46 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export const connectMongoDB = async () => {
   try {
-    await mongoose.connect(process.env.MONGODB_URI)
-    console.log("Connected to MongoDB")
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("Connected to MongoDB");
   } catch (error) {
     console.log("Error connecting to db", error);
   }
-}
+};
 // This approach is taken from https://github.com/vercel/next.js/tree/canary/examples/with-mongodb
-
 
 import User from "@/app/models/user";
 // import { connectMongoDB } from "@/libs/mongodb";
 import GoogleProvider from "next-auth/providers/google";
-import { MongoClient } from "mongodb"
+import { MongoClient } from "mongodb";
 import { Collection } from "mongoose";
 
 if (!process.env.MONGODB_URI) {
-  throw new Error('Invalid/Missing environment variable: "MONGODB_URI"')
+  throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
 }
 
 const uri = process.env.MONGODB_URI;
-const options = { session: Collection.session }
+const options = { session: Collection.session };
 
 let client;
 let clientPromise;
-
 
 if (process.env.NODE_ENV === "development") {
   // In development mode, use a global variable so that the value
   // is preserved across module reloads caused by HMR (Hot Module Replacement).
   if (!global._mongoClientPromise) {
-    client = new MongoClient(uri, options)
-    global._mongoClientPromise = client.connect()
+    client = new MongoClient(uri, options);
+    global._mongoClientPromise = client.connect();
   }
-  clientPromise = global._mongoClientPromise
+  clientPromise = global._mongoClientPromise;
 } else {
   // In production mode, it's best to not use a global variable.
-  client = new MongoClient(uri, options)
-  clientPromise = client.connect()
+  client = new MongoClient(uri, options);
+  clientPromise = client.connect();
 }
 
 // Export a module-scoped MongoClient promise. By doing this in a
 // separate module, the client can be shared across functions.
-console.log("Client Promise", clientPromise)
-export default clientPromise
+console.log("Client Promise", clientPromise);
+export default clientPromise;

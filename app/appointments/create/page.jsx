@@ -65,6 +65,8 @@ export default function Page() {
   const router = useRouter();
   console.log(userId);
 
+  if (!session || !session.data?.user) router.push('/');
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 

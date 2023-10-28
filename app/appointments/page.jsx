@@ -1,16 +1,20 @@
+"use client";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
-async function fetchAppointments() {
-  const res = await fetch("http://localhost:3000/api/appointments", {
-    cache: "no-store",
-  });
-  if (res.ok) {
-    const appointments = await res.json();
-    return appointments;
-  }
-}
-export default async function Page() {
-  const { appointments } = await fetchAppointments();
+export default function Page() {
+  const session = useSession();
+  const router = useRouter();
+  const [appointments, setAppointments] = useState([]);
+  if (!session || session.data.user.role !== "admin") router.push("/");
+
+  useEffect(() => {
+    fetch("/api/appointments", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => setAppointments(data.appointments));
+  }, []);
 
   return (
     <div>
