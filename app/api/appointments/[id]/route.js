@@ -22,11 +22,14 @@ export async function GET(request, { params }) {
 }
 
 export async function PUT(request, { params }) {
+  const { user } = await getServerSession(options);
   const { id } = params;
-  console.log(
-    "______________________ PUT REQUEST _______________________\n\n",
-    id
-  );
+  const appointment = await Appointment.findById(id);
+
+  if (!(user.role === "admin" || appointment.userId === user.id)) {
+    return NextResponse.json({ message: "Unauthorized" });
+  }
+
   const {
     name,
     date,

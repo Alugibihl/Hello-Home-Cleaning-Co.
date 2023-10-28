@@ -2,10 +2,8 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { getServerSession } from "next-auth";
 import InputFeild from "@/components/InputField";
-// import { options } from "../../api/auth/[...nextauth]/options";
+
 
 export default function Page({ params }) {
   const session = useSession();
@@ -24,9 +22,8 @@ export default function Page({ params }) {
 
   const [isLoading, setIsLoading] = useState(true);
 
-  const userId = session.data?.user?.id;
   const router = useRouter();
-  console.log(userId);
+
 
   //   if (!session || session.data?.user?.role !== 'admin') router.push("/");
 
@@ -190,7 +187,7 @@ export default function Page({ params }) {
         setValue={setRefSource}
       />
       <button className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        Create Appointment
+        Update Appointment
       </button>
     </form>
   );

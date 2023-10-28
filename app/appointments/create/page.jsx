@@ -5,45 +5,6 @@ import { useState } from "react";
 import axios from "axios";
 import { getServerSession } from "next-auth";
 import InputFeild from "@/components/InputField";
-// import { options } from "../../api/auth/[...nextauth]/options";
-
-async function createAppointment({
-  session,
-  name,
-  date,
-  phone,
-  userId,
-  address,
-  stories,
-  rooms,
-  pets,
-  noTouch,
-  focus,
-  allergies,
-  frequency,
-  refSource,
-}) {
-
-  const res = await axios.post("http://localhost:3000/api/appointments", {
-    name,
-    date,
-    phone,
-    userId,
-    address,
-    stories,
-    rooms,
-    pets,
-    noTouch,
-    focus,
-    allergies,
-    frequency,
-    refSource,
-  });
-  if (res.ok) {
-    const appointment = await res.json();
-    return appointment;
-  }
-}
 
 export default function Page() {
   const session = useSession();
@@ -68,29 +29,30 @@ export default function Page() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    console.log("session", session);
-    const appointment = await createAppointment({
-      session: session.data.user,
-      name,
-      date,
-      phone,
-      userId,
-      address,
-      stories,
-      rooms,
-      pets,
-      noTouch,
-      focus,
-      allergies,
-      frequency,
-      refSource,
+    await fetch("/api/appointments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        name,
+        date,
+        phone,
+        userId,
+        address,
+        stories,
+        rooms,
+        pets,
+        noTouch,
+        focus,
+        allergies,
+        frequency,
+        refSource,
+      }),
     });
 
-    console.log(appointment);
     router.push("/appointments");
   };
-  console.log(name);
+
+  // router.push("/appointments");
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-lg ml-6">
       <InputFeild
