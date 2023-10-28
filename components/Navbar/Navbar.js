@@ -37,9 +37,15 @@ const Navbar = ({ session }) => {
           <Link href="/appointments/create">REQUEST QUOTE</Link>
         </li>
         <li className="mx-6">
-          {!session ? <Link href="/signIn">LOGIN</Link> : <p>{session.user.name}</p>}
+          {!session ? (
+            <Link href="/signIn">LOGIN</Link>
+          ) : (
+            <div>
+              <p>{session.user.name}</p>
+              <p>{session.user.email}</p>
+            </div>
+          )}
         </li>
-
       </ul>
     </nav>
   );
