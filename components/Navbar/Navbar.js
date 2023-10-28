@@ -2,12 +2,14 @@ import Link from "next/link";
 import React from "react";
 // import "./Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ session }) => {
+  console.log("NAV SESSION: ", session)
   return (
     <nav className="flex items-center justify-between">
-      <Link href="/"><img src="hhlogo.png" className="w-56 m-6 ml-20"></img></Link>
+      <Link href="/">
+        <img src="hhlogo.png" className="w-56 m-6 ml-20"></img>
+      </Link>
       <ul className="flex font-roboto font-bold text-base mr-12">
-        
         <li className="mx-6">
           <Link href="/">HOME</Link>
         </li>
@@ -35,8 +37,9 @@ const Navbar = () => {
           <Link href="/appointments/create">REQUEST QUOTE</Link>
         </li>
         <li className="mx-6">
-          <Link href="/signIn">LOGIN</Link>
+          {!session ? <Link href="/signIn">LOGIN</Link> : <p>{session.user.name}</p>}
         </li>
+
       </ul>
     </nav>
   );
