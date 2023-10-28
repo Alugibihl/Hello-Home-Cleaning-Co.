@@ -8,13 +8,20 @@ export default function Page() {
   const session = useSession();
   const router = useRouter();
   const [appointments, setAppointments] = useState([]);
-  if (!session || session?.data?.user?.role !== "admin") router.push("/");
 
+  if (!session?.data?.user) router.push("/");
+  console.log("SESSIONS DATA: ", session)
   useEffect(() => {
-    fetch("/api/appointments", { cache: "no-store" })
-      .then((res) => res.json())
-      .then((data) => setAppointments(data.appointments));
-  }, []);
+    if (session.data.user.role === 'admin') {
+      fetch("/api/appointments", { cache: "no-store" })
+        .then((res) => res.json())
+        .then((data) => setAppointments(data.appointments));
+    } else {
+      fetch(`/api/users/${session.data.user.id}/appointments`, { cache: "no-store" })
+        .then((res) => res.json())
+        .then((data) => setAppointments(data.appointments));
+    }
+  }, [session]);
 
   return (
     <div>

@@ -1,11 +1,11 @@
-"use client"
+"use client";
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import React from "react";
 // import "./Navbar.css";
 
 const Navbar = ({ session }) => {
-  console.log("NAV SESSION: ", session)
+  console.log("NAV SESSION: ", session);
   return (
     <nav className="flex items-center justify-between">
       <Link href="/">
@@ -35,9 +35,18 @@ const Navbar = ({ session }) => {
             </li>
           </ol>
         </li> */}
-        {session && <li className="mx-6">
-          <Link href="/appointments/create">REQUEST QUOTE</Link>
-        </li>}
+        {session && (
+          <li className="mx-6">
+            <Link href="/appointments/create">REQUEST QUOTE</Link>
+          </li>
+        )}
+        {session && (
+          <Link href="/appointments">
+            {session?.user?.role === "admin"
+              ? "ALL APPOINTMENTS"
+              : "MY APPOINTMENTS"}
+          </Link>
+        )}
         <li className="mx-6">
           {!session ? (
             <button onClick={signIn}>Sign In</button>
