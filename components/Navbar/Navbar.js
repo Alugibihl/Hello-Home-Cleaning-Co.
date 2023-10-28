@@ -1,5 +1,6 @@
 "use client";
 import { signIn, signOut } from "next-auth/react";
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 // import "./Navbar.css";
@@ -9,7 +10,13 @@ const Navbar = ({ session }) => {
   return (
     <nav className="flex items-center justify-between">
       <Link href="/">
-        <img src="hhlogo.png" className="w-56 m-6 ml-20"></img>
+        <Image
+          src="/hhlogo.png"
+          className="w-56 m-6 ml-20"
+          width={300}
+          height={30}
+          alt="Hello Home Cleaning Co. Logo"
+        ></Image>
       </Link>
       <ul className="flex font-roboto font-bold text-base mr-12">
         <li className="mx-6">
