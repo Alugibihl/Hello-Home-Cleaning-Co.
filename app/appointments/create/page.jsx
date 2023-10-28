@@ -26,23 +26,19 @@ async function createAppointment({
   axios.defaults.headers.common["Authorization"] = `${JSON.stringify(session)}`;
   console.log("THIS IS MY SESSION", session);
   const res = await axios.post("http://localhost:3000/api/appointments", {
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name,
-      date,
-      phone,
-      userId,
-      address,
-      stories,
-      rooms,
-      pets,
-      noTouch,
-      focus,
-      allergies,
-      frequency,
-      refSource,
-    }),
-    cache: "no-store",
+    name,
+    date,
+    phone,
+    userId,
+    address,
+    stories,
+    rooms,
+    pets,
+    noTouch,
+    focus,
+    allergies,
+    frequency,
+    refSource,
   });
   if (res.ok) {
     const appointment = await res.json();
