@@ -6,10 +6,9 @@ import { options } from "../auth/[...nextauth]/options";
 import { redirect } from "next/dist/server/api-utils";
 
 export async function POST(request) {
-
   const { user } = await getServerSession(options);
-  console.log("SESSION: ", user);
-  if (!user) return redirect('/')
+
+  if (!user) return redirect("/");
   const {
     name,
     date,
@@ -51,9 +50,9 @@ export async function POST(request) {
 }
 
 export async function GET(request) {
-  const session = await getServerSession(options);
-  console.log("SESSION: ", session)
-  if (!session || session.user.role !== 'admin') return redirect('/');
+  const { user } = await getServerSession(options);
+
+  if (!user || user.role !== "admin") return redirect("/");
 
   try {
     await connectMongoDB();

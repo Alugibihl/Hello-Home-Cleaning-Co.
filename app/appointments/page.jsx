@@ -8,7 +8,7 @@ export default function Page() {
   const session = useSession();
   const router = useRouter();
   const [appointments, setAppointments] = useState([]);
-  if (!session || session.data.user.role !== "admin") router.push("/");
+  if (!session || session?.data?.user?.role !== "admin") router.push("/");
 
   useEffect(() => {
     fetch("/api/appointments", { cache: "no-store" })

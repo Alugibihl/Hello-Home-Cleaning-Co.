@@ -4,8 +4,12 @@ import { options } from "../auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 
 export async function GET() {
-  const session = await getServerSession(options);
-  console.log("--------------------------------", session, '-------------------------------');
+  const { user } = await getServerSession(options);
+  console.log(
+    "--------------------------------",
+    user,
+    "-------------------------------"
+  );
 
-  return NextResponse.json({ message: JSON.stringify(session)});
+  return NextResponse.json({ message: JSON.stringify(user) });
 }
