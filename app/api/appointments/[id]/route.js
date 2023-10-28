@@ -6,10 +6,9 @@ import { getServerSession } from "next-auth";
 import { options } from "../../auth/[...nextauth]/options";
 
 export async function GET(request, { params }) {
-  const {user} = await getServerSession(options);
+  const { user } = await getServerSession(options);
   const { id } = params;
-  if (id !== user.id)
-    return NextResponse.json({ message: "Unauthorized" });
+//   if (id !== user.id) return NextResponse.json({ message: "Unauthorized" });
   try {
     await connectMongoDB();
     const appointment = await Appointment.findById(id);
