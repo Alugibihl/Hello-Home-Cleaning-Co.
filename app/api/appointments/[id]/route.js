@@ -35,7 +35,6 @@ export async function PUT(request, { params }) {
     },
   };
 
-  // Check the user's role and the fields that they are trying to update.
   const allowedFields = roles[user.role].fields;
   const requestedFields = Object.keys(request.body);
   const invalidFields = requestedFields.filter((field) => !allowedFields.includes(field));
@@ -46,8 +45,7 @@ export async function PUT(request, { params }) {
       status: 403,
     });
   }
-
-  // Update the document in MongoDB with the fields that the user is allowed to update.
+  
   await connectMongoDB();
   const app = await Appointment.findByIdAndUpdate(id, request.body);
   console.log("APPOINTMENT UPDATED: ", app);

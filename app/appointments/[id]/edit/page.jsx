@@ -2,8 +2,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import InputFeild from "@/components/InputField";
-
+import InputField from "@/components/InputField";
 
 export default function Page({ params }) {
   const session = useSession();
@@ -23,9 +22,9 @@ export default function Page({ params }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
+  let user = session.data?.user;
 
-
-  //   if (!session || session.data?.user?.role !== 'admin') router.push("/");
+  if (!session || user.role !== "admin") router.push("/");
 
   useEffect(() => {
     setIsLoading(true);
@@ -94,50 +93,56 @@ export default function Page({ params }) {
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-lg ml-6">
-      <InputFeild
+      <InputField
         label="Full Name"
         type="text"
         value={name}
         setValue={setName}
       />
-      <InputFeild label="Date" type="date" value={date} setValue={setDate} />
-      <InputFeild
+      <InputField
+        label="Service Date"
+        type="date"
+        value={date}
+        setValue={setDate}
+        disabled={user.role !== "admin" ? true : false}
+      />
+      <InputField
         label="Phone Number"
         type="text"
         value={phone}
         setValue={setPhone}
       />
-      <InputFeild
+      <InputField
         label="Address"
         type="text"
         value={address}
         setValue={setAddress}
       />
-      <InputFeild
+      <InputField
         label="How many stories does your home have?"
         type="text"
         value={stories}
         setValue={setStories}
       />
-      <InputFeild
+      <InputField
         label="How many bedrooms and bathrooms?"
         type="text"
         value={rooms}
         setValue={setRooms}
       />
-      <InputFeild
+      <InputField
         label="Do you have any Pets?"
         type="text"
         value={pets}
         setValue={setPets}
       />
-      <InputFeild
+      <InputField
         label="Any areas you would like us to avoid?"
         type="text"
         value={noTouch}
         setValue={setNoTouch}
       />
-      <InputFeild
+      <InputField
         label="Any areas you would like us to focus on?"
         type="text"
         value={focus}
@@ -149,7 +154,7 @@ export default function Page({ params }) {
             className="block text-gray-700 text-s font-bold mb-2"
             htmlFor="grid-allergies"
           >
-            Any allergies to Clove, Cinnamon, or Orange?
+            Is anyone in your home allergic to Clove, Cinnamon, or Orange?
           </label>
           <input
             type="checkbox"
@@ -180,11 +185,12 @@ export default function Page({ params }) {
           </select>
         </div>
       </div>
-      <InputFeild
+      <InputField
         label="Where did you hear about us?"
         type="text"
         value={refSource}
         setValue={setRefSource}
+        disabled={user.role !== "admin" ? true : false}
       />
       <button className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
         Update Appointment
