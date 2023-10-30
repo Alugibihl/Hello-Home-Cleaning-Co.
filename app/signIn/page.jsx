@@ -21,8 +21,6 @@ export default function Page() {
     setErrors(errorsObj)
   }, [email, password]);
 
-  console.log(errors)
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (Object.values(errors).length) {
