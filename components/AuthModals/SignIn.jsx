@@ -6,7 +6,8 @@ import { useRouter } from "next/navigation";
 import InputField from "@/components/FormComponents/InputField";
 import ErrorText from "@/components/FormComponents/ErrorText";
 import SubmitButton from "@/components/FormComponents/SubmitButton";
-export default function Page() {
+
+const SignInPage = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const session = useSession();
@@ -60,4 +61,5 @@ export default function Page() {
       <SubmitButton buttonText={"Submit"} />
     </form>
   );
-}
+};
+export default SignInPage;

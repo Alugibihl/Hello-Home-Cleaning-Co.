@@ -3,6 +3,8 @@ import { signIn, signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import SignIn from "../AuthModals/SignIn";
+import OpenModalButton from "../OpenModalButton";
 // import "./Navbar.css";
 
 const Navbar = ({ session }) => {
@@ -55,8 +57,9 @@ const Navbar = ({ session }) => {
           </Link>
         )}
         <li className="mx-6">
-          {!session ? (
-            <Link href="/signIn">Sign In</Link>
+          {!session ? (<OpenModalButton
+            buttonText="Sign In"
+            modalComponent={<SignIn />} />
           ) : (
             <div>
               <p>{session.user.name}</p>
