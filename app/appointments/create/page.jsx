@@ -4,7 +4,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import axios from "axios";
 import { getServerSession } from "next-auth";
+<<<<<<< HEAD
 import InputField from "@/components/InputField";
+=======
+import InputFeild from "@/components/FormComponents/InputField";
+>>>>>>> dev
 
 export default function Page() {
   const session = useSession();

@@ -1,5 +1,7 @@
+"use client"
 import { useState } from "react";
-import './Modal.css'
+import { useSearchParams } from "next/navigation";
+import { useRef, useEffect } from "react";
 
 const Modal = ({ children, onClose }) => {
   const [isOpen, setIsOpen] = useState(false);

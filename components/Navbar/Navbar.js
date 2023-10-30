@@ -56,7 +56,7 @@ const Navbar = ({ session }) => {
         )}
         <li className="mx-6">
           {!session ? (
-            <button onClick={signIn}>Sign In</button>
+            <Link href="/signIn">Sign In</Link>
           ) : (
             <div>
               <p>{session.user.name}</p>

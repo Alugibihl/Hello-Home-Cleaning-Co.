@@ -1,6 +1,11 @@
+<<<<<<< HEAD:components/InputField.jsx
 export default function InputField({ label, value, setValue, type }) {
+=======
+
+export default function InputFeild({ label, value, setValue, type }) {
+>>>>>>> dev:components/FormComponents/InputField.jsx
   return (
-    <div className="flex flex-wrap -mx-3 mb-6">
+    <div className="flex flex-wrap -mx-3 mt-5">
       <div className="w-full px-3">
         <label
           className="block text-gray-700 text-s font-bold mb-2"
@@ -8,7 +13,6 @@ export default function InputField({ label, value, setValue, type }) {
         >
           {label}
         </label>
-
         <input
           value={value}
           type={type}
