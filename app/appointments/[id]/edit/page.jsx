@@ -2,7 +2,7 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import InputFeild from "@/components/InputField";
+import InputFeild from "@/components/FormComponents/InputField";
 
 
 export default function Page({ params }) {
