@@ -8,10 +8,10 @@ import { options } from "../../auth/[...nextauth]/options";
 export async function GET(request, { params }) {
   const { user } = await getServerSession(options);
   const { id } = params;
-  //   if (id !== user.id) return NextResponse.json({ message: "Unauthorized" });
   try {
     await connectMongoDB();
     const appointment = await Appointment.findById(id);
+    if (!(user.role === "admin" || appointment.userId === user.id)) { return NextResponse.json({ message: "Unauthorized" }) };
     return NextResponse.json({ appointment });
   } catch (error) {
     return NextResponse.json({
@@ -75,7 +75,12 @@ export async function PUT(request, { params }) {
 }
 export async function DELETE(request, { params }) {
   try {
+    const { user } = await getServerSession(options);
     const { id } = params;
+    let appointment = Appointment.findById(id)
+    if (!(user.role === "admin" || appointment.userId === user.id)) {
+      return NextResponse.json({ message: "Unauthorized" })
+    }
     await connectMongoDB();
     await Appointment.findByIdAndDelete(id);
     return NextResponse.json({ message: "Appointment Deleted", status: 201 });
