@@ -8,7 +8,7 @@ const style =
 
 const SignupPage = () => {
   const router = useRouter();
-
+  const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: "",
     email: "",
