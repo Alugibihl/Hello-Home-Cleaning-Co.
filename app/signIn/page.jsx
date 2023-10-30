@@ -3,7 +3,7 @@ import GoogleButton from "react-google-button";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import InputFeild from "@/components/FormComponents/InputField";
+import InputField from "@/components/FormComponents/InputField";
 import ErrorText from "@/components/FormComponents/ErrorText";
 import SubmitButton from "@/components/FormComponents/SubmitButton";
 export default function Page() {
@@ -18,14 +18,14 @@ export default function Page() {
     const errorsObj = {};
     if (!email) errorsObj.email = "Please type your password";
     if (!password) errorsObj.password = "Please type your password";
-    setErrors(errorsObj)
+    setErrors(errorsObj);
   }, [email, password]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (Object.values(errors).length) {
       SetSubmittedWithErrors(true);
-      return
+      return;
     }
 
     const data = {
@@ -37,7 +37,7 @@ export default function Page() {
   if (session.status === "authenticated") router.push("/");
   return (
     <form onSubmit={handleSubmit}>
-      <InputFeild
+      <InputField
         label={"Email"}
         value={email}
         setValue={setEmail}
@@ -46,7 +46,7 @@ export default function Page() {
       {submittedWithErrors && errors.email && (
         <ErrorText error={errors.email} />
       )}
-      <InputFeild
+      <InputField
         label={"Password"}
         value={password}
         setValue={setPassword}
