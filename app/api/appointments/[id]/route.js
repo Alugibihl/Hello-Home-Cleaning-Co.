@@ -20,59 +20,50 @@ export async function GET(request, { params }) {
     });
   }
 }
-
 export async function PUT(request, { params }) {
   const { user } = await getServerSession(options);
   const { id } = params;
   const appointment = await Appointment.findById(id);
 
-  if (!(user.role === "admin" || appointment.userId === user.id)) {
-    return NextResponse.json({ message: "Unauthorized" });
+  // Create a list of roles and the fields that each role is allowed to update.
+  const roles = {
+    admin: {
+      fields: ["name", "date", "phone", "address", "stories", "rooms", "pets", "noTouch", "focus", "allergies", "frequency", "refSource"],
+    },
+    user: {
+      fields: ["name", "phone", "address", "stories", "rooms", "pets", "noTouch", "focus", "allergies", "frequency"],
+    },
+  };
+
+  // Check the user's role and the fields that they are trying to update.
+  const allowedFields = roles[user.role].fields;
+  const requestedFields = Object.keys(request.body);
+  const invalidFields = requestedFields.filter((field) => !allowedFields.includes(field));
+
+  if (invalidFields.length > 0) {
+    return NextResponse.json({
+      message: `You are not authorized to update the following fields: ${invalidFields.join(", ")}`,
+      status: 403,
+    });
   }
 
-  const {
-    name,
-    date,
-    phone,
-    address,
-    stories,
-    rooms,
-    pets,
-    noTouch,
-    focus,
-    allergies,
-    frequency,
-    refSource,
-  } = await request.json();
-
+  // Update the document in MongoDB with the fields that the user is allowed to update.
   await connectMongoDB();
-  const app = await Appointment.findByIdAndUpdate(id, {
-    name,
-    date,
-    phone,
-    address,
-    stories,
-    rooms,
-    pets,
-    noTouch,
-    focus,
-    allergies,
-    frequency,
-    refSource,
-  });
+  const app = await Appointment.findByIdAndUpdate(id, request.body);
   console.log("APPOINTMENT UPDATED: ", app);
+
   if (app) {
     return NextResponse.json({
       message: "Appointment Successfully Updated",
       status: 201,
     });
   }
-
   return NextResponse.json({
     error: "Appointment update failed",
     status: 500,
   });
 }
+
 export async function DELETE(request, { params }) {
   try {
     const { user } = await getServerSession(options);
