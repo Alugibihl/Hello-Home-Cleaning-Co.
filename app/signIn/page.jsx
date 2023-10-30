@@ -39,6 +39,7 @@ export default function Page() {
     <form onSubmit={handleSubmit}>
       <InputField
         label={"Email"}
+        placeholder="Email@email.com"
         value={email}
         setValue={setEmail}
         type={"text"}
@@ -51,6 +52,7 @@ export default function Page() {
         value={password}
         setValue={setPassword}
         type={"password"}
+        placeholder="Phone number"
       />
       {submittedWithErrors && errors.password && (
         <ErrorText error={errors.password} />

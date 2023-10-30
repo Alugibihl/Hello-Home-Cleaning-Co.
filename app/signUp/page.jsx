@@ -91,7 +91,7 @@ const SignupPage = () => {
         <input
           type="email"
           name="email"
-          placeholder="Email address"
+          placeholder="email@email.com"
           value={formData.email}
           onChange={handleChange}
           className={style}
