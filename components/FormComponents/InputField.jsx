@@ -1,14 +1,21 @@
-export default function InputField({ label, value, setValue, type }) {
+export default function InputField({
+  label,
+  value,
+  setValue,
+  type,
+  placeholder,
+}) {
   return (
     <div className="flex flex-wrap -mx-3 mt-5">
       <div className="w-full px-3">
-        <label
+        {/* <label
           className="block text-gray-700 text-s font-bold mb-2"
           htmlFor="grid-date"
-        >
-          {label}
-        </label>
+        > */}
+          {/* {label} */}
+        {/* </label> */}
         <input
+          placeholder={label}
           value={value}
           type={type}
           onChange={(e) => setValue(e.target.value)}

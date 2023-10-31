@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import InputField from "@/components/FormComponents/InputField";
+import SubmitButton from "@/components/FormComponents/SubmitButton";
 
 
 export default function Page({ params }) {
@@ -193,9 +194,7 @@ export default function Page({ params }) {
         setValue={setRefSource}
         disabled={user.role !== "admin" ? true : false}
       />
-      <button className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        Update Appointment
-      </button>
+      <SubmitButton type="submit" buttonText="Update Appointment" />
     </form>
   );
 }
