@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import InputField from "@/components/FormComponents/InputField";
 
 const style =
   "appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
@@ -80,52 +81,52 @@ const SignupPage = () => {
         onSubmit={handleSubmit}
         className="flex justify-center flex-col items-center"
       >
-        <input
+        <InputField
           type="text"
-          name="name"
+          label="Name"
           placeholder="John Doe"
           value={formData.name}
           onChange={handleChange}
           className={style}
         />
-        <input
+        <InputField
           type="email"
-          name="email"
+          label="Email"
           placeholder="email@email.com"
           value={formData.email}
           onChange={handleChange}
           className={style}
         />
 
-        <input
+        <InputField
           type="text"
-          name="phone"
+          label="Phone"
           placeholder="Phone number"
           value={formData.phone}
           onChange={handleChange}
           className={style}
         />
 
-        <input
+        <InputField
           type="password"
-          name="password"
+          label="Password"
           placeholder="Password"
           value={formData.password}
           onChange={handleChange}
           className={style}
         />
 
-        <input
+        <InputField
           type="password"
-          name="confirmPassword"
+          label="Confirm Password"
           placeholder="Confirm Password"
           value={formData.confirmPassword}
           onChange={handleChange}
           className={style}
         />
-        <input
+        <InputField
           type="text"
-          name="address"
+          label="Address"
           placeholder="Address"
           value={formData.address}
           onChange={handleChange}
