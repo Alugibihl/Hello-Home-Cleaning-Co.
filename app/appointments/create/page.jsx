@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { getServerSession } from "next-auth";
 import InputField from "@/components/FormComponents/InputField";
+import SubmitButton from "@/components/FormComponents/SubmitButton";
 
 export default function Page() {
   const session = useSession();
@@ -152,9 +153,7 @@ export default function Page() {
         value={refSource}
         setValue={setRefSource}
       />
-      <button className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-        Create Appointment
-      </button>
+      <SubmitButton type="submit" buttonText="Update Appointment" />
     </form>
   );
 }
