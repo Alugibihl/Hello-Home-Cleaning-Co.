@@ -52,7 +52,7 @@ export default function Page() {
         value={password}
         setValue={setPassword}
         type={"password"}
-        placeholder="Phone number"
+        placeholder="Password"
       />
       {submittedWithErrors && errors.password && (
         <ErrorText error={errors.password} />
