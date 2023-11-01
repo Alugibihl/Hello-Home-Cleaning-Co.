@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import "./LoginModal.css";
 
-function LoginModal({close, modalFunctions}) {
+function LoginModal({ close, modalFunctions }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const session = useSession();
@@ -49,7 +49,7 @@ function LoginModal({close, modalFunctions}) {
   const handleSwitchSignup = () => {
     close(false);
     modalFunctions.setShowSignupModal(true);
-  }
+  };
 
   return (
     <div className="flex flex-col">
@@ -75,14 +75,24 @@ function LoginModal({close, modalFunctions}) {
             onChange={update("password")}
           />
         </div>
-        <input type="submit" value="Log In" className="login-submit-button" disabled={!email || !password} />
+        <input
+          type="submit"
+          value="Log In"
+          className="login-submit-button"
+          disabled={!email || !password}
+        />
         {/* <button onClick={handleClick} className="demo-button">
           Demo User
         </button> */}
       </form>
       <div className="login-switch-container flex justify-center mt-8">
-            <span>Don't have an account yet?</span>
-            <button onClick={handleSwitchSignup} className="switch-loginmodal-button">Sign up</button>
+        <span>Don't have an account yet?</span>
+        <button
+          onClick={handleSwitchSignup}
+          className="switch-loginmodal-button"
+        >
+          Sign up
+        </button>
       </div>
     </div>
   );

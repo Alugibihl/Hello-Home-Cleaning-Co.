@@ -6,7 +6,7 @@ import Link from "next/link";
 import React from "react";
 import LoginModal from "../LoginModal/LoginModal";
 import SignupModal from "../SignupModal/SignupModal";
-import Modal from '../Modal/Modal';
+import Modal from "../Modal/Modal";
 // import "./Navbar.css";
 
 const Navbar = ({ session }) => {
@@ -15,12 +15,12 @@ const Navbar = ({ session }) => {
 
   const modalFunctions = {
     setShowLoginModal: (shown) => setShowLoginModal(shown),
-    setShowSignupModal: (shown) => setShowSignupModal(shown)
-  }
+    setShowSignupModal: (shown) => setShowSignupModal(shown),
+  };
 
   const handleSignin = () => {
     setShowLoginModal(true);
-  }
+  };
 
   console.log("NAV SESSION: ", session);
   return (
@@ -39,26 +39,6 @@ const Navbar = ({ session }) => {
           <li className="mx-6">
             <Link href="/">HOME</Link>
           </li>
-<<<<<<< HEAD
-        )}
-        {session && (
-          <Link href="/appointments">
-            {session?.user?.role === "admin"
-              ? "ALL APPOINTMENTS"
-              : "MY APPOINTMENTS"}
-          </Link>
-        )}
-        <li className="mx-6">
-          {!session ? (<OpenModalButton
-            buttonText="Sign In"
-            modalComponent={<SignIn />} />
-          ) : (
-            <div>
-              <p>{session.user.name}</p>
-              <p>{session.user.email}</p>
-              <button onClick={signOut}>Sign Out</button>
-            </div>
-=======
           <li className="mx-6">
             <Link href="/about">ABOUT</Link>
           </li>
@@ -83,7 +63,6 @@ const Navbar = ({ session }) => {
             <li className="mx-6">
               <Link href="/appointments/create">REQUEST QUOTE</Link>
             </li>
->>>>>>> 5564bd9 (initial modal work)
           )}
           {session && (
             <Link href="/appointments">
@@ -95,7 +74,9 @@ const Navbar = ({ session }) => {
           <li className="mx-6">
             {!session ? (
               // <Link href="/signIn">Sign In</Link>
-              <button onClick={handleSignin} className="">SIGN IN</button>
+              <button onClick={handleSignin} className="">
+                SIGN IN
+              </button>
             ) : (
               <div>
                 <p>{session.user.name}</p>
@@ -106,8 +87,20 @@ const Navbar = ({ session }) => {
           </li>
         </ul>
       </nav>
-      {showLoginModal && <Modal component={LoginModal} close={() => setShowLoginModal(false)} modalFunctions={modalFunctions} />}
-      {showSignupModal && <Modal component={SignupModal} close={(shown) => setShowSignupModal(shown)} modalFunctions={modalFunctions} />}
+      {showLoginModal && (
+        <Modal
+          component={LoginModal}
+          close={() => setShowLoginModal(false)}
+          modalFunctions={modalFunctions}
+        />
+      )}
+      {showSignupModal && (
+        <Modal
+          component={SignupModal}
+          close={(shown) => setShowSignupModal(shown)}
+          modalFunctions={modalFunctions}
+        />
+      )}
     </>
   );
 };
