@@ -3,7 +3,7 @@ import { useForm, ValidationError } from '@formspree/react';
 export default function ResumeForm() {
     const [state, handleSubmit] = useForm("xyyqoqjv");
     if (state.succeeded) {
-        return <p>Thanks applying, We will get back to you shortly!</p>;
+        return <p>Thank you for your interest in working with us. We will get back to you shortly!</p>;
     }
     return (
         <form
@@ -74,3 +74,4 @@ export default function ResumeForm() {
         </form>
     );
 }
+// Please fill out the form below and our agency will reach out to you within 2 business days to discuss the next steps.Feel free to contact us to follow up.
