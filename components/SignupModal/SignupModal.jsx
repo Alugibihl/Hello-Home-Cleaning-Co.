@@ -1,0 +1,169 @@
+import { useState, useEffect } from "react";
+import InputField from "@/components/FormComponents/InputField";
+import { signIn } from "next-auth/react";
+import "./SignupModal.css";
+
+function SignupModal({ close, modalFunctions }) {
+  const [errors, setErrors] = useState({});
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    address: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const validateSignUpForm = () => {
+    // Validate email
+    if (!formData.email.includes("@") || !formData.email.includes(".")) {
+      return "Invalid email address";
+    }
+    // Validate phone number
+    if (!formData.phone.match(/\d{10}/)) {
+      return "Invalid phone number";
+    }
+    // Validate password
+    if (formData.password.length < 8) {
+      return "Password must be at least 8 characters long";
+    }
+    // Validate confirm password
+    if (formData.password !== formData.confirmPassword) {
+      return "Passwords do not match";
+    }
+    if (!formData.address) return "Adress Required";
+
+    return null;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Form Data: ", formData);
+    // Validate the form
+    const error = validateSignUpForm();
+    if (error) {
+      // Display the error to the user
+      return;
+    }
+    // Submit the form data to your server
+    const response = await fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    });
+    // Check the response status
+    if (response.ok) {
+      // Signup successful!
+      const { email, hashedPassword } = await response.json();
+      signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+      });
+      // close(false);
+    } else {
+      // Signup failed
+      // Display the error to the user
+    }
+  };
+
+  const handleSwitchLogin = () => {
+    close(false);
+    modalFunctions.setShowLoginModal(true);
+  };
+
+  return (
+    <>
+      <div>
+        <h1>Sign Up</h1>
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col w-full items-center justify-center"
+        >
+          <div className="flex flex-row mb-4">
+            <InputField
+              type="text"
+              name="name"
+              label="Name"
+              placeholder="John Doe"
+              value={formData.name}
+              setValue={handleChange}
+              className=""
+            />
+            <InputField
+              type="email"
+              name="email"
+              label="Email"
+              placeholder="email@email.com"
+              value={formData.email}
+              setValue={handleChange}
+              className=""
+            />
+          </div>
+          <div className="flex flex-row mb-4">
+            <InputField
+              type="text"
+              name="phone"
+              label="Phone"
+              placeholder="Phone number"
+              value={formData.phone}
+              setValue={handleChange}
+              className=""
+            />
+            <InputField
+              type="text"
+              name="address"
+              label="Address"
+              placeholder="Address"
+              value={formData.address}
+              setValue={handleChange}
+              className=""
+            />
+          </div>
+          <div className="flex flex-row mb-4">
+            <InputField
+              type="password"
+              name="password"
+              label="Password"
+              placeholder="Password"
+              value={formData.password}
+              setValue={handleChange}
+              className=""
+            />
+            <InputField
+              type="password"
+              label="Confirm Password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              setValue={handleChange}
+              className=""
+            />
+          </div>
+          <button
+            className="mb-6 mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            Sign Up
+          </button>
+        </form>
+        <div className="login-switch-container flex justify-center mt-8">
+          <span>Already have an account?</span>
+          <button
+            onClick={handleSwitchLogin}
+            className="switch-loginmodal-button"
+          >
+            Log In
+          </button>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default SignupModal;

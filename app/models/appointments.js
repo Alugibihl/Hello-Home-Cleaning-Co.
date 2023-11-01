@@ -1,66 +1,85 @@
 import mongoose, { Schema } from "mongoose";
 
-const appointmentSchema = new Schema({
+const appointmentSchema = new Schema(
+  {
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     date: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
+      default: "unscheduled",
     },
     phone: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
     userId: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     address: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     stories: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
     rooms: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     pets: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     noTouch: {
-        type: String,
-        default: "None"
+      type: String,
+      default: "None",
     },
     focus: {
-        type: String,
-        default: "None"
+      type: String,
+      default: "None",
     },
     allergies: {
-        type: Boolean,
-        default: false,
+      type: Boolean,
+      default: false,
     },
     frequency: {
-        type: String,
-        enum: ["2", "3", "4", "none"],
-        default: "none"
+      type: String,
+      enum: ["2", "3", "4", "none"],
+      default: "none",
     },
     refSource: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
-    scheduled: {
-        type: Boolean,
-        default: false
-    }
+    status: {
+      type: String,
+      required: true,
+      enum: ["New", "Scheduled", "In Progress", "Needs Update", "Past"],
+      default: "New",
+    },
+    paid: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    paymentMethod: {
+      type: String,
+      enum: ["Cash", "Check", "Card"],
+    },
+    price: {
+      type: Number,
+    },
+  },
+  { timestamps: true }
+);
 
-}, { timestamps: true });
-
-const Appointment = mongoose.models.Appointment || mongoose.model('Appointment', appointmentSchema);
+const Appointment =
+  mongoose.models.Appointment ||
+  mongoose.model("Appointment", appointmentSchema);
 
 export default Appointment;
