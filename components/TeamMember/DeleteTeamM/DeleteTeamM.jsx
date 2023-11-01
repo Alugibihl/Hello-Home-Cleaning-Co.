@@ -7,10 +7,8 @@ export default function DeleteTeamMemberButton({ id }) {
 
     const deleteMemeber = async () => {
         try {
-
             const res = await fetch(`/api/teammembers?id=${id}`, {
                 method: "DELETE",
-
             });
 
             if (res.ok) {

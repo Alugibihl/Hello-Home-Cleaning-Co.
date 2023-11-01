@@ -2,17 +2,17 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-async function createMemeber({ name, img, about }) {
-    const res = await fetch("/api/teammembers", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, img, about }),
-    });
-    if (res.ok) {
-        const teamMember = await res.json();
-        return teamMember;
-    }
-}
+// async function createMemeber({ name, img, about }) {
+//     const res = await fetch("/api/teammembers", {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ name, img, about }),
+//     });
+//     if (res.ok) {
+//         const teamMember = await res.json();
+//         return teamMember;
+//     }
+// }
 
 export default function AddTeamMember() {
     const [name, setName] = useState();
@@ -23,10 +23,19 @@ export default function AddTeamMember() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const teamMember = await createMemeber({ name, img, about });
-        console.log(teamMember)
-        router.refresh();
-        // router.push("/about");
+        const res = await fetch("/api/teammembers", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, img, about }),
+        });
+        if (res.ok) {
+            const teamMember = await res.json();
+            // return teamMember;
+
+        }
+        console.log('apples----------------')
+        // router.push("/team");
+        router.refresh()
     };
 
     return (
@@ -80,7 +89,7 @@ export default function AddTeamMember() {
                     </label>
                 </div>
             </div>
-            <button className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <button type="submit" className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Create Team Member
             </button>
         </form>
