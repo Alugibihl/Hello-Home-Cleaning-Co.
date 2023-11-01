@@ -25,28 +25,29 @@ const getTeamMemberList = async () => {
 
 export default function TeamMemberList() {
     const session = useSession()
-    const [members, setMembers] = useState()
+    const [members, setMembers] = useState('')
     const [loading, setLoading] = useState(false);
+    const [deleted, setDeleted] = useState(false)
 
 
 
     useEffect(() => {
         fetch("/api/teammembers", {
-            // cache: "no-store",
+            cache: "no-store",
         })
             .then((res) => res.json())
             .then((data) => setMembers(data.members))
             .then(() => setLoading(true))
+            .then(() => setDeleted(false))
 
-    }, [])
-
+    }, [deleted])
     let user = session.data?.user
     console.log(user)
     if (!loading) return <h1>Loading</h1>;
 
     return (
         <>
-            <AddTeamMember />
+            <Link href="/team/create">Add New Team Member</Link>
             {members?.map((t) => (
                 <div
                     key={t._id}
@@ -63,13 +64,17 @@ export default function TeamMemberList() {
                         </img>
                         <div>{t.about}</div>
                     </div>
+                    {user.role == 'admin' ?
+                        <div className="flex gap-2">
+                            <Link href={`/team/edit/${t._id}`}>
+                                <HiPencilAlt size={24} />
+                            </Link>
+                            <DeleteTeamMemberButton id={t._id} setDeleted={setDeleted} />
+                        </div>
+                        : <></>
+                    }
 
-                    <div className="flex gap-2">
-                        <Link href={`/team/edit/${t._id}`}>
-                            <HiPencilAlt size={24} />
-                        </Link>
-                        <DeleteTeamMemberButton id={t._id} />
-                    </div>
+
                 </div>
             ))}
         </>

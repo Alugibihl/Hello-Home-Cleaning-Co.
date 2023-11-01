@@ -15,9 +15,9 @@ import { useState } from "react";
 // }
 
 export default function AddTeamMember() {
-    const [name, setName] = useState();
-    const [img, setImg] = useState();
-    const [about, setAbout] = useState();
+    const [name, setName] = useState('');
+    const [img, setImg] = useState('');
+    const [about, setAbout] = useState('');
 
     const router = useRouter();
 
@@ -33,9 +33,7 @@ export default function AddTeamMember() {
             // return teamMember;
 
         }
-        console.log('apples----------------')
-        // router.push("/team");
-        router.refresh()
+        router.push("/team");
     };
 
     return (
