@@ -15,7 +15,7 @@ const AboutPage = () => {
 
 
     const quote = () => {
-        return router.push("/appountments/create")
+        return router.push("/appointments/create")
     }
     return (
         <div className={container}>
