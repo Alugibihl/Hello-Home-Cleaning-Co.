@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import InputField from "@/components/FormComponents/InputField";
-import "./SignupModal.css";    
+import { signIn } from "next-auth/react";
+import "./SignupModal.css";
 
-function SignupModal({close, modalFunctions}) {
-
-  const style =
-  "appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500";
+function SignupModal({ close, modalFunctions }) {
   const [errors, setErrors] = useState({});
   const [formData, setFormData] = useState({
     name: "",
@@ -63,8 +61,11 @@ function SignupModal({close, modalFunctions}) {
     if (response.ok) {
       // Signup successful!
       const { email, hashedPassword } = await response.json();
-      console.log("email/pass: ", email, hashedPassword);
-      router.push("/signIn");
+      signIn("credentials", {
+        email: formData.email,
+        password: formData.password,
+      });
+      // close(false);
     } else {
       // Signup failed
       // Display the error to the user
@@ -74,7 +75,7 @@ function SignupModal({close, modalFunctions}) {
   const handleSwitchLogin = () => {
     close(false);
     modalFunctions.setShowLoginModal(true);
-  }
+  };
 
   return (
     <>
@@ -82,59 +83,68 @@ function SignupModal({close, modalFunctions}) {
         <h1>Sign Up</h1>
         <form
           onSubmit={handleSubmit}
-          className="flex justify-center flex-col items-center"
+          className="flex flex-col w-full items-center justify-center"
         >
-          <InputField
-            type="text"
-            label="Name"
-            placeholder="John Doe"
-            value={formData.name}
-            onChange={handleChange}
-            className={style}
-          />
-          <InputField
-            type="email"
-            label="Email"
-            placeholder="email@email.com"
-            value={formData.email}
-            onChange={handleChange}
-            className={style}
-          />
-
-          <InputField
-            type="text"
-            label="Phone"
-            placeholder="Phone number"
-            value={formData.phone}
-            onChange={handleChange}
-            className={style}
-          />
-
-          <InputField
-            type="password"
-            label="Password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className={style}
-          />
-
-          <InputField
-            type="password"
-            label="Confirm Password"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className={style}
-          />
-          <InputField
-            type="text"
-            label="Address"
-            placeholder="Address"
-            value={formData.address}
-            onChange={handleChange}
-            className={style}
-          />
+          <div className="flex flex-row mb-4">
+            <InputField
+              type="text"
+              name="name"
+              label="Name"
+              placeholder="John Doe"
+              value={formData.name}
+              setValue={handleChange}
+              className=""
+            />
+            <InputField
+              type="email"
+              name="email"
+              label="Email"
+              placeholder="email@email.com"
+              value={formData.email}
+              setValue={handleChange}
+              className=""
+            />
+          </div>
+          <div className="flex flex-row mb-4">
+            <InputField
+              type="text"
+              name="phone"
+              label="Phone"
+              placeholder="Phone number"
+              value={formData.phone}
+              setValue={handleChange}
+              className=""
+            />
+            <InputField
+              type="text"
+              name="address"
+              label="Address"
+              placeholder="Address"
+              value={formData.address}
+              setValue={handleChange}
+              className=""
+            />
+          </div>
+          <div className="flex flex-row mb-4">
+            <InputField
+              type="password"
+              name="password"
+              label="Password"
+              placeholder="Password"
+              value={formData.password}
+              setValue={handleChange}
+              className=""
+            />
+            <InputField
+              type="password"
+              label="Confirm Password"
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              setValue={handleChange}
+              className=""
+            />
+          </div>
           <button
             className="mb-6 mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
@@ -142,9 +152,14 @@ function SignupModal({close, modalFunctions}) {
             Sign Up
           </button>
         </form>
-        <div className="login-switch-container">
+        <div className="login-switch-container flex justify-center mt-8">
           <span>Already have an account?</span>
-          <button onClick={handleSwitchLogin} className="switch-loginmodal-button">Log In</button>
+          <button
+            onClick={handleSwitchLogin}
+            className="switch-loginmodal-button"
+          >
+            Log In
+          </button>
         </div>
       </div>
     </>

@@ -11,8 +11,8 @@ function LoginModal({close, modalFunctions}) {
 
   useEffect(() => {
     const errorsObj = {};
-    if (!email) errorsObj.email = "Please type your password";
-    if (!password) errorsObj.password = "Please type your password";
+    if (!email) errorsObj.email = "Please enter your email";
+    if (!password) errorsObj.password = "Please enter your password";
     setErrors(errorsObj);
   }, [email, password]);
 
@@ -52,7 +52,7 @@ function LoginModal({close, modalFunctions}) {
   }
 
   return (
-    <>
+    <div className="flex flex-col">
       <form className="session-form" onSubmit={handleSubmit}>
         <h2>Log In</h2>
         <div className="errors">{errors?.email}</div>
@@ -80,11 +80,11 @@ function LoginModal({close, modalFunctions}) {
           Demo User
         </button> */}
       </form>
-      <div className="login-switch-container">
+      <div className="login-switch-container flex justify-center mt-8">
             <span>Don't have an account yet?</span>
             <button onClick={handleSwitchSignup} className="switch-loginmodal-button">Sign up</button>
       </div>
-    </>
+    </div>
   );
 }
 

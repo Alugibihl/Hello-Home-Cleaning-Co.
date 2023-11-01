@@ -100,7 +100,7 @@
 }
 
 .login-switch-container {
-    margin-left: 80px;
+    width: 100%;
 }
 
 .login-switch-container > * {
