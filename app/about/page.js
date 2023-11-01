@@ -52,7 +52,7 @@ const AboutPage = () => {
                     <li className={listItem}>Upholstery cleaning</li>
                 </ul>
 
-                <button className='Button' onClick={quote}>Get a Free Quote Today!</button>
+                <button className={Button} onClick={quote}>Get a Free Quote Today!</button>
             </div>
         </div >
     );
