@@ -54,9 +54,11 @@ const appointmentSchema = new Schema({
         type: String,
         required: true
     },
-    scheduled: {
-        type: Boolean,
-        default: false
+    status: {
+        type: String,
+        required: true,
+        enum: ["New", "Scheduled", "In Progress", "Needs Update", "Past"],
+        default: "New"
     }
 
 }, { timestamps: true });
