@@ -15,6 +15,29 @@ export default function ResumeForm() {
             <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3">
                     <label
+                        htmlFor="name"
+                        className="block text-gray-700 text-s font-bold mb-2"
+                    >
+                        Full Name
+
+                        <input
+                            id="name"
+                            type="name"
+                            name="name"
+                            required="true"
+                            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+
+                        />
+                    </label>
+                    <ValidationError
+                        prefix="Email"
+                        field="email"
+                        errors={state.errors} />
+                </div>
+            </div>
+            <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full px-3">
+                    <label
                         htmlFor="email"
                         className="block text-gray-700 text-s font-bold mb-2"
                     >
@@ -38,11 +61,36 @@ export default function ResumeForm() {
             <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3">
                     <label
+                        htmlFor="phone"
+                        className="block text-gray-700 text-s font-bold mb-2"
+                    >
+                        Phone Number
+
+                        <input
+                            required="true"
+                            id="phone"
+                            type="phone"
+                            name="phone"
+                            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+
+                        />
+                    </label>
+                    <ValidationError
+                        prefix="phone"
+                        field="phone"
+                        errors={state.errors} />
+                </div>
+            </div>
+            <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full px-3">
+                    <label
                         className="block text-gray-700 text-s font-bold mb-2">
-                        Message
+                        Resume
                         <textarea
+                            required="true"
                             id="message"
                             name="message"
+                            placeholder='Paste Resume'
                             className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         />
                         <ValidationError
