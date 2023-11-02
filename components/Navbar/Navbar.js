@@ -63,7 +63,13 @@ const Navbar = ({ session }) => {
             <Link href="/appointments/create">REQUEST QUOTE</Link>
           </li>
           {session && (
-            <Link href="/appointments">
+            <Link
+              href={
+                session?.user?.role === "admin"
+                  ? "/admin/appointments"
+                  : "/appointments"
+              }
+            >
               {session?.user?.role === "admin"
                 ? "ALL APPOINTMENTS"
                 : "MY APPOINTMENTS"}
