@@ -46,31 +46,33 @@ export default function AppointmentCard({ appointment }) {
   return (
     <div className="border-2 p-3 m-auto w-fit rounded-md max-w-3xl">
       {appointment.status === "New" ? (
-        <div className="bg-slate-50 p-2 rounded-sm shadow-md mb-2">
+        <div>
           <span className="flex justify-between">
             <h2 className="font-roboto font-semibold text-xl text-slate-400 mb-2">
               New Appointment Requested: {appointment.name}
             </h2>
             <MdPendingActions />
           </span>
-          <p>
-            <strong>Pending Approval:</strong> This request was submited on{" "}
-            {getDay(appointment.createdAt)}. We will give you a call to confirm
-            appointment details.
-          </p>
-          <div className="flex gap-3 mt-1">
-            <button
-              onClick={() => handlDelete(appointment._id)}
-              className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
-            >
-              Cancel This Appointment
-            </button>
-            <button
-              onClick={() => handleUpdate(appointment._id)}
-              className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
-            >
-              Update This Appointment
-            </button>
+          <div className="bg-slate-50 p-2 rounded-sm shadow-md mb-2">
+            <p>
+              <strong>Pending Approval:</strong> This request was submited on{" "}
+              {getDay(appointment.createdAt)}. We will give you a call to
+              confirm appointment details.
+            </p>
+            <div className="flex gap-3 mt-1">
+              <button
+                onClick={() => handlDelete(appointment._id)}
+                className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
+              >
+                Cancel This Appointment
+              </button>
+              <button
+                onClick={() => handleUpdate(appointment._id)}
+                className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
+              >
+                Update This Appointment
+              </button>
+            </div>
           </div>
         </div>
       ) : (
