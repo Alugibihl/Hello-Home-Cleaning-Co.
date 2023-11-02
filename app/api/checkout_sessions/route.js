@@ -131,6 +131,7 @@
 // }
 
 import { NextResponse } from 'next/server';
+import { Redirect } from 'next';
 import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -142,7 +143,7 @@ export async function POST(req) {
             line_items: [
                 {
                     // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    price: 'price_1O85RcQrAbe7T8q62gVGsCTb',
+                    price: 200,
                     quantity: 1,
                 },
             ],
@@ -150,8 +151,15 @@ export async function POST(req) {
             success_url: `${req.headers.origin}/?success=true`,
             cancel_url: `${req.headers.origin}/?canceled=true`,
         });
-        return NextResponse.redirect(303, session.url);
+        return NextResponse.Redirect(303, session.url);
     } catch (err) {
         return NextResponse.status(err.statusCode || 500).json(err.message);
     }
 }
+// res.redirect(303, session.url);
+// return NextResponse.json({ message: "hello", status: 201 });
+//     } catch (err) {
+//     // res.status(err.statusCode || 500).json(err.message);
+//     return NextResponse.json({ message: { err }, status: 500 });
+// }
+// }
