@@ -63,7 +63,7 @@ export default function Page({ params }) {
       rooms,
       pets,
       noTouch,
-      focus,
+      areaInterest,
       allergies,
       frequency,
       refSource
@@ -80,7 +80,7 @@ export default function Page({ params }) {
         rooms,
         pets,
         noTouch,
-        focus,
+        areaInterest,
         allergies,
         frequency,
         refSource,
@@ -147,8 +147,8 @@ export default function Page({ params }) {
       <InputField
         label="Any areas you would like us to focus on?"
         type="text"
-        value={focus}
-        setValue={setFocus}
+        value={areaInterest}
+        setValue={setAreaInterest}
       />
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
