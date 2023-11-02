@@ -26,8 +26,6 @@ export default function Page() {
     allergies: false,
     frequency: "None",
   });
-  // const [allergies, setAllergies] = useState(false);
-  // const [frequency, setFrequency] = useState("None");
 
   // const [errors, setErrors] = useState({});
 
@@ -232,7 +230,7 @@ export default function Page() {
               // onChange={(e) => setFrequency(e.target.value)}
               className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
-              <option value="none">None</option>
+              <option value="None">None</option>
               <option value="2">Every 2 weeks</option>
               <option value="3">Every 3 weeks</option>
               <option value="4">Every 4 weeks</option>
