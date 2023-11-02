@@ -29,10 +29,11 @@ export default function AppointmentCard({ appointment }) {
     router.push(`/appointments/${id}/edit`);
   }
   const handlDelete = async (id) => {
+    console.log("APP ID: ", id)
     const confirmed = confirm("Are you sure?");
 
     if (confirmed) {
-      const res = await fetch(`http://localhost:3000/api/appointments/${id}`, {
+      const res = await fetch(`/api/appointments/${id}`, {
         method: "DELETE",
       });
       if (res.ok) {
@@ -46,7 +47,7 @@ export default function AppointmentCard({ appointment }) {
   }
 
   return (
-    <div className="border-2 p-3 m-auto w-fit rounded-md">
+    <div className="border-2 p-3 m-auto w-fit rounded-md max-w-3xl">
       {appointment.status === "New" ? (
         <div className="bg-slate-50 p-2 rounded-sm shadow-md mb-2">
           <span className="flex justify-between">
