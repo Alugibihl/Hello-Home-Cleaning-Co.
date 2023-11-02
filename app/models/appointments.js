@@ -49,8 +49,8 @@ const appointmentSchema = new Schema(
     },
     frequency: {
       type: String,
-      enum: ["2", "3", "4", "none"],
-      default: "none",
+      enum: ["2", "3", "4", "None"],
+      default: "None",
     },
     refSource: {
       type: String,
