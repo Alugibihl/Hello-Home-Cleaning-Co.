@@ -41,9 +41,7 @@ export default function AppointmentCard({ appointment }) {
     }
   };
 
-  function handlePayment(id) {
-
-  }
+  function handlePayment(id) {}
 
   return (
     <div className="border-2 p-3 m-auto w-fit rounded-md">
@@ -88,7 +86,8 @@ export default function AppointmentCard({ appointment }) {
               </h2>
             </div>
             <h2 className="font-roboto font-semibold text-xl text-green-800 mb-2">
-              Total Due: {appointment.paid ? 'Paid' : `$${appointment.price.toFixed(2)}`}
+              Total Due:{" "}
+              {appointment.paid ? "Paid" : `$${appointment.price.toFixed(2)}`}
             </h2>
             <FcApproval />
           </span>
@@ -104,19 +103,21 @@ export default function AppointmentCard({ appointment }) {
               >
                 Update This Appointment
               </button>
-              {!appointment.paid && <button
-                onClick={() => handlePayment(appointment._id)}
-                className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
-              >
-                Pay for this appointment
-              </button>}
+              {!appointment.paid && (
+                <button
+                  onClick={() => handlePayment(appointment._id)}
+                  className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
+                >
+                  Pay for this appointment
+                </button>
+              )}
             </div>
           </div>
         </div>
       )}
       <p>
         If you have any questions about your appointment, please call us at
-        555-555-5555
+        (123) 456-7890
       </p>
     </div>
   );
