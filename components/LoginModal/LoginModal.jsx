@@ -74,7 +74,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
           });
         }
         close(false);
-        router.push("/appointments");
+        // router.push("/appointments");
         router.refresh()
       }
       if (error) {
