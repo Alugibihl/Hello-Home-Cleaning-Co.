@@ -5,6 +5,9 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import ExpandedRowContent from '@/components/ExpandedRowContent/ExpandedRowContent';
+
+
 export default function Page() {
   const session = useSession();
   const router = useRouter();
@@ -79,11 +82,11 @@ export default function Page() {
         ),
       },
       // { Header: 'Client ID', accessor: 'id' },
-      { Header: 'Client', accessor: 'name' },
       { Header: 'Date', accessor: 'date' },
-      { Header: 'Referred By', accessor: 'refSource' },
+      { Header: 'Client', accessor: 'name' },
       // { Header: 'Status', accessor: 'status' },
       { Header: 'Number', accessor: 'phone' },
+      { Header: 'Referred By', accessor: 'refSource' },
     ],
     [expandedRowId] 
   );
@@ -151,7 +154,7 @@ export default function Page() {
                       {expandedRowId === row.id && (
                         <tr>
                           <td colSpan={columns.length + 1} className="border border-gray-300 p-2">
-                            Expanded Content for {row.original.name}
+                            <ExpandedRowContent appointment={row.original} />
                           </td>
                         </tr>
                       )}
