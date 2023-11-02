@@ -1,10 +1,13 @@
+"use client";
 import { useState, useEffect } from "react";
 import InputField from "@/components/FormComponents/InputField";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import "./SignupModal.css";
 
-function SignupModal({ close, modalFunctions }) {
+function SignupModal({ close, modalFunctions, values: quoteFormData }) {
   const [errors, setErrors] = useState({});
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -59,13 +62,39 @@ function SignupModal({ close, modalFunctions }) {
     });
     // Check the response status
     if (response.ok) {
-      // Signup successful!
-      const { email, hashedPassword } = await response.json();
-      signIn("credentials", {
+      const data = {
         email: formData.email,
         password: formData.password,
+        redirect: false,
+      };
+      signIn("credentials", data).then(async ({ ok, error }) => {
+        if (ok) {
+          //if quoteFormData object is not empty, then this modal is being opened in the request quote page
+          if (Object.keys(quoteFormData).length > 0) {
+            const appointment = await fetch("/api/appointments", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name: quoteFormData.name,
+                date: quoteFormData.date,
+                phone: quoteFormData.phone,
+                userId: quoteFormData.userId,
+                address: quoteFormData.address,
+                stories: quoteFormData.stories,
+                rooms: quoteFormData.rooms,
+                pets: quoteFormData.pets,
+                noTouch: quoteFormData.noTouch,
+                focus: quoteFormData.focus,
+                allergies: quoteFormData.allergies,
+                frequency: quoteFormData.frequency,
+                refSource: quoteFormData.refSource,
+              }),
+            });
+          }
+          close(false);
+          router.push("/appointments");
+        }
       });
-      // close(false);
     } else {
       // Signup failed
       // Display the error to the user
