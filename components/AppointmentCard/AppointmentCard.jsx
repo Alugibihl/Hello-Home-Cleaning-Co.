@@ -29,7 +29,7 @@ export default function AppointmentCard({ appointment }) {
     router.push(`/appointments/${id}/edit`);
   }
   const handlDelete = async (id) => {
-    console.log("APP ID: ", id)
+    console.log("APP ID: ", id);
     const confirmed = confirm("Are you sure?");
 
     if (confirmed) {
@@ -37,7 +37,7 @@ export default function AppointmentCard({ appointment }) {
         method: "DELETE",
       });
       if (res.ok) {
-        router.push("/appointments");
+        
       }
     }
   };

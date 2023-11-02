@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { MdPendingActions } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
 import AppointmentCard from "@/components/AppointmentCard/AppointmentCard";
+import Loading from "@/components/Loding";
 
 function getDay(string) {
   //   return string;
@@ -38,6 +39,7 @@ export default function Page() {
   }
 
   useEffect(() => {
+    if (!session?.data) return;
     fetch(`/api/users/${session.data.user.id}/appointments`, {
       cache: "no-store",
     })
@@ -48,7 +50,7 @@ export default function Page() {
       });
   }, [session]);
 
-  console.log(appointments);
+  if (isLoading) return <Loading />;
 
   return (
     <div className="flex flex-col gap-5">
