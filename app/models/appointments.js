@@ -9,6 +9,7 @@ const appointmentSchema = new Schema(
     date: {
       type: String,
       required: true,
+      default: "unscheduled",
     },
     phone: {
       type: Number,
@@ -68,7 +69,7 @@ const appointmentSchema = new Schema(
     },
     paymentMethod: {
       type: String,
-      enum: ['Cash', 'Check', 'Card']
+      enum: ["Cash", "Check", "Card"],
     },
     price: {
       type: Number,
