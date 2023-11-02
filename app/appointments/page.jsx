@@ -51,7 +51,7 @@ export default function Page() {
   console.log(appointments);
 
   return (
-    <div>
+    <div className="flex flex-col gap-5">
       {appointments.map((appointment) => (
         <AppointmentCard key={appointment._id} appointment={appointment} />
       ))}

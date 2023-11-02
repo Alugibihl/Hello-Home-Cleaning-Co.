@@ -30,7 +30,7 @@ const ExpandedRowContent = ({ appointment }) => {
           <strong>No Touch Areas:</strong> {appointment.noTouch}
         </div>
         <div>
-          <strong>Focus Areas:</strong> {appointment.focus}
+          <strong>Focus Areas:</strong> {appointment.areaInterest}
         </div>
         <div>
           <strong>Allergies:</strong> {appointment.allergies ? 'Yes' : 'No'}

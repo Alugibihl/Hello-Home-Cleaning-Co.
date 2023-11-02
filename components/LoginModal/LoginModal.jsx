@@ -66,7 +66,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
               rooms: quoteFormData.rooms,
               pets: quoteFormData.pets,
               noTouch: quoteFormData.noTouch,
-              focus: quoteFormData.focus,
+              areaInterest: quoteFormData.areaInterest,
               allergies: quoteFormData.allergies,
               frequency: quoteFormData.frequency,
               refSource: quoteFormData.refSource,
