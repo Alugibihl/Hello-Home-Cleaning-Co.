@@ -37,7 +37,6 @@ export default function AppointmentCard({ appointment }) {
         method: "DELETE",
       });
       if (res.ok) {
-        
       }
     }
   };
@@ -118,7 +117,7 @@ export default function AppointmentCard({ appointment }) {
       )}
       <p>
         If you have any questions about your appointment, please call us at
-        (123) 456-7890
+        (419) 208-6265
       </p>
     </div>
   );
