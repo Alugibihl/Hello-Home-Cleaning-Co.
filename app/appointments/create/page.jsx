@@ -244,7 +244,7 @@ export default function Page() {
           value={formData.refSource}
           setValue={handleChange}
         />
-        <SubmitButton type="submit" buttonText="Update Appointment" />
+        <SubmitButton type="submit" buttonText="Create Appointment" />
       </form>
       {showLoginModal && (
         <Modal

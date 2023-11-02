@@ -73,6 +73,7 @@ const appointmentSchema = new Schema(
     },
     price: {
       type: Number,
+      default: "0.00",
     },
   },
   { timestamps: true }
