@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { MdPendingActions } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
+import AppointmentCard from "@/components/AppointmentCard/AppointmentCard";
 
 function getDay(string) {
   //   return string;
@@ -50,44 +51,9 @@ export default function Page() {
   console.log(appointments);
 
   return (
-    <div className="border-2 p-3 m-auto w-fit rounded-md">
+    <div>
       {appointments.map((appointment) => (
-        <div key={appointment._id}>
-          <span className="flex justify-between">
-            <h2 className="font-roboto font-semibold text-xl text-slate-400 mb-2">
-              New Appointment Requested: {appointment.name}
-            </h2>
-            {appointment.status === "New" ? (
-              <MdPendingActions />
-            ) : (
-              <FcApproval />
-            )}
-          </span>
-          {appointment.status === "New" ? (
-            <div className="bg-slate-50 p-2 rounded-sm shadow-md mb-2">
-              <p>
-                <strong>Pending Approval:</strong> This request was submited on{" "}
-                {getDay(appointment.createdAt)}. We will give you a call to
-                confirm appointment details.
-              </p>
-              <button className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md">
-                Cancel This Appointment
-              </button>
-            </div>
-          ) : (
-            <div>
-              <p>
-                <strong>Appointment Confirmed:</strong> Your cleaning
-                appointment is on {getDay(appointment.date)}. We look forward to
-                helping you.
-              </p>
-            </div>
-          )}
-          <p>
-            If you have any questions about your appointment, please call us at
-            555-555-5555
-          </p>
-        </div>
+        <AppointmentCard key={appointment._id} appointment={appointment} />
       ))}
     </div>
   );

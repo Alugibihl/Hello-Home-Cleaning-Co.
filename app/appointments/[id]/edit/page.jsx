@@ -26,7 +26,7 @@ export default function Page({ params }) {
   const router = useRouter();
   let user = session.data?.user;
 
-  if (!session || user.role !== "admin") router.push("/");
+  // if (!session || user.role !== "admin") router.push("/");
 
   useEffect(() => {
     setIsLoading(true);
