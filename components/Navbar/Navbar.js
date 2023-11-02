@@ -59,11 +59,9 @@ const Navbar = ({ session }) => {
               </li>
             </ol>
           </li> */}
-          {session && (
-            <li className="mx-6">
-              <Link href="/appointments/create">REQUEST QUOTE</Link>
-            </li>
-          )}
+          <li className="mx-6">
+            <Link href="/appointments/create">REQUEST QUOTE</Link>
+          </li>
           {session && (
             <Link href="/appointments">
               {session?.user?.role === "admin"
