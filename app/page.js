@@ -1,5 +1,5 @@
 "use client";
-import PreviewPage from "@/components/checkoutButton";
+import PreviewPage from "@/components/checkoutButton/page";
 import { data } from "browserslist";
 import { useSession } from "next-auth/react";
 import { signIn, signOut, useRegistration } from "next-auth/react";
