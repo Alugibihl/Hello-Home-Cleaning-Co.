@@ -16,7 +16,7 @@ export default function Page({ params }) {
   const [rooms, setRooms] = useState("");
   const [pets, setPets] = useState("");
   const [noTouch, setNoTouch] = useState("None");
-  const [focus, setFocus] = useState("None");
+  const [areaInterest, setAreaInterest] = useState("None");
   const [allergies, setAllergies] = useState(false);
   const [frequency, setFrequency] = useState("none");
   const [refSource, setRefSource] = useState("");
@@ -43,7 +43,7 @@ export default function Page({ params }) {
         setRooms(appointment.rooms);
         setPets(appointment.pets);
         setNoTouch(appointment.noTouch);
-        setFocus(appointment.focus);
+        setAreaInterest(appointment.areaInterest);
         setAllergies(appointment.allergies);
         setFrequency(appointment.frequency);
         setRefSource(appointment.refSource);

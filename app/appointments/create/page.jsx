@@ -2,8 +2,8 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import axios from "axios";
-import { getServerSession } from "next-auth";
+// import axios from "axios";
+// import { getServerSession } from "next-auth";
 import InputField from "@/components/FormComponents/InputField";
 import SubmitButton from "@/components/FormComponents/SubmitButton";
 import Modal from "@/components/Modal/Modal";
@@ -11,6 +11,9 @@ import SignupModal from "@/components/SignupModal/SignupModal";
 import LoginModal from "@/components/LoginModal/LoginModal";
 
 export default function Page() {
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   const session = useSession();
   const [formData, setFormData] = useState({
     name: "",
@@ -21,11 +24,21 @@ export default function Page() {
     rooms: "",
     pets: "",
     noTouch: "None",
-    focus: "None",
+    areaInterest: "None",
     refSource: "",
     allergies: false,
     frequency: "None",
   });
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false); 
+    }, 2000);
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   // const [errors, setErrors] = useState({});
 
@@ -56,16 +69,10 @@ export default function Page() {
   //   if (!formData.noTouch) {
   //     setErrors["noTouch"] = "No touch required";
   //   }
-  //   if (!formData.focus) {
-  //     setErrors["focus"] = "Focus required";
-  //   }
   //   if (!frequency) {
   //     setErrors["frequency"] = "Frequency required";
   //   }
   // };
-
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [showSignupModal, setShowSignupModal] = useState(false);
 
   const modalFunctions = {
     setShowLoginModal: (shown) => setShowLoginModal(shown),
@@ -93,6 +100,8 @@ export default function Page() {
     //   return;
     // }
 
+
+
     if (!session.data?.user) {
       handleSignin();
     } else {
@@ -109,7 +118,7 @@ export default function Page() {
           rooms: formData.rooms,
           pets: formData.pets,
           noTouch: formData.noTouch,
-          focus: formData.focus,
+          areaInterest: formData.areaInterest,
           allergies: formData.allergies,
           frequency: formData.frequency,
           refSource: formData.refSource,
@@ -117,19 +126,16 @@ export default function Page() {
       });
 
       router.push("/appointments");
-    }
+        }
   };
 
   // router.push("/appointments");
   return (
     <>
-      <form onSubmit={handleSubmit} className="w-full max-w-lg ml-6">
-        {/* placeholder={placeholder || ""}
-          value={value}
-          type={type}
-          name={name}
-          onChange={(e) => {
-            setValue(e); */}
+      <div className="flex justify-center items-center min-h-screen bg-gray-50 p-6">
+            <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl">
+                <h2 className="text-2xl font-bold mb-6 text-center">Create Appointment</h2>   
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <InputField
           label="Full Name"
           name="name"
@@ -190,46 +196,47 @@ export default function Page() {
           label="Any areas you would like us to focus on?"
           type="text"
           name="focus"
-          value={formData.focus}
+          value={formData.areaInterest}
           setValue={handleChange}
         />
-        <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full px-3">
-            <label
-              className="block text-gray-700 text-s font-bold mb-2"
-              htmlFor="grid-allergies"
-            >
-              Is anyone in your home allergic to Clove, Cinnamon, or Orange?
-            </label>
-            <input
-              type="checkbox"
-              checked={formData.allergies}
-              name="allergies"
-              onChange={(e) =>
-                setFormData({ ...formData, [e.target.name]: e.target.checked })
-              }
-              // onChange={(e) => setAllergies(e.target.checked)}
-            />
+        </div>
+         <div className="flex flex-wrap -mx-3 mb-6">
+                    <div className="w-full px-3">
+                        <label
+                            className="block text-gray-700 text-s font-bold mb-2"
+                            htmlFor="grid-allergies"
+                        >
+                            Is anyone in your home allergic to Clove, Cinnamon, or Orange?
+                        </label>
+                        <input
+                            type="checkbox"
+                            checked={formData.allergies}
+                            name="allergies"
+                            onChange={(e) =>
+                                setFormData({ ...formData, [e.target.name]: e.target.checked })
+                            }
+                            className="mb-4"
+                            // onChange={(e) => setAllergies(e.target.checked)}
+                        />
           </div>
         </div>
         <div className="flex flex-wrap -mx-3 mb-6">
-          <div className="w-full px-3">
-            <label
-              className="block text-gray-700 text-s font-bold mb-2"
-              htmlFor="grid-frequency"
-            >
-              How frequently are you looking to have cleanings?
-            </label>
-            <select
-              id="frequency"
-              name="frequency"
-              value={formData.frequency}
-              onChange={(e) =>
-                setFormData({ ...formData, [e.target.name]: e.target.value })
-              }
-              // onChange={(e) => setFrequency(e.target.value)}
-              className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-            >
+                    <div className="w-full px-3">
+                        <label
+                            className="block text-gray-700 text-s font-bold mb-2"
+                            htmlFor="grid-frequency"
+                        >
+                            How frequently are you looking to have cleanings?
+                        </label>
+                        <select
+                            id="frequency"
+                            name="frequency"
+                            value={formData.frequency}
+                            onChange={(e) =>
+                                setFormData({ ...formData, [e.target.name]: e.target.value })
+                            }
+                            className="appearance-none block w-full bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        >
               <option value="None">None</option>
               <option value="2">Every 2 weeks</option>
               <option value="3">Every 3 weeks</option>
@@ -262,6 +269,7 @@ export default function Page() {
           values={formData}
         />
       )}
+      </div>
     </>
   );
 }
