@@ -39,7 +39,7 @@ const appointmentSchema = new Schema(
       type: String,
       default: "None",
     },
-    focus: {
+    areaInterest: {
       type: String,
       default: "None",
     },
@@ -73,7 +73,7 @@ const appointmentSchema = new Schema(
     },
     price: {
       type: Number,
-      default: "0.00",
+      default: 0.00,
     },
   },
   { timestamps: true }

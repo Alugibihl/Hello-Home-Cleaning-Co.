@@ -13,6 +13,7 @@ export default function Page() {
   const router = useRouter();
   const [appointments, setAppointments] = useState([]);
   const [expandedRowId, setExpandedRowId] = useState(null);
+  // const [loading, setLoading] = useState(true);
 
   // checks if user is admin
   if (session?.data?.user?.role !== 'admin') router.push('/')
