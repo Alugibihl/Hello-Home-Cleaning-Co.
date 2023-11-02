@@ -47,7 +47,10 @@ export default function TeamMemberList() {
 
     return (
         <>
-            <Link href="/team/create">Add New Team Member</Link>
+            {user.role == 'admin' ?
+                <Link className="border-4 bg-slate-500 text-white hover:bg-blue-600" href="/team/create">Add New Team Member</Link>
+                : <></>
+            }
             {members?.map((t) => (
                 <div
                     key={t._id}
