@@ -5,6 +5,8 @@ import { signIn, signOut, useRegistration } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import GoogleButton from "react-google-button";
+import { loadStripe } from '@stripe/stripe-js';
+import PreviewPage from "@/components/CheckoutButton/checkoutButton";
 
 export default function Home() {
   const session = useSession();
@@ -75,6 +77,7 @@ export default function Home() {
           </button>
         </div>
       </div>
+      <PreviewPage />
     </div>
   );
 }

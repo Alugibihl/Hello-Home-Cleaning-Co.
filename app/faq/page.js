@@ -82,7 +82,7 @@ const FaqPage = () => {
                     <h2 className="text-xl font-semibold">Q: How can I contact you?</h2>
 
                     <p>
-                        A: You can contact us by phone at (123) 456-7890 or by email at hellohomecleaning@gmail.com.
+                        A: You can contact us by phone at <a href="tel:4192086265">(419) 208-6265</a> or by email at <a href="mailto: hellohomecleaningco@gmail.com">hellohomecleaningco@gmail.com</a>.
                     </p>
                 </section>
             </main>
