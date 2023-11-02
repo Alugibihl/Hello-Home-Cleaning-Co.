@@ -59,7 +59,7 @@ const appointmentSchema = new Schema(
     status: {
       type: String,
       required: true,
-      enum: ["New", "Scheduled", "In Progress", "Needs Update", "Past"],
+      enum: ["New", "Scheduled", "Past"],
       default: "New",
     },
     paid: {

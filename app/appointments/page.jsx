@@ -1,38 +1,33 @@
 "use client";
+import React from 'react';
+import { useTable, useFilters } from 'react-table';
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+
+import ExpandedRowContent from '@/components/ExpandedRowContent/ExpandedRowContent';
+
 
 export default function Page() {
   const session = useSession();
   const router = useRouter();
   const [appointments, setAppointments] = useState([]);
-  const [rows, setRows] = useState([]);
+  const [expandedRowId, setExpandedRowId] = useState(null);
 
-  // redirected if not logged in
+  const handleExpandClick = (rowId) => {
+    setExpandedRowId(expandedRowId === rowId ? null : rowId);
+  };
+
+  const handleFilterChange = (e) => {
+    setFilter('status', e.target.value); 
+  };
+  
   useEffect(() => {
     if (!session.data?.user) {
       router.push("/");
     }
   }, [session, router]);
 
-  // if (!session?.data?.user) router.push("/");
-  // console.log("SESSIONS DATA: ", session)
-  // useEffect(() => {
-  //   if (session.data.user.role === 'admin') {
-  //     fetch("/api/appointments", { cache: "no-store" })
-  //       .then((res) => res.json())
-  //       .then((data) => setAppointments(data.appointments));
-  //   } else {
-  //     fetch(`/api/users/${session.data.user.id}/appointments`, { cache: "no-store" })
-  //       .then((res) => res.json())
-  //       .then((data) => setAppointments(data.appointments));
-  //   }
-  // }, [session]);
-
-  // Fetch appointments
   useEffect(() => {
     if (session.data?.user) {
       const url = session.data.user.role === 'admin'
@@ -41,59 +36,134 @@ export default function Page() {
 
       fetch(url, { cache: "no-store" })
         .then((res) => res.json())
-        .then((data) => {
-          setAppointments(data.appointments);
-          console.log(data);
-          console.log(data.appointments);
-          const transformedRows = data.appointments.map((app, index) => ({
-            id: index,
-            date: app.date,
-            phone: app.phone,
-            status: app.status,
-            name: app.name,
-            refSource: app.refSource
-            // ... any other fields you want to display
-          }));
-          setRows(transformedRows);
-        });
+        .then((data) => setAppointments(data.appointments));
     }
   }, [session]);
 
-  // const GridRowsProp = [
-  //   { id: 1, col1: 'Hello', col2: 'World' },
-  //   { id: 2, col1: 'DataGridPro', col2: 'is Awesome' },
-  //   { id: 3, col1: 'MUI', col2: 'is Amazing' },
-  // ];
-  
-  const columns = [
-    { field: 'id', headerName: 'Client ID', flex: 1, minWidth: 100 },
-    { field: 'name', headerName: 'Client', flex: 1, minWidth: 100 },
-    { field: 'date', headerName: 'Date', flex: 1, minWidth: 100 },
-    { field: 'refSource', headerName: 'Referred By', flex: 1, minWidth: 100 },
-    { field: 'status', headerName: 'Status', flex: 1, minWidth: 100 },
-    { field: 'phone', headerName: 'Number', flex: 1, minWidth: 100 },
-    // ... define other columns as needed
-  ];
-  
+  const columns = React.useMemo(
+    () => [
+
+      {
+        Header: 'Status',  
+        accessor: 'status',
+        canSort: true,
+        Cell: ({ value }) => {
+          let bgColor;
+          switch(value) {
+            case 'New':
+              bgColor = 'bg-red-500';
+              break;
+            case 'Scheduled':
+              bgColor = 'bg-green-500';
+              break;
+            case 'Past':
+              bgColor = 'bg-gray-700';
+              break;
+            default:
+              bgColor = '';
+              break;
+          }
+          return <div className={`p-2 ${bgColor} text-white rounded-lg`}>{value}</div>;
+        }
+      },
+      {
+        Header: '', 
+        id: 'expander', 
+        Cell: ({ row }) => (
+          <div className="flex items-center justify-center">
+              <button
+              type="button"
+              className="text-gray-500 text-2xl focus:outline-none"
+              onClick={() => handleExpandClick(row.id)}
+              >
+                  {expandedRowId === row.id ? '-' : '+'}
+              </button>
+          </div>
+        ),
+      },
+      // { Header: 'Client ID', accessor: 'id' },
+      { Header: 'Date', accessor: 'date' },
+      { Header: 'Client', accessor: 'name' },
+      // { Header: 'Status', accessor: 'status' },
+      { Header: 'Number', accessor: 'phone' },
+      { Header: 'Referred By', accessor: 'refSource' },
+    ],
+    [expandedRowId] 
+  );
+
+  const data = React.useMemo(
+    () => appointments.map((app, index) => ({
+      id: index,
+      date: app.date,
+      phone: app.phone,
+      status: app.status,
+      name: app.name,
+      refSource: app.refSource,
+    })),
+    [appointments]
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    setFilter,
+    state: { expanded }
+  } = useTable({
+    columns,
+    data,
+    initialState: { expanded: {} }
+  },
+    useFilters
+  );
 
   return (
-
-    <div style={{ height: 300, width: '100%' }}>
-    <DataGrid rows={rows} columns={columns} />
-    </div>
-
-      /* {appointments.map((app) => (
-        <div
-          key={app._id}
-          className="w-72 bg-white text-gray-700 border border-gray-200 rounded m-6"
-        >
-          <Link href={`/appointments/${app._id}`}>
-            <h1>{app.name}</h1>
-            <h2>{app.date}</h2>
-            <h2>{app._id}</h2>
-          </Link>
-        </div>
-      ))} */
-     
+            <div className="w-full">
+              <select onChange={handleFilterChange} 
+                className="w-40 h-12 ml-10 mb-6 p-2 text-lg bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                >      
+                <option value="">All</option>
+                <option value="new">New</option>
+                <option value="past">Past</option>
+                <option value="scheduled">Scheduled</option>
+              </select>
+            <table {...getTableProps()}className="w-full max-h-screen overflow-auto">
+              <thead>
+                {headerGroups.map(headerGroup => (
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map(column => (
+                      <th {...column.getHeaderProps()} className="font-bold text-sm border-b border-gray-300 p-2">
+                        {column.render('Header')}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {rows.map(row => {
+                  prepareRow(row);
+                  return (
+                    <React.Fragment key={row.id}>
+                      <tr {...row.getRowProps()} className="hover:bg-gray-100">
+                        {row.cells.map(cell => (
+                          <td {...cell.getCellProps()}  className="border border-gray-300 p-1">{cell.render('Cell')}</td>
+                        ))}
+                      </tr>
+                      {expandedRowId === row.id && (
+                        <tr>
+                          <td colSpan={columns.length + 1} className="border border-gray-300 p-2">
+                            <ExpandedRowContent appointment={row.original} />
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          
   );
 }
