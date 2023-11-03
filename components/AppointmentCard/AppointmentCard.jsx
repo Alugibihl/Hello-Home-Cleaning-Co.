@@ -3,6 +3,8 @@ import { MdPendingActions } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import { BsFillCalendarCheckFill } from "react-icons/bs";
+import { useEffect, useState } from "react";
+import Payment from "../Payment/Payment";
 function getDay(string) {
   //   return string;
   const months = [
@@ -24,12 +26,13 @@ function getDay(string) {
 }
 export default function AppointmentCard({ appointment, handleDelete }) {
   const router = useRouter();
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [isPaid, setIsPaid] = useState(appointment.paid);
 
   function handleUpdate(id) {
     router.push(`/appointments/${id}/edit`);
   }
-
-
+  useEffect(() => {}, [isPaid]);
   function handlePayment(id) {}
 
   return (
@@ -77,8 +80,7 @@ export default function AppointmentCard({ appointment, handleDelete }) {
               </h2>
             </div>
             <h2 className="font-roboto font-semibold text-xl text-green-800 mb-2">
-              Total Due:{" "}
-              {appointment.paid ? "Paid" : `$${appointment.price.toFixed(2)}`}
+              Total Due: {isPaid ? "Paid" : `$${appointment.price.toFixed(2)}`}
             </h2>
             <FcApproval />
           </span>
@@ -87,22 +89,25 @@ export default function AppointmentCard({ appointment, handleDelete }) {
               <strong>Appointment Confirmed:</strong> Your cleaning appointment
               is on {getDay(appointment.date)}. We look forward to helping you!
             </p>
-            <div className="flex gap-3 mt-1">
+            <div className="flex gap-3 my-2">
               <button
                 onClick={() => handleUpdate(appointment._id)}
                 className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
               >
                 Update This Appointment
               </button>
-              {!appointment.paid && (
+              {!isPaid && (
                 <button
-                  onClick={() => handlePayment(appointment._id)}
+                  onClick={() => setIsPaymentOpen(!isPaymentOpen)}
                   className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
                 >
                   Pay for this appointment
                 </button>
               )}
             </div>
+            {isPaymentOpen && !isPaid && (
+              <Payment appointment={appointment} setIsPaid={setIsPaid} />
+            )}
           </div>
         </div>
       )}

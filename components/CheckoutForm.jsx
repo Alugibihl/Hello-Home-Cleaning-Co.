@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
   PaymentElement,
   LinkAuthenticationElement,
@@ -6,9 +6,10 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ appointment, setIsPaid }) {
   const stripe = useStripe();
   const elements = useElements();
+  console.log("ELEMENTS: ", elements);
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
@@ -31,6 +32,8 @@ export default function CheckoutForm() {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
+          // paymentSuccessfull();
+          // setIsPaid(true);
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -45,9 +48,23 @@ export default function CheckoutForm() {
     });
   }, [stripe]);
 
+  async function paymentSuccessfull() {
+    debugger;
+    const res = await fetch(`/api/appointments/${appointment._id}/payments`, {
+      headers: { "Content-Type": "application/json" },
+      method: "PUT",
+    });
+
+    if (res.ok) {
+      debugger;
+      setIsPaid(true);
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    debugger;
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -60,8 +77,8 @@ export default function CheckoutForm() {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
-        receipt_email: email
+        return_url: "http://localhost:3000/appointments",
+        receipt_email: email,
       },
     });
 
@@ -76,6 +93,8 @@ export default function CheckoutForm() {
       setMessage("An unexpected error occurred.");
     }
 
+    paymentSuccessfull();
+    
     setIsLoading(false);
   };
 
