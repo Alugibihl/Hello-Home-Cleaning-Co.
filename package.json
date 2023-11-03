@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.2",
-    "@formspree/react": "^2.5.1",
+    "@edgestore/react": "^0.1.4",
+    "@edgestore/server": "^0.1.4",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@formspree/react": "^2.5.1",
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-regular-svg-icons": "^6.4.2",
@@ -38,7 +40,8 @@
     "react-table": "^7.8.0",
     "stripe": "^14.2.0",
     "styled-components": "^6.1.0",
-    "swr": "^2.2.4"
+    "swr": "^2.2.4",
+    "zod": "^3.22.4"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",

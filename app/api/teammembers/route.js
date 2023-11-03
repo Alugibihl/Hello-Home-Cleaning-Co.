@@ -12,11 +12,16 @@ export async function GET() {
 }
 
 export async function POST(request) {
+    // try {
 
     const { name, img, about } = await request.json()
+    console.log('========================', img)
     await connectMongoDB();
     await TeamMember.create({ name, img, about });
     return NextResponse.json({ message: "Member Created", status: 201 });
+    // } catch (err) {
+    //     return NextResponse.json({ message: { err } })
+    // }
 
 }
 export async function DELETE(request) {

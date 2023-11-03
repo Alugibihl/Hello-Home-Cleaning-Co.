@@ -42,7 +42,7 @@ export default function TeamMemberList() {
 
     }, [deleted])
     let user = session.data?.user
-    console.log(user)
+    // console.log(user)
     if (!loading) return <h1>Loading</h1>;
 
     return (

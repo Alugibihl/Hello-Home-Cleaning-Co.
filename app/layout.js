@@ -7,6 +7,7 @@ import Footer from "@/components/Footer/Footer";
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { options } from "./api/auth/[...nextauth]/options";
+import { EdgeStoreProvider } from "@/lib/edgestore";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,13 +28,15 @@ export default async function RootLayout({ children }) {
     <html lang="en" className={'${inter.className} ${roboto.className}'}>
       <SessionProvider session={session}>
         <body>
-          <Head>
-            <link rel="icon" href="/favicon.ico" />
-            <title>{metadata.title}</title>
-          </Head>
-          <Navbar session={session} />
-          {children}
-          <Footer />
+          <EdgeStoreProvider>
+            <Head>
+              <link rel="icon" href="/favicon.ico" />
+              <title>{metadata.title}</title>
+            </Head>
+            <Navbar session={session} />
+            {children}
+            <Footer />
+          </EdgeStoreProvider>
         </body>
       </SessionProvider>
     </html>
