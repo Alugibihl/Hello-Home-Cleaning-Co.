@@ -14,13 +14,6 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
   const [loginError, setLoginError] = useState("");
   const router = useRouter();
 
-  useEffect(() => {
-    const errorsObj = {};
-    if (!email) errorsObj.email = "Please enter your email";
-    if (!password) errorsObj.password = "Please enter your password";
-    setErrors(errorsObj);
-  }, [email, password]);
-
   // useEffect(() => {
   //   return () => {
   //     dispatch(clearSessionErrors());
@@ -75,7 +68,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
         }
         close(false);
         // router.push("/appointments");
-        router.refresh()
+        router.refresh();
       }
       if (error) {
         setLoginError("Credentials do not match!");
@@ -96,24 +89,26 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
   return (
     <div className="flex flex-col">
       <form className="session-form" onSubmit={handleSubmit}>
-        <h2>Log In</h2>
-        <div className="errors">{errors?.email}</div>
-        {loginError && <div>{loginError}</div>}
+        <h2 className="text-xl font-bold">Log In</h2>
+        {loginError ? (
+          <div className="h-8">{loginError}</div>
+        ) : (
+          <div className="h-8"></div>
+        )}
         <div className="login-password-container input-container">
-          <span className="email-label input-label">Email</span>
           <input
             type="text"
             value={email}
+            placeholder="Email"
             className="login-email-input login-input"
             onChange={update("email")}
           />
         </div>
-        <div className="errors">{errors?.password}</div>
         <div className="login-password-container input-container">
-          <span className="password-label input-label">Password</span>
           <input
             type="password"
             value={password}
+            placeholder="Password"
             className="login-password-input login-input"
             onChange={update("password")}
           />
@@ -121,7 +116,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
         <input
           type="submit"
           value="Log In"
-          className="login-submit-button"
+          className="login-submit-button rounded mt-6 h-12 px-6 bg-logo-blue font-bold hover:bg-highlight-orange disabled:bg-gray-300"
           disabled={!email || !password}
         />
         {/* <button onClick={handleClick} className="demo-button">
@@ -132,7 +127,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
         <span>Don't have an account yet?</span>
         <button
           onClick={handleSwitchSignup}
-          className="switch-loginmodal-button"
+          className="switch-loginmodal-button text-logo-blue hover:text-highlight-orange"
         >
           Sign up
         </button>

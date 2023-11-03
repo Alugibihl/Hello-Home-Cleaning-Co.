@@ -43,7 +43,7 @@ export default function Home() {
             onClick={() => {
               router.push("/appointments/create");
             }}
-            className="font-bold text-logo-blue ml-8"
+            className="font-bold text-logo-blue ml-8 hover:text-highlight-orange"
           >
             Sign Up Today
           </button>
@@ -57,7 +57,7 @@ export default function Home() {
             onClick={() => {
               router.push("/appointments/create");
             }}
-            className="font-bold text-logo-blue ml-8"
+            className="font-bold text-logo-blue ml-8 hover:text-highlight-orange"
           >
             Let Us Help
           </button>
@@ -71,7 +71,7 @@ export default function Home() {
             onClick={() => {
               router.push("/appointments/create");
             }}
-            className="font-bold text-logo-blue ml-8"
+            className="font-bold text-logo-blue ml-8 hover:text-highlight-orange"
           >
             Book Us For Your Next Party
           </button>
