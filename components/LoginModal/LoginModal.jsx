@@ -89,7 +89,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
   return (
     <div className="flex flex-col">
       <form className="session-form" onSubmit={handleSubmit}>
-        <h2>Log In</h2>
+        <h2 className="text-xl font-bold">Log In</h2>
         {loginError ? (
           <div className="h-8">{loginError}</div>
         ) : (
@@ -116,7 +116,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
         <input
           type="submit"
           value="Log In"
-          className="login-submit-button bg-logo-blue hover:bg-highlight-orange"
+          className="login-submit-button rounded mt-6 h-12 px-6 bg-logo-blue font-bold hover:bg-highlight-orange disabled:bg-gray-300"
           disabled={!email || !password}
         />
         {/* <button onClick={handleClick} className="demo-button">
