@@ -47,8 +47,8 @@ export default function TeamMemberList() {
 
     return (
         <>
-            {user.role == 'admin' ?
-                <Link className="border-4 bg-slate-500 text-white hover:bg-blue-600" href="/team/create">Add New Team Member</Link>
+            {user && user.role == 'admin' ?
+                <Link className="border-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded my-4" href="/team/create">Add New Team Member</Link>
                 : <></>
             }
             {members?.map((t) => (
@@ -67,7 +67,7 @@ export default function TeamMemberList() {
                         </img>
                         <div>{t.about}</div>
                     </div>
-                    {user.role == 'admin' ?
+                    {user && user.role == 'admin' ?
                         <div className="flex gap-2">
                             <Link href={`/team/edit/${t._id}`}>
                                 <HiPencilAlt size={24} />
@@ -76,8 +76,6 @@ export default function TeamMemberList() {
                         </div>
                         : <></>
                     }
-
-
                 </div>
             ))}
         </>
