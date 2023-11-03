@@ -13,7 +13,7 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
-export default function Payment({ appointment }) {
+export default function Payment({ appointment, setIsPaid }) {
   const user = useSession().data;
   const [clientSecret, setClientSecret] = useState("");
 
@@ -42,7 +42,7 @@ export default function Payment({ appointment }) {
     <div className="App">
       {clientSecret && (
         <Elements options={options} stripe={stripePromise}>
-          <CheckoutForm />
+          <CheckoutForm appointment={appointment} setIsPaid={setIsPaid} />
         </Elements>
       )}
     </div>

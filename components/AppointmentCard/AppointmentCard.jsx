@@ -3,7 +3,7 @@ import { MdPendingActions } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import { BsFillCalendarCheckFill } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Payment from "../Payment/Payment";
 function getDay(string) {
   //   return string;
@@ -27,11 +27,12 @@ function getDay(string) {
 export default function AppointmentCard({ appointment, handleDelete }) {
   const router = useRouter();
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [isPaid, setIsPaid] = useState(appointment.paid);
 
   function handleUpdate(id) {
     router.push(`/appointments/${id}/edit`);
   }
-
+  useEffect(() => {}, [isPaid]);
   function handlePayment(id) {}
 
   return (
@@ -79,8 +80,7 @@ export default function AppointmentCard({ appointment, handleDelete }) {
               </h2>
             </div>
             <h2 className="font-roboto font-semibold text-xl text-green-800 mb-2">
-              Total Due:{" "}
-              {appointment.paid ? "Paid" : `$${appointment.price.toFixed(2)}`}
+              Total Due: {isPaid ? "Paid" : `$${appointment.price.toFixed(2)}`}
             </h2>
             <FcApproval />
           </span>
@@ -96,7 +96,7 @@ export default function AppointmentCard({ appointment, handleDelete }) {
               >
                 Update This Appointment
               </button>
-              {!appointment.paid && (
+              {!isPaid && (
                 <button
                   onClick={() => setIsPaymentOpen(!isPaymentOpen)}
                   className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
@@ -105,7 +105,9 @@ export default function AppointmentCard({ appointment, handleDelete }) {
                 </button>
               )}
             </div>
-            {isPaymentOpen && !appointment.paid && <Payment appointment={appointment} />}
+            {isPaymentOpen && !isPaid && (
+              <Payment appointment={appointment} setIsPaid={setIsPaid} />
+            )}
           </div>
         </div>
       )}
