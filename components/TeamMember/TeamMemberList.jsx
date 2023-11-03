@@ -4,6 +4,8 @@ import { HiPencilAlt } from "react-icons/hi";
 import { blankProfile } from '../../public/blank-profile-pic.png'
 import AddTeamMember from "./AddTeamM/AddTeamMember";
 import DeleteTeamMemberButton from "./DeleteTeamM/DeleteTeamM";
+import { useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 
 const getTeamMemberList = async () => {
     try {
@@ -21,13 +23,35 @@ const getTeamMemberList = async () => {
     }
 };
 
-export default async function TeamMemberList() {
-    const { members } = await getTeamMemberList();
+export default function TeamMemberList() {
+    const session = useSession()
+    const [members, setMembers] = useState('')
+    const [loading, setLoading] = useState(false);
+    const [deleted, setDeleted] = useState(false)
+
+
+
+    useEffect(() => {
+        fetch("/api/teammembers", {
+            cache: "no-store",
+        })
+            .then((res) => res.json())
+            .then((data) => setMembers(data.members))
+            .then(() => setLoading(true))
+            .then(() => setDeleted(false))
+
+    }, [deleted])
+    let user = session.data?.user
+    console.log(user)
+    if (!loading) return <h1>Loading</h1>;
 
     return (
         <>
-            <AddTeamMember />
-            {members.map((t) => (
+            {user.role == 'admin' ?
+                <Link className="border-4 bg-slate-500 text-white hover:bg-blue-600" href="/team/create">Add New Team Member</Link>
+                : <></>
+            }
+            {members?.map((t) => (
                 <div
                     key={t._id}
                     className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start"
@@ -43,13 +67,17 @@ export default async function TeamMemberList() {
                         </img>
                         <div>{t.about}</div>
                     </div>
+                    {user.role == 'admin' ?
+                        <div className="flex gap-2">
+                            <Link href={`/team/edit/${t._id}`}>
+                                <HiPencilAlt size={24} />
+                            </Link>
+                            <DeleteTeamMemberButton id={t._id} setDeleted={setDeleted} />
+                        </div>
+                        : <></>
+                    }
 
-                    <div className="flex gap-2">
-                        <Link href={`/meettheteam/edit/${t._id}`}>
-                            <HiPencilAlt size={24} />
-                        </Link>
-                        <DeleteTeamMemberButton id={t._id} />
-                    </div>
+
                 </div>
             ))}
         </>
