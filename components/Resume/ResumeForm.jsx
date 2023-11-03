@@ -1,8 +1,12 @@
 import React from 'react';
 import { useForm, ValidationError } from '@formspree/react';
-export default function ResumeForm() {
+export default function ResumeForm({ close, modalFunctions }) {
     const [state, handleSubmit] = useForm("xyyqoqjv");
     if (state.succeeded) {
+
+        setTimeout(() => {
+            close(false);
+        }, "2000");
         return <p>Thank you for your interest in working with us. We will get back to you shortly!</p>;
     }
     return (
@@ -11,7 +15,8 @@ export default function ResumeForm() {
             onSubmit={handleSubmit}
             action="https://formspree.io/f/xyyqoqjv"
             method="POST"
-            enctype="multipart/form-data">
+        // enctype="multipart/form-data"
+        >
             <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3">
                     <label
@@ -19,12 +24,11 @@ export default function ResumeForm() {
                         className="block text-gray-700 text-s font-bold mb-2"
                     >
                         Full Name
-
                         <input
                             id="name"
                             type="name"
                             name="name"
-                            required="true"
+                            required={true}
                             className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 
                         />
@@ -47,7 +51,7 @@ export default function ResumeForm() {
                             id="email"
                             type="email"
                             name="email"
-                            required="true"
+                            required={true}
                             className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
 
                         />
@@ -67,7 +71,7 @@ export default function ResumeForm() {
                         Phone Number
 
                         <input
-                            required="true"
+                            required={true}
                             id="phone"
                             type="phone"
                             name="phone"
@@ -87,7 +91,7 @@ export default function ResumeForm() {
                         className="block text-gray-700 text-s font-bold mb-2">
                         Resume
                         <textarea
-                            required="true"
+                            required={true}
                             id="message"
                             name="message"
                             placeholder='Paste Resume'

@@ -1,9 +1,20 @@
 'use client'
 
+import Modal from "@/components/Modal/Modal"
 import ResumeForm from "@/components/Resume/ResumeForm"
+import { useState } from "react";
 
 
 export default function CareersPage() {
+    const [showApply, setShowApply] = useState(false);
+
+    const modalFunctions = {
+        setShowApply: (shown) => setShowApply(shown),
+    };
+    const handleModal = () => {
+        setShowApply(true)
+    }
+
     return (
         <>
             <div className="bg-blue-200" >
@@ -34,11 +45,17 @@ export default function CareersPage() {
                         <li>benefits 3</li>
                     </ul>
                     {/* //Modal */}
-                    <button className="mb-6 bg-blue-500 w-26 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Apply here</button>
+                    <button onClick={handleModal} className="mb-6 bg-blue-500 w-26 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Apply here</button>
                 </div>
-                {/* <div className="flex justify-center"> */}
-                <ResumeForm />
-                {/* </div> */}
+                {showApply && (
+                    <Modal
+                        component={ResumeForm}
+                        close={(shown) => setShowApply((shown))}
+                        modalFunctions={modalFunctions}
+                    />
+                )}
+
+                {/* <ResumeForm /> */}
             </div>
 
         </>)
