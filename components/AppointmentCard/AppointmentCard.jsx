@@ -26,14 +26,14 @@ function getDay(string) {
 }
 export default function AppointmentCard({ appointment, handleDelete }) {
   const router = useRouter();
-  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  // const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [isPaid, setIsPaid] = useState(appointment.paid);
 
   function handleUpdate(id) {
     router.push(`/appointments/${id}/edit`);
   }
   useEffect(() => {}, [isPaid]);
-  function handlePayment(id) {}
+
 
   return (
     <div className="border-2 p-3 m-auto w-fit rounded-md max-w-3xl">
@@ -96,16 +96,16 @@ export default function AppointmentCard({ appointment, handleDelete }) {
               >
                 Update This Appointment
               </button>
-              {!isPaid && (
+              {/* {!isPaid && (
                 <button
                   onClick={() => setIsPaymentOpen(!isPaymentOpen)}
                   className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
                 >
                   Pay for this appointment
                 </button>
-              )}
+              )} */}
             </div>
-            {isPaymentOpen && !isPaid && (
+            {!isPaid && (
               <Payment appointment={appointment} setIsPaid={setIsPaid} />
             )}
           </div>
