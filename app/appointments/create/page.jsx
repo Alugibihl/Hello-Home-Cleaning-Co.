@@ -211,18 +211,36 @@ export default function Page() {
               >
                 Is anyone in your home allergic to Clove, Cinnamon, or Orange?
               </label>
-              <input
-                type="checkbox"
-                checked={formData.allergies}
-                name="allergies"
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    [e.target.name]: e.target.checked,
-                  })
-                }
-                // onChange={(e) => setAllergies(e.target.checked)}
-              />
+              <div className="flex">
+                <label style={{ marginRight: "10px" }}>
+                  <input
+                    type="checkbox"
+                    name="allergies"
+                    checked={formData.allergies}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        allergies: e.target.checked,
+                      })
+                    }
+                  />
+                  Yes
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    name="allergies"
+                    checked={!formData.allergies}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        allergies: !e.target.checked,
+                      })
+                    }
+                  />
+                  No
+                </label>
+              </div>
             </div>
           </div>
           <div className="flex flex-wrap mb-6">

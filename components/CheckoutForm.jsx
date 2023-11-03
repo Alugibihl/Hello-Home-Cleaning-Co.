@@ -32,7 +32,7 @@ export default function CheckoutForm({ appointment, setIsPaid }) {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
-          // paymentSuccessfull();
+          paymentSuccessfull();
           // setIsPaid(true);
           break;
         case "processing":
@@ -49,14 +49,11 @@ export default function CheckoutForm({ appointment, setIsPaid }) {
   }, [stripe]);
 
   async function paymentSuccessfull() {
-    debugger;
     const res = await fetch(`/api/appointments/${appointment._id}/payments`, {
       headers: { "Content-Type": "application/json" },
       method: "PUT",
     });
-
     if (res.ok) {
-      debugger;
       setIsPaid(true);
     }
   }
@@ -64,7 +61,6 @@ export default function CheckoutForm({ appointment, setIsPaid }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    debugger;
     if (!stripe || !elements) {
       // Stripe.js hasn't yet loaded.
       // Make sure to disable form submission until Stripe.js has loaded.
@@ -73,7 +69,7 @@ export default function CheckoutForm({ appointment, setIsPaid }) {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
+    stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
@@ -81,6 +77,8 @@ export default function CheckoutForm({ appointment, setIsPaid }) {
         receipt_email: email,
       },
     });
+
+    if (!error) paymentSuccessfull();
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
@@ -93,8 +91,7 @@ export default function CheckoutForm({ appointment, setIsPaid }) {
       setMessage("An unexpected error occurred.");
     }
 
-    paymentSuccessfull();
-    
+
     setIsLoading(false);
   };
 
