@@ -1,41 +1,61 @@
 "use client";
+import { data } from "autoprefixer";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { MdPendingActions } from "react-icons/md";
+import { FcApproval } from "react-icons/fc";
+import AppointmentCard from "@/components/AppointmentCard/AppointmentCard";
+import Loading from "@/components/Loding";
+
+function getDay(string) {
+  //   return string;
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const [year, month, day] = string.split("T")[0].split("-");
+  return `${months[month - 1]} ${day}`;
+}
 
 export default function Page() {
   const session = useSession();
   const router = useRouter();
   const [appointments, setAppointments] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  if (!session?.data?.user) router.push("/");
-  console.log("SESSIONS DATA: ", session)
+  if (!session.data?.user) {
+    router.push("/");
+  }
+
   useEffect(() => {
-    if (session.data.user.role === 'admin') {
-      fetch("/api/appointments", { cache: "no-store" })
-        .then((res) => res.json())
-        .then((data) => setAppointments(data.appointments));
-    } else {
-      fetch(`/api/users/${session.data.user.id}/appointments`, { cache: "no-store" })
-        .then((res) => res.json())
-        .then((data) => setAppointments(data.appointments));
-    }
+    if (!session?.data) return;
+    fetch(`/api/users/${session.data.user.id}/appointments`, {
+      cache: "no-store",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setAppointments(data.appointments);
+        setIsLoading(false);
+      });
   }, [session]);
 
+  if (isLoading) return <Loading />;
+
   return (
-    <div>
-      {appointments.map((app) => (
-        <div
-          key={app._id}
-          className="w-72 bg-white text-gray-700 border border-gray-200 rounded m-6"
-        >
-          <Link href={`/appointments/${app._id}`}>
-            <h1>{app.name}</h1>
-            <h2>{app.date}</h2>
-            <h2>{app._id}</h2>
-          </Link>
-        </div>
+    <div className="flex flex-col gap-5">
+      {appointments.map((appointment) => (
+        <AppointmentCard key={appointment._id} appointment={appointment} />
       ))}
     </div>
   );

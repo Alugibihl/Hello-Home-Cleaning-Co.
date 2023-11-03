@@ -1,22 +1,24 @@
-import { useState } from "react";
-import './Modal.css'
+import "./Modal.css";
 
-const Modal = ({ children, onClose }) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleClose = () => {
-    setIsOpen(false);
-    onClose();
-  };
-
+const Modal = ({
+  component: Component,
+  close,
+  modalFunctions,
+  values = {},
+}) => {
   return (
-    <div className="modal-container">
-      <div className="modal-overlay" onClick={handleClose}></div>
+    <div className="modal">
       <div className="modal-content">
-        <button className="modal-close-button" onClick={handleClose}>
-          &times;
-        </button>
-        {children}
+        <img
+          className="close-button"
+          src="/CloseModal.png"
+          onClick={() => close(false)}
+        />
+        <Component
+          close={close}
+          modalFunctions={modalFunctions}
+          values={values}
+        />
       </div>
     </div>
   );
