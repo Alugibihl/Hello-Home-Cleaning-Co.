@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import InputField from "@/components/FormComponents/InputField";
 import SubmitButton from "@/components/FormComponents/SubmitButton";
 
-
 export default function Page({ params }) {
   const session = useSession();
   const [name, setName] = useState("");
@@ -158,20 +157,34 @@ export default function Page({ params }) {
           >
             Is anyone in your home allergic to Clove, Cinnamon, or Orange?
           </label>
-          <input
-            type="checkbox"
-            checked={allergies}
-            onChange={(e) => setAllergies(e.target.checked)}
-          />
+          <div className="flex">
+            <label style={{ marginRight: "10px" }}>
+              <input
+                type="checkbox"
+                checked={allergies}
+                onChange={(e) => setAllergies(true)}
+              />
+              Yes
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={!allergies}
+                onChange={(e) => setAllergies(false)}
+              />
+              No
+            </label>
+          </div>
         </div>
       </div>
+
       <div className="flex flex-wrap -mx-3 mb-6">
         <div className="w-full px-3">
           <label
             className="block text-gray-700 text-s font-bold mb-2"
             htmlFor="grid-frequency"
           >
-            How frequently are you looking have cleanings?
+            How frequently are you looking to have cleanings?
           </label>
           <select
             id="frequency"
