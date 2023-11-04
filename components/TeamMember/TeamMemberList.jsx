@@ -7,27 +7,28 @@ import DeleteTeamMemberButton from "./DeleteTeamM/DeleteTeamM";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-const getTeamMemberList = async () => {
-    try {
-        const res = await fetch("http://localhost:3000/api/teammembers", {
-            cache: "no-store",
-        });
+// const getTeamMemberList = async () => {
+//     try {
+//         const res = await fetch("http://localhost:3000/api/teammembers", {
+//             cache: "no-store",
+//         });
 
-        if (!res.ok) {
-            throw new Error("Failed to fetch Team Members");
-        }
+//         if (!res.ok) {
+//             throw new Error("Failed to fetch Team Members");
+//         }
 
-        return res.json()
-    } catch (error) {
-        console.log("Error loading Team Members: ", error);
-    }
-};
+//         return res.json()
+//     } catch (error) {
+//         console.log("Error loading Team Members: ", error);
+//     }
+// };
 
 export default function TeamMemberList() {
     const session = useSession()
     const [members, setMembers] = useState('')
     const [loading, setLoading] = useState(false);
     const [deleted, setDeleted] = useState(false)
+    // const {useEdgeStore} fro
 
 
 
@@ -72,7 +73,7 @@ export default function TeamMemberList() {
                             <Link href={`/team/edit/${t._id}`}>
                                 <HiPencilAlt size={24} />
                             </Link>
-                            <DeleteTeamMemberButton id={t._id} setDeleted={setDeleted} />
+                            <DeleteTeamMemberButton id={t._id} setDeleted={setDeleted} urlD={t.img} />
                         </div>
                         : <></>
                     }

@@ -18,23 +18,19 @@ export default function AddTeamMember() {
     const router = useRouter();
 
     useEffect(() => {
-        const check = async (file) => {
-            if (file) {
-                const res = await edgestore.myPublicsImages.upload({ file })
-                //save your data here
-                const add = res.url
-                setImg(add)
-            }
+        if (file) {
+            console.log(edgestore.myPublicsImages)
+            edgestore.myPublicsImages.upload({ file })
+                .then(res => setImg(res.url))
+            //save your data here
         }
-        check(file)
+
 
     }, [file])
-    // console.log("hello")
-    // console.log(file, 'fillllle')
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // console.log(img, "+++++++++++s")
         const res = await fetch("/api/teammembers", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
