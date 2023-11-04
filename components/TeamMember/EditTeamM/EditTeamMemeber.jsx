@@ -25,7 +25,7 @@ export default function EditTeamMember({ id, name, img, about }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         await editMember(id, { newName, newImg, newAbout });
-        router.push("/meettheteam");
+        router.push("/team");
     };
 
     return (

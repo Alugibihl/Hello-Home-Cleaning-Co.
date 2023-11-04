@@ -1,20 +1,15 @@
-'use client';
+
 import { HiOutlineTrash } from "react-icons/hi"
-import { useRouter } from "next/navigation";
 
-export default function DeleteTeamMemberButton({ id }) {
-    const router = useRouter()
-
+export default function DeleteTeamMemberButton({ id, setDeleted }) {
     const deleteMemeber = async () => {
         try {
-
             const res = await fetch(`/api/teammembers?id=${id}`, {
                 method: "DELETE",
-
             });
 
             if (res.ok) {
-                router.refresh()
+                setDeleted(true)
             }
         } catch (error) { "message", error }
 

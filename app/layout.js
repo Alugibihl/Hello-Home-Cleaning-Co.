@@ -3,7 +3,7 @@ import "./globals.css";
 import Head from "next/head";
 import SessionProvider from "./SessionProivder";
 import Navbar from "@/components/Navbar/Navbar";
-// import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/Footer/Footer";
 import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 import { options } from "./api/auth/[...nextauth]/options";
@@ -33,7 +33,7 @@ export default async function RootLayout({ children }) {
           </Head>
           <Navbar session={session} />
           {children}
-          {/* <Footer /> */}
+          <Footer />
         </body>
       </SessionProvider>
     </html>
