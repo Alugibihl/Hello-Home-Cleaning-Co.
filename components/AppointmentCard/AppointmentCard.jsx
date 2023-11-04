@@ -22,24 +22,13 @@ function getDay(string) {
   const [year, month, day] = string.split("T")[0].split("-");
   return `${months[month - 1]} ${day}`;
 }
-export default function AppointmentCard({ appointment }) {
+export default function AppointmentCard({ appointment, handleDelete }) {
   const router = useRouter();
 
   function handleUpdate(id) {
     router.push(`/appointments/${id}/edit`);
   }
-  const handlDelete = async (id) => {
-    console.log("APP ID: ", id);
-    const confirmed = confirm("Are you sure?");
 
-    if (confirmed) {
-      const res = await fetch(`/api/appointments/${id}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-      }
-    }
-  };
 
   function handlePayment(id) {}
 
@@ -61,7 +50,7 @@ export default function AppointmentCard({ appointment }) {
             </p>
             <div className="flex gap-3 mt-1">
               <button
-                onClick={() => handlDelete(appointment._id)}
+                onClick={() => handleDelete(appointment._id)}
                 className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
               >
                 Cancel This Appointment

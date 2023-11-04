@@ -110,11 +110,11 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
   return (
     <>
       <div>
-        <h1>Sign Up</h1>
         <form
           onSubmit={handleSubmit}
           className="flex flex-col w-full items-center justify-center"
         >
+          <h2 className="mb-4 font-bold text-xl">Sign Up</h2>
           <div className="flex flex-row mb-4">
             <InputField
               type="text"
@@ -176,7 +176,7 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
             />
           </div>
           <button
-            className="mb-6 mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="mt-6 h-12 px-6 bg-logo-blue hover:bg-highlight-orange text-white font-bold rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
             Sign Up
@@ -186,7 +186,7 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
           <span>Already have an account?</span>
           <button
             onClick={handleSwitchLogin}
-            className="switch-loginmodal-button"
+            className="switch-loginmodal-button text-logo-blue hover:text-highlight-orange"
           >
             Log In
           </button>

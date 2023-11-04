@@ -50,12 +50,31 @@ export default function Page() {
       });
   }, [session]);
 
-  if (isLoading) return <Loading />;
+  const handleDelete = async (id) => {
+    const confirmed = confirm("Are you sure?");
+    if (confirmed) {
+      const res = await fetch(`/api/appointments/${id}`, {
+        method: "DELETE",
+      });
+      if (res.ok) {
+        const filteredApps = appointments.filter((app) => {
+          console.log("appointments id", app._id, id);
+          return app._id !== id;
+        });
+        console.log(filteredApps);
+        setAppointments(filteredApps);
+      }
+    }
+  };
 
   return (
     <div className="flex flex-col gap-5">
       {appointments.map((appointment) => (
-        <AppointmentCard key={appointment._id} appointment={appointment} />
+        <AppointmentCard
+          key={appointment._id}
+          appointment={appointment}
+          handleDelete={handleDelete}
+        />
       ))}
     </div>
   );
