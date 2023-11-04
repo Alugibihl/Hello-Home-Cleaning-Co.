@@ -27,17 +27,17 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={'${inter.className} ${roboto.className}'}>
       <SessionProvider session={session}>
-        <body>
-          <Head>
-            <link rel="icon" href="/favicon.ico" />
-            <title>{metadata.title}</title>
-          </Head>
-          <Navbar session={session} />
-          <EdgeStoreProvider>
+        <EdgeStoreProvider>
+          <body>
+            <Head>
+              <link rel="icon" href="/favicon.ico" />
+              <title>{metadata.title}</title>
+            </Head>
+            <Navbar session={session} />
             {children}
-          </EdgeStoreProvider>
-          <Footer />
-        </body>
+            <Footer />
+          </body>
+        </EdgeStoreProvider>
       </SessionProvider>
     </html>
   );
