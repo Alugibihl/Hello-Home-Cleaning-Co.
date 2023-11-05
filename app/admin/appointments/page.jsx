@@ -126,7 +126,7 @@ export default function Page() {
         canSort: true,
         Cell: ({ value }) => {
           let bgColor;
-          switch(value.toString()) { // Convert boolean to string for comparison
+          switch(value.toString()) { 
             case 'false':
               bgColor = 'bg-red-500';
               break;
