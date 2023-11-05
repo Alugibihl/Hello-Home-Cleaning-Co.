@@ -27,7 +27,7 @@ export default function Page({ params }) {
   let user = session?.data?.user;
   console.log("USER: ", user);
 
-  if (!user || user.role !== "admin") router.push("/");
+  if (session?.data?.status === "unauthenticated" || !user) router.push("/");
 
   useEffect(() => {
     setIsLoading(true);
@@ -35,7 +35,6 @@ export default function Page({ params }) {
       .then((res) => res.json())
       .then((data) => {
         const { appointment } = data;
-        console.log("CURRENT APPOINTMENT: ", appointment);
         setName(appointment.name);
         setDate(appointment.date);
         setPhone(appointment.phone);
@@ -55,20 +54,7 @@ export default function Page({ params }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // ERROR HANDLING
-    console.log(
-      name,
-      date,
-      phone,
-      address,
-      stories,
-      rooms,
-      pets,
-      noTouch,
-      areaInterest,
-      allergies,
-      frequency,
-      refSource
-    );
+
     await fetch(`/api/appointments/${params.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -90,7 +76,6 @@ export default function Page({ params }) {
 
     router.push("/appointments");
   };
-  console.log(name);
 
   if (isLoading) return <Loading />;
 
