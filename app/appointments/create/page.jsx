@@ -9,26 +9,25 @@ import SubmitButton from "@/components/FormComponents/SubmitButton";
 import Modal from "@/components/Modal/Modal";
 import SignupModal from "@/components/SignupModal/SignupModal";
 import LoginModal from "@/components/LoginModal/LoginModal";
+import Loading from "@/components/Loding";
 
 export default function Page() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const session = useSession();
-  const [formData, setFormData] = useState({
-    name: "",
-    date: "",
-    phone: "",
-    address: "",
-    stories: "",
-    rooms: "",
-    pets: "",
-    noTouch: "None",
-    areaInterest: "None",
-    refSource: "",
-    allergies: false,
-    frequency: "None",
-  });
+  const [name, setName] = useState("");
+  const [date, setDate] = useState("");
+  const [phone, setPhone] = useState("");
+  const [address, setAddress] = useState("");
+  const [stories, setStories] = useState("");
+  const [rooms, setRooms] = useState("");
+  const [pets, setPets] = useState("");
+  const [noTouch, setNoTouch] = useState("None");
+  const [areaInterest, setAreaInterest] = useState("None");
+  const [allergies, setAllergies] = useState(false);
+  const [frequency, setFrequency] = useState("None");
+  const [refSource, setRefSource] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -37,9 +36,7 @@ export default function Page() {
     }, 2000);
   }, []);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <Loading />;
 
   // const [errors, setErrors] = useState({});
 
@@ -84,10 +81,6 @@ export default function Page() {
     setShowLoginModal(true);
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
   const userId = session.data?.user?.id;
 
   // if (!session || !session.data?.user) router.push("/");
@@ -107,26 +100,26 @@ export default function Page() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: formData.name,
-          date: formData.date,
-          phone: formData.phone,
-          userId: formData.userId,
-          address: formData.address,
-          stories: formData.stories,
-          rooms: formData.rooms,
-          pets: formData.pets,
-          noTouch: formData.noTouch,
-          areaInterest: formData.areaInterest,
-          allergies: formData.allergies,
-          frequency: formData.frequency,
-          refSource: formData.refSource,
+          name,
+          date,
+          phone,
+          userId,
+          address,
+          stories,
+          rooms,
+          pets,
+          noTouch,
+          areaInterest,
+          allergies,
+          frequency,
+          refSource,
         }),
       });
 
       router.push("/appointments");
     }
   };
-
+  console.log("F: ", frequency);
   // router.push("/appointments");
   return (
     <>
@@ -143,64 +136,64 @@ export default function Page() {
               label="Full Name"
               name="name"
               type="text"
-              value={formData.name}
-              setValue={handleChange}
+              value={name}
+              setValue={setName}
             />
             <InputField
               label="Today's Date"
               type="date"
               name="date"
-              value={formData.date}
-              setValue={handleChange}
+              value={date}
+              setValue={setDate}
             />
             <InputField
               label="Phone Number"
               type="text"
               name="phone"
-              value={formData.phone}
-              setValue={handleChange}
+              value={phone}
+              setValue={setPhone}
             />
             <InputField
               label="Address"
               type="text"
               name="address"
-              value={formData.address}
-              setValue={handleChange}
+              value={address}
+              setValue={setAddress}
             />
             <InputField
               label="How many stories does your home have?"
               type="text"
               name="stories"
-              value={formData.stories}
-              setValue={handleChange}
+              value={stories}
+              setValue={setStories}
             />
             <InputField
               label="How many bedrooms and bathrooms?"
               type="text"
               name="rooms"
-              value={formData.rooms}
-              setValue={handleChange}
+              value={rooms}
+              setValue={setRooms}
             />
             <InputField
               label="Do you have any Pets?"
               type="text"
               name="pets"
-              value={formData.pets}
-              setValue={handleChange}
+              value={pets}
+              setValue={setPets}
             />
             <InputField
               label="Any areas you would like us to avoid?"
               type="text"
               name="noTouch"
-              value={formData.noTouch}
-              setValue={handleChange}
+              value={noTouch}
+              setValue={setNoTouch}
             />
             <InputField
               label="Any areas you would like us to focus on?"
               type="text"
               name="focus"
-              value={formData.areaInterest}
-              setValue={handleChange}
+              value={areaInterest}
+              setValue={setAreaInterest}
             />
           </div>
           <div className="flex flex-wrap mb-6">
@@ -216,13 +209,8 @@ export default function Page() {
                   <input
                     type="checkbox"
                     name="allergies"
-                    checked={formData.allergies}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        allergies: e.target.checked,
-                      })
-                    }
+                    checked={allergies}
+                    onChange={(e) => setFormData((e) => setAllergies(true))}
                   />
                   Yes
                 </label>
@@ -230,13 +218,8 @@ export default function Page() {
                   <input
                     type="checkbox"
                     name="allergies"
-                    checked={!formData.allergies}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        allergies: !e.target.checked,
-                      })
-                    }
+                    checked={!allergies}
+                    onChange={(e) => setFormData((e) => setAllergies(false))}
                   />
                   No
                 </label>
@@ -254,10 +237,8 @@ export default function Page() {
               <select
                 id="frequency"
                 name="frequency"
-                value={formData.frequency}
-                onChange={(e) =>
-                  setFormData({ ...formData, [e.target.name]: e.target.value })
-                }
+                value={frequency}
+                onChange={(e) => setFrequency(e.target.value)}
                 className="appearance-none w-1/2 block bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               >
                 <option value="None">None</option>
@@ -267,31 +248,14 @@ export default function Page() {
               </select>
             </div>
           </div>
-          {/* <InputField
-            label="Where did you hear about us?"
+
+          <InputField
             type="text"
-            name="refSource"
-            value={formData.refSource}
-            setValue={handleChange}
-          /> */}
-          <div className="px-3">
-            <label
-              className="block text-gray-700 text-s font-bold mb-2"
-              htmlFor="grid-date"
-            >
-              Where did you hear about us?
-            </label>
-            <input
-              type="text"
-              name="refSource"
-              value={formData.refSource}
-              onChange={(e) => {
-                handleChange(e);
-              }}
-              className="appearance-none w-1/2 block bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-              disabled={false}
-            />
-          </div>
+            label="Where did you hear about us?"
+            value={refSource}
+            setValue={setRefSource}
+          />
+
           <div className="pl-3">
             <SubmitButton type="submit" buttonText="Create Appointment" />
           </div>
@@ -316,20 +280,3 @@ export default function Page() {
     </>
   );
 }
-
-//   <div className="flex flex-wrap -mx-3 mb-6">
-//     <div className="w-full px-3">
-//       <label
-//         className="block text-gray-700 text-s font-bold mb-2"
-//         htmlFor="grid-refSource"
-//       >
-//         Where did you hear about us?
-//       </label>
-//       <input
-//         value={refSource}
-//         type="text"
-//         onChange={(e) => setRefSource(e.target.value)}
-//         className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-//       />
-//     </div>
-//   </div>}

@@ -197,7 +197,7 @@ export default function Page({ params }) {
             <option value="2">Every 2 weeks</option>
             <option value="3">Every 3 weeks</option>
             <option value="4">Every 4 weeks</option>
-            <option value="none">None</option>
+            <option value="None">None</option>
           </select>
         </div>
       </div>
