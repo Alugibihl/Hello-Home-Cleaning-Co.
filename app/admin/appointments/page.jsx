@@ -26,6 +26,10 @@ export default function Page() {
     setFilter('status', e.target.value);
   };
 
+   const handlePaymentFilterChange = (e) => {
+    setFilter('paid', e.target.value === "paid" ? true : e.target.value === "unpaid" ? false : undefined);
+  };
+
   useEffect(() => {
     if (!session.data?.user) {
       router.push("/");
@@ -44,11 +48,36 @@ export default function Page() {
     }
   }, [session]);
 
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let formattedDate = date.toLocaleDateString('en-US', options);
+  
+    const day = date.getDate();
+    let suffix = 'th';
+    if (day % 10 === 1 && day !== 11) suffix = 'st';
+    else if (day % 10 === 2 && day !== 12) suffix = 'nd';
+    else if (day % 10 === 3 && day !== 13) suffix = 'rd';
+  
+    return formattedDate.replace(/\d+/, `${day}${suffix}`);
+  }
+
+  function formatNumber(phoneNumber) {
+    const phoneString = phoneNumber.toString();
+    const cleaned = ('' + phoneString).replace(/\D/g, '');
+  
+    let match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return '(' + match[1] + ') ' + match[2] + '-' + match[3];
+    }
+    return null;
+  }
+
   const columns = React.useMemo(
     () => [
 
       {
-        Header: 'Status',
+        Header: 'Appointment Status',
         accessor: 'status',
         canSort: true,
         Cell: ({ value }) => {
@@ -91,6 +120,26 @@ export default function Page() {
       // { Header: 'Status', accessor: 'status' },
       { Header: 'Number', accessor: 'phone' },
       { Header: 'Referred By', accessor: 'refSource' },
+      {
+        Header: 'Payment Status',
+        accessor: 'paid',
+        canSort: true,
+        Cell: ({ value }) => {
+          let bgColor;
+          switch(value.toString()) { // Convert boolean to string for comparison
+            case 'false':
+              bgColor = 'bg-red-500';
+              break;
+            case 'true':
+              bgColor = 'bg-green-500';
+              break;
+            default:
+              bgColor = '';
+              break;
+          }
+          return <div className={`p-2 ${bgColor} text-white rounded-lg`}>{value ? 'Paid' : 'Unpaid'}</div>;
+        }
+      },
     ],
     [expandedRowId]
   );
@@ -98,9 +147,10 @@ export default function Page() {
   const data = React.useMemo(
     () => appointments.map((app, index) => ({
       id: index,
-      date: app.date,
-      phone: app.phone,
+      date: formatDate(app.date),
+      phone: formatNumber(app.phone),
       status: app.status,
+      paid: app.paid,
       name: app.name,
       refSource: app.refSource,
     })),
@@ -124,15 +174,26 @@ export default function Page() {
   );
 
   return (
-            <div className="w-full">
+          <div className="w-full pt-4 px-10">
+            <div className="flex justify-between space-x-4 mb-4">
+
               <select onChange={handleFilterChange}
-                className="w-40 h-12 ml-10 mb-6 p-2 text-lg bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
+                className="w-40 h-12 p-2 text-lg text-center bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
                 >
                 <option value="">All</option>
                 <option value="new">New</option>
                 <option value="past">Past</option>
                 <option value="scheduled">Scheduled</option>
               </select>
+              <div className="flex-grow"></div>
+              <select onChange={handlePaymentFilterChange}
+              className="w-40 h-12 p-2 text-lg text-center bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
+          >
+                <option value="">All</option>
+                <option value="paid">Paid</option>
+                <option value="unpaid">Unpaid</option>
+              </select>
+            </div>
             <table {...getTableProps()}className="w-full max-h-screen overflow-auto">
               <thead>
                 {headerGroups.map(headerGroup => (

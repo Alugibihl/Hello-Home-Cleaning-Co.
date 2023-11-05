@@ -90,18 +90,18 @@ const Navbar = ({ session }) => {
             </button>
             
             {showDropdown && (
-              <div id="user-menu-dropdown" className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 z-10">
+              <div id="user-menu-dropdown" className="origin-top-right absolute right-0 mt-2 w-30 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 z-10">
                 <ul className="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
                   {/* Include any other dropdown items here */}
                   <li>
                     <button
-                      className="block px-4 py-2 hover:bg-gray-100 w-full text-left"
+                      className="block px-4 py-2 text-md font-bold hover:bg-gray-100 w-full text-center"
                       onClick={() => {
                         signOut();
                         setShowDropdown(false);
                       }}
                     >
-                      Sign out
+                      Sign Out
                     </button>
                   </li>
                 </ul>
