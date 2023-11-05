@@ -123,7 +123,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
           Demo User
         </button> */}
       </form>
-      <div className="login-switch-container flex justify-center mt-8">
+      <div className="login-switch-container flex justify-center mt-8 pb-2">
         <span>Don't have an account yet?</span>
         <button
           onClick={handleSwitchSignup}

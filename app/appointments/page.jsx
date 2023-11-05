@@ -68,7 +68,7 @@ export default function Page() {
   };
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 mt-8">
       {appointments.map((appointment) => (
         <AppointmentCard
           key={appointment._id}

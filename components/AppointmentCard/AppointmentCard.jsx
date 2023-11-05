@@ -88,22 +88,6 @@ export default function AppointmentCard({ appointment, handleDelete }) {
               <strong>Appointment Confirmed:</strong> Your cleaning appointment
               is on {getDay(appointment.date)}. We look forward to helping you!
             </p>
-            <div className="flex gap-3 my-2">
-              <button
-                onClick={() => handleUpdate(appointment._id)}
-                className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
-              >
-                Update This Appointment
-              </button>
-              {/* {!isPaid && (
-                <button
-                  onClick={() => setIsPaymentOpen(!isPaymentOpen)}
-                  className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
-                >
-                  Pay for this appointment
-                </button>
-              )} */}
-            </div>
             {!isPaid && (
               <Payment appointment={appointment} setIsPaid={setIsPaid} />
             )}
