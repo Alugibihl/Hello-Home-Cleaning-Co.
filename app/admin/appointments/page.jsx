@@ -27,7 +27,9 @@ export default function Page() {
   };
 
    const handlePaymentFilterChange = (e) => {
-    setFilter('paid', e.target.value === "paid" ? true : e.target.value === "unpaid" ? false : undefined);
+    console.log(e.target.value);     
+    setFilter('paid', e.target.value);
+    
   };
 
   useEffect(() => {
@@ -46,7 +48,7 @@ export default function Page() {
         .then((res) => res.json())
         .then((data) => setAppointments(data.appointments));
     }
-  }, [session]);
+  }, []);
 
   function formatDate(dateString) {
     const date = new Date(dateString);
@@ -119,6 +121,7 @@ export default function Page() {
       { Header: 'Client', accessor: 'name' },
       // { Header: 'Status', accessor: 'status' },
       { Header: 'Number', accessor: 'phone' },
+      { Header: 'Address', accessor: 'address'},
       { Header: 'Referred By', accessor: 'refSource' },
       {
         Header: 'Payment Status',
@@ -150,9 +153,17 @@ export default function Page() {
       date: formatDate(app.date),
       phone: formatNumber(app.phone),
       status: app.status,
+      rooms: app.rooms,
+      stories: app.stories,
+      noTouch: app.noTouch,
+      pets: app.pets,
+      areaInterest: app.areaInterest,
       paid: app.paid,
       name: app.name,
+      address: app.address,
       refSource: app.refSource,
+      price: app.price,
+      frequency: app.frequency
     })),
     [appointments]
   );
@@ -173,6 +184,7 @@ export default function Page() {
     useFilters
   );
 
+
   return (
           <div className="w-full pt-4 px-10">
             <div className="flex justify-between space-x-4 mb-4">
@@ -190,8 +202,8 @@ export default function Page() {
               className="w-40 h-12 p-2 text-lg text-center bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
           >
                 <option value="">All</option>
-                <option value="paid">Paid</option>
-                <option value="unpaid">Unpaid</option>
+                <option value="true">Paid</option>
+                <option value="false">Unpaid</option>
               </select>
             </div>
             <table {...getTableProps()}className="w-full max-h-screen overflow-auto">
@@ -199,7 +211,7 @@ export default function Page() {
                 {headerGroups.map(headerGroup => (
                   <tr {...headerGroup.getHeaderGroupProps()}>
                     {headerGroup.headers.map(column => (
-                      <th {...column.getHeaderProps()} className="font-bold text-sm border-b border-gray-300 p-2">
+                      <th {...column.getHeaderProps()} className="font-bold text-md border-b border-gray-300 p-2">
                         {column.render('Header')}
                       </th>
                     ))}
@@ -213,7 +225,7 @@ export default function Page() {
                     <React.Fragment key={row.id}>
                       <tr {...row.getRowProps()} className="hover:bg-gray-100">
                         {row.cells.map(cell => (
-                          <td {...cell.getCellProps()}  className="border border-gray-300 p-1">{cell.render('Cell')}</td>
+                          <td {...cell.getCellProps()}  className="border border-gray-300 p-2">{cell.render('Cell')}</td>
                         ))}
                       </tr>
                       {expandedRowId === row.id && (

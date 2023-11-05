@@ -47,9 +47,9 @@ const ExpandedRowContent = ({ appointment }) => {
         <div>
           <strong>Paid:</strong> {appointment.paid ? 'Yes' : 'No'}
         </div>
-        <div>
-          <strong>Payment Method:</strong> {appointment.paymentMethod}
-        </div>
+        {/* <div> */}
+          {/* <strong>Payment Method:</strong> {appointment.paymentMethod} */}
+        {/* </div> */}
         <div>
           <strong>Price:</strong> ${appointment.price}
         </div>
