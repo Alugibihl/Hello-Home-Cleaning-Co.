@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import InputField from "@/components/FormComponents/InputField";
 import SubmitButton from "@/components/FormComponents/SubmitButton";
+import Loading from "@/components/Loding";
 
 export default function Page({ params }) {
   const session = useSession();
@@ -90,7 +91,7 @@ export default function Page({ params }) {
   };
   console.log(name);
 
-  if (isLoading) return <h1>LOADING</h1>;
+  if (isLoading) return <Loading />;
 
   return (
     <form onSubmit={handleSubmit} className="w-full max-w-lg ml-6">
