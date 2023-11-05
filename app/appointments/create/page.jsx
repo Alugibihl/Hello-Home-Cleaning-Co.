@@ -139,13 +139,13 @@ export default function Page() {
               value={name}
               setValue={setName}
             />
-            <InputField
+            {/* <InputField
               label="Today's Date"
               type="date"
               name="date"
               value={date}
               setValue={setDate}
-            />
+            /> */}
             <InputField
               label="Phone Number"
               type="text"
