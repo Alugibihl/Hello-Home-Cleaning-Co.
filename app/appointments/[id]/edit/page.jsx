@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import InputField from "@/components/FormComponents/InputField";
 import SubmitButton from "@/components/FormComponents/SubmitButton";
 import Loading from "@/components/Loding";
+import ErrorText from "@/components/FormComponents/ErrorText";
 
 export default function Page({ params }) {
   const session = useSession();
@@ -20,12 +21,37 @@ export default function Page({ params }) {
   const [allergies, setAllergies] = useState(false);
   const [frequency, setFrequency] = useState("none");
   const [refSource, setRefSource] = useState("");
+  const [errors, setErrors] = useState({});
+  const [submittedWithErrors, SetSubmittedWithErrors] = useState(false);
+
+  useEffect(() => {
+    const errorsObj = {};
+    if (!name) errorsObj.name = "Name is required";
+    if (!phone) errorsObj.phone = "Phone number is required";
+    if (!address) errorsObj.address = "Address is required";
+    if (!stories) errorsObj.stories = "This field is required";
+    if (!rooms) errorsObj.rooms = "This field is required";
+    if (!noTouch) errorsObj.noTouch = "This field is required";
+    if (!pets) errorsObj.pets = "This field is required";
+    if (!areaInterest) errorsObj.areaInterest = "This field is required";
+    if (!refSource) errorsObj.refSource = "This field is required";
+    setErrors(errorsObj);
+  }, [
+    name,
+    phone,
+    address,
+    stories,
+    rooms,
+    noTouch,
+    areaInterest,
+    refSource,
+    pets,
+  ]);
 
   const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
   let user = session?.data?.user;
-  console.log("USER: ", user);
 
   if (session?.data?.status === "unauthenticated" || !user) router.push("/");
 
@@ -50,10 +76,14 @@ export default function Page({ params }) {
       })
       .then(() => setIsLoading(false));
   }, []);
-
+  console.log("ERRORS: ", errors);
   const handleSubmit = async (e) => {
     e.preventDefault();
     // ERROR HANDLING
+    if (Object.values(errors).length) {
+      SetSubmittedWithErrors(true);
+      return;
+    }
 
     await fetch(`/api/appointments/${params.id}`, {
       method: "PUT",
@@ -90,69 +120,102 @@ export default function Page({ params }) {
             Update your Appointment
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <InputField
-              label="Full Name"
-              name="name"
-              type="text"
-              value={name}
-              setValue={setName}
-            />
-            {/* <InputField
-              label="Today's Date"
-              type="date"
-              name="date"
-              value={date}
-              setValue={setDate}
-            /> */}
-            <InputField
-              label="Phone Number"
-              type="text"
-              name="phone"
-              value={phone}
-              setValue={setPhone}
-            />
-            <InputField
-              label="Address"
-              type="text"
-              name="address"
-              value={address}
-              setValue={setAddress}
-            />
-            <InputField
-              label="How many stories does your home have?"
-              type="text"
-              name="stories"
-              value={stories}
-              setValue={setStories}
-            />
-            <InputField
-              label="How many bedrooms and bathrooms?"
-              type="text"
-              name="rooms"
-              value={rooms}
-              setValue={setRooms}
-            />
-            <InputField
-              label="Do you have any Pets?"
-              type="text"
-              name="pets"
-              value={pets}
-              setValue={setPets}
-            />
-            <InputField
-              label="Any areas you would like us to avoid?"
-              type="text"
-              name="noTouch"
-              value={noTouch}
-              setValue={setNoTouch}
-            />
-            <InputField
-              label="Any areas you would like us to focus on?"
-              type="text"
-              name="focus"
-              value={areaInterest}
-              setValue={setAreaInterest}
-            />
+            <div>
+              <InputField
+                label="Full Name"
+                name="name"
+                type="text"
+                value={name}
+                setValue={setName}
+              />
+              {submittedWithErrors && errors.name && (
+                <ErrorText error={errors.name} />
+              )}
+            </div>
+            <div>
+              <InputField
+                label="Phone Number"
+                type="text"
+                name="phone"
+                value={phone}
+                setValue={setPhone}
+              />
+              {submittedWithErrors && errors.phone && (
+                <ErrorText error={errors.phone} />
+              )}
+            </div>
+            <div>
+              <InputField
+                label="Address"
+                type="text"
+                name="address"
+                value={address}
+                setValue={setAddress}
+              />
+              {submittedWithErrors && errors.address && (
+                <ErrorText error={errors.address} />
+              )}
+            </div>
+            <div>
+              <InputField
+                label="How many stories does your home have?"
+                type="text"
+                name="stories"
+                value={stories}
+                setValue={setStories}
+              />
+              {submittedWithErrors && errors.stories && (
+                <ErrorText error={errors.stories} />
+              )}
+            </div>
+            <div>
+              <InputField
+                label="How many bedrooms and bathrooms?"
+                type="text"
+                name="rooms"
+                value={rooms}
+                setValue={setRooms}
+              />
+              {submittedWithErrors && errors.rooms && (
+                <ErrorText error={errors.rooms} />
+              )}
+            </div>
+            <div>
+              <InputField
+                label="Do you have any Pets?"
+                type="text"
+                name="pets"
+                value={pets}
+                setValue={setPets}
+              />
+              {submittedWithErrors && errors.pets && (
+                <ErrorText error={errors.pets} />
+              )}
+            </div>
+            <div>
+              <InputField
+                label="Any areas you would like us to avoid?"
+                type="text"
+                name="noTouch"
+                value={noTouch}
+                setValue={setNoTouch}
+              />
+              {submittedWithErrors && errors.noTouch && (
+                <ErrorText error={errors.noTouch} />
+              )}
+            </div>
+            <div>
+              <InputField
+                label="Any areas you would like us to focus on?"
+                type="text"
+                name="focus"
+                value={areaInterest}
+                setValue={setAreaInterest}
+              />
+              {submittedWithErrors && errors.areaInterest && (
+                <ErrorText error={errors.areaInterest} />
+              )}
+            </div>
           </div>
           <div className="flex flex-wrap mb-6">
             <div className="w-full pl-4 pt-4">
@@ -206,13 +269,17 @@ export default function Page({ params }) {
               </select>
             </div>
           </div>
-
-          <InputField
-            type="text"
-            label="Where did you hear about us?"
-            value={refSource}
-            setValue={setRefSource}
-          />
+          <div>
+            <InputField
+              type="text"
+              label="Where did you hear about us?"
+              value={refSource}
+              setValue={setRefSource}
+            />
+            {submittedWithErrors && errors.refSource && (
+              <ErrorText error={errors.refSource} />
+            )}
+          </div>
 
           <div className="pl-3">
             <SubmitButton type="submit" buttonText="Update Appointment" />
