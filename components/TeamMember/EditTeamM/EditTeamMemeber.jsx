@@ -2,12 +2,12 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-async function editMember(id, { newName, newImg, newAbout }) {
+async function editMember(id, { newName, newImg, newAbout, newPosition }) {
 
     const res = await fetch(`/api/teammembers/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ newName, newImg, newAbout }),
+        body: JSON.stringify({ newName, newImg, newAbout, newPosition }),
     });
     if (res.ok) {
         const teamMember = await res.json();
@@ -15,16 +15,17 @@ async function editMember(id, { newName, newImg, newAbout }) {
     }
 }
 
-export default function EditTeamMember({ id, name, img, about }) {
+export default function EditTeamMember({ id, name, img, about, position }) {
     const [newName, setNewName] = useState(name);
     const [newImg, setNewImg] = useState(img);
     const [newAbout, setNewAbout] = useState(about);
+    const [newPosition, setNewPosition] = useState(position || "");
 
     const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await editMember(id, { newName, newImg, newAbout });
+        await editMember(id, { newName, newImg, newAbout, newPosition });
         router.push("/team");
     };
 
@@ -36,6 +37,7 @@ export default function EditTeamMember({ id, name, img, about }) {
                         className="block text-gray-700 text-s font-bold mb-2"
                     >Name
                         <input
+                            required={true}
                             autoComplete="on"
                             name="name"
                             value={newName}
@@ -46,18 +48,20 @@ export default function EditTeamMember({ id, name, img, about }) {
                     </label>
                 </div>
             </div>
+
             <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3">
                     <label
                         className="block text-gray-700 text-s font-bold mb-2"
-
-                    >
-                        Profile Picture
+                    >Position
                         <input
-                            name="img"
-                            value={newImg}
+                            required={true}
+
+                            autoComplete="on"
+                            name="position"
+                            value={newPosition}
                             type="text"
-                            onChange={(e) => setNewImg(e.target.value)}
+                            onChange={(e) => setNewPosition(e.target.value)}
                             className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         />
                     </label>
@@ -70,10 +74,27 @@ export default function EditTeamMember({ id, name, img, about }) {
                     >
                         About
                         <textarea
+                            required={true}
                             name="about"
                             value={newAbout}
                             type="text"
                             onChange={(e) => setNewAbout(e.target.value)}
+                            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        />
+                    </label>
+                </div>
+            </div>
+            <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full px-3">
+                    <label
+                        className="block text-gray-700 text-s font-bold mb-2"
+                    >
+                        Profile Picture
+                        <input
+                            name="img"
+                            value={newImg}
+                            type="text"
+                            onChange={(e) => setNewImg(e.target.value)}
                             className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         />
                     </label>
