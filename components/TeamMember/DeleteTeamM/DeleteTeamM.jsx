@@ -3,13 +3,17 @@ import { HiOutlineTrash } from "react-icons/hi"
 
 export default function DeleteTeamMemberButton({ id, setDeleted }) {
     const deleteMemeber = async () => {
+        const confirmed = confirm("Are you sure you want to delete team member?")
         try {
-            const res = await fetch(`/api/teammembers?id=${id}`, {
-                method: "DELETE",
-            });
+            if (confirmed) {
 
-            if (res.ok) {
-                setDeleted(true)
+                const res = await fetch(`/api/teammembers?id=${id}`, {
+                    method: "DELETE",
+                });
+
+                if (res.ok) {
+                    setDeleted(true)
+                }
             }
         } catch (error) { "message", error }
 
