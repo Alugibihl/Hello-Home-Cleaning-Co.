@@ -68,32 +68,39 @@ export default function CheckoutForm({ appointment, setIsPaid }) {
     }
 
     setIsLoading(true);
+    
+    try {
+      const result = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          // Make sure to change this to your payment completion page
+          return_url: "http://localhost:3000/appointments",
+          receipt_email: email,
+        },
+      });
 
-    stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/appointments",
-        receipt_email: email,
-      },
-    });
-
-    if (!error) paymentSuccessfull();
-
+  if (result.error) {
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
+    if (result.error.type === "card_error" || result.error.type === "validation_error") {
+      setMessage(result.error.message);
     } else {
       setMessage("An unexpected error occurred.");
     }
+  } else {
+    // No error returned by confirmPayment, which means Stripe.js will handle the redirect
+    // The result of the payment will be handled in the useEffect with retrievePaymentIntent
+  }
+} catch (error) {
+  // Catch any errors that occur during the confirmation process
+  setMessage("An error occurred while processing your payment. Please try again.");
+}
 
-
-    setIsLoading(false);
-  };
+setIsLoading(false);
+};
 
   const paymentElementOptions = {
     layout: "tabs",
