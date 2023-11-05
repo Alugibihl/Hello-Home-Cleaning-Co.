@@ -22,16 +22,17 @@ export default function CareersPage() {
                 </div> */}
                 <div className="relative w-full">
                     <img src="/join3.jpg" className="h-fit min-w-full"></img>
-                    <div className="absolute top-1/3 left-0 right-0 mx-auto text-center">
-                        < h1 className="text-6xl text-white font-serif">
+                    <div className="absolute top-1/3 left-0 right-0 mx-auto text-center font-serif">
+                        < h1 className="text-6xl text-white">
                             Join Our Team
                         </h1>
+                        <br></br>
+                        <h2 className="text-center text-white text-2xl">
+                            We are looking for hardworking, reliable, and positive individuals to join our growing team of cleaning specialists
+                        </h2>
                     </div>
                 </div>
                 <div className=" font-serif flex flex-col justify-center items-center bg-light-blue pb-32">
-                    <h2 className="text-center text-2xl">
-                        We are looking for hardworking, reliable, and positive individuals to join our growing team of cleaning specialists
-                    </h2>
                     <p className="text-xl font-bold pt-2" >Benefits you can look forward to:</p>
                     <ul className="text-xl text-center p-5">
                         <li className="p-1">Flexible schedule to meet your busy life.</li>
