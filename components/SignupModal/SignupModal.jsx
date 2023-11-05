@@ -182,7 +182,7 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
             Sign Up
           </button>
         </form>
-        <div className="login-switch-container flex justify-center mt-8">
+        <div className="login-switch-container flex justify-center mt-8 pb-2">
           <span>Already have an account?</span>
           <button
             onClick={handleSwitchLogin}

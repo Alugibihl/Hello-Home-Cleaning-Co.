@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { signIn, signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Image from "next/image";
@@ -21,7 +21,10 @@ const Navbar = ({ session }) => {
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
-      if (!event.target.closest("#user-menu-button") && !event.target.closest("#user-menu-dropdown")) {
+      if (
+        !event.target.closest("#user-menu-button") &&
+        !event.target.closest("#user-menu-dropdown")
+      ) {
         setShowDropdown(false);
       }
     };
@@ -37,20 +40,22 @@ const Navbar = ({ session }) => {
     };
   }, [showDropdown]);
 
-  const appointmentsLink = session?.user.role === 'admin' ? "/admin/appointments" : "/appointments";
-  const appointmentsText = session?.user.role === 'admin' ? "ALL APPOINTMENTS" : "MY APPOINTMENTS";
+  const appointmentsLink =
+    session?.user.role === "admin" ? "/admin/appointments" : "/appointments";
+  const appointmentsText =
+    session?.user.role === "admin" ? "ALL APPOINTMENTS" : "MY APPOINTMENTS";
 
   return (
     <>
       <nav className="flex items-center justify-between shadow-md border-b-2 py-4 px-6 bg-white">
         <Link href="/" passHref>
-            <Image
-              src="/hhlogo.png"
-              className="w-36 cursor-pointer"
-              width={144}
-              height={24}
-              alt="Hello Home Cleaning Co. Logo"
-            />
+          <Image
+            src="/hhlogo.png"
+            className="w-36 cursor-pointer"
+            width={144}
+            height={24}
+            alt="Hello Home Cleaning Co. Logo"
+          />
         </Link>
         <ul className="flex items-center font-roboto font-bold text-md text-gray-700 space-x-4 lg:space-x-6 ">
           <li className="mx-6">
@@ -62,12 +67,16 @@ const Navbar = ({ session }) => {
           <li className="mx-6">
             <Link href="/faq">FAQ</Link>
           </li>
-          <li className="mx-6">
-            <Link href="/careers">JOIN OUR TEAM!</Link>
-          </li>
-          <li className="mx-6">
-            <Link href="/appointments/create">MAKE AN APPOINTMENT</Link>
-          </li>
+          {session?.user?.role !== "admin" && (
+            <>
+              <li className="mx-6">
+                <Link href="/careers">JOIN OUR TEAM!</Link>
+              </li>
+              <li className="mx-6">
+                <Link href="/appointments/create">MAKE AN APPOINTMENT</Link>
+              </li>
+            </>
+          )}
           {session && (
             <li className="mx-6">
               <Link href={appointmentsLink}>{appointmentsText}</Link>
@@ -84,11 +93,23 @@ const Navbar = ({ session }) => {
               onClick={() => setShowDropdown(!showDropdown)}
             >
               {session.user.name}
-              <svg className="w-2.5 h-2.5 ml-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4"/>
+              <svg
+                className="w-2.5 h-2.5 ml-2.5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m1 1 4 4 4-4"
+                />
               </svg>
             </button>
-            
+
             {showDropdown && (
               <div id="user-menu-dropdown" className="origin-top-right absolute right-0 mt-2 w-30 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 z-10">
                 <ul className="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
@@ -108,7 +129,7 @@ const Navbar = ({ session }) => {
               </div>
             )}
           </div>
-          ) : (
+        ) : (
           <button
             onClick={() => setShowLoginModal(true)}
             className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center focus:outline-none focus:ring focus:border-blue-300"

@@ -21,7 +21,7 @@ export default function InputField({
           type={type}
           name={name}
           onChange={(e) => {
-            setValue(e);
+            setValue(e.target.value);
           }}
           className="appearance-none block bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
           disabled={false}
