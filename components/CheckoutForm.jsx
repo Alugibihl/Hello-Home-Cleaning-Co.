@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import {
   PaymentElement,
   LinkAuthenticationElement,
@@ -6,9 +6,10 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({ appointment, setIsPaid }) {
   const stripe = useStripe();
   const elements = useElements();
+  console.log("ELEMENTS: ", elements);
 
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
@@ -31,6 +32,8 @@ export default function CheckoutForm() {
       switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
+          paymentSuccessfull();
+          // setIsPaid(true);
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -45,6 +48,16 @@ export default function CheckoutForm() {
     });
   }, [stripe]);
 
+  async function paymentSuccessfull() {
+    const res = await fetch(`/api/appointments/${appointment._id}/payments`, {
+      headers: { "Content-Type": "application/json" },
+      method: "PUT",
+    });
+    if (res.ok) {
+      setIsPaid(true);
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -56,14 +69,16 @@ export default function CheckoutForm() {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
+    stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000",
-        receipt_email: email
+        return_url: "http://localhost:3000/appointments",
+        receipt_email: email,
       },
     });
+
+    if (!error) paymentSuccessfull();
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
@@ -75,6 +90,7 @@ export default function CheckoutForm() {
     } else {
       setMessage("An unexpected error occurred.");
     }
+
 
     setIsLoading(false);
   };
