@@ -119,8 +119,7 @@ export default function Page() {
       router.push("/appointments");
     }
   };
-  console.log("F: ", frequency);
-  // router.push("/appointments");
+ 
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-gray-50 p-6">
