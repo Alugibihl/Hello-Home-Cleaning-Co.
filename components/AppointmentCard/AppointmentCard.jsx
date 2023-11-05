@@ -34,7 +34,6 @@ export default function AppointmentCard({ appointment, handleDelete }) {
   }
   useEffect(() => {}, [isPaid]);
 
-
   return (
     <div className="border-2 p-3 m-auto w-fit rounded-md max-w-3xl">
       {appointment.status === "New" ? (
@@ -112,8 +111,8 @@ export default function AppointmentCard({ appointment, handleDelete }) {
         </div>
       )}
       <p>
-        If you have any questions about your appointment, please call us at
-        (419) 208-6265
+        If you have any questions about your appointment, please call us at{" "}
+        <a href="tel:4192086265">(419) 208-6265</a>
       </p>
     </div>
   );
