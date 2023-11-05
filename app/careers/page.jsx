@@ -5,7 +5,14 @@ import ResumeForm from "@/components/Resume/ResumeForm";
 import { useState } from "react";
 
 export default function CareersPage() {
-  const [showApply, setShowApply] = useState(false);
+    const [showApply, setShowApply] = useState(false);
+    const modalFunctions = {
+        setShowApply: (shown) => setShowApply(shown),
+    };
+    const handleModal = () => {
+        setShowApply(true);
+    };
+
 
     return (
         <>
@@ -22,17 +29,15 @@ export default function CareersPage() {
                     </div>
                 </div>
                 <div className=" font-serif flex flex-col justify-center items-center bg-light-blue pb-32">
-                    <h2 className="text-center  text-2xl">
-                        We are looking for hardworking, reliable, and positive individuals to join our growing team of cleaning specialists </h2>
-                   <p>Benefits you can look forward to</p>
-          
-<ul className="text-xl text-center p-5">
-          
-            <li>Flexible schedule to meet your busy life.</li>
-            <li>No prior experience required. We will train you</li>
-            <li>Close knit and supportive team</li>
-            <li>Skills you can take home with you</li>
-          
+                    <h2 className="text-center text-2xl">
+                        We are looking for hardworking, reliable, and positive individuals to join our growing team of cleaning specialists
+                    </h2>
+                    <p className="text-xl font-bold pt-2" >Benefits you can look forward to:</p>
+                    <ul className="text-xl text-center p-5">
+                        <li className="p-1">Flexible schedule to meet your busy life.</li>
+                        <li className="p-1">No prior experience required. We will train you</li>
+                        <li className="p-1">Close knit and supportive team</li>
+                        <li className="p-1">Skills you can take home with you</li>
                     </ul>
                     <button onClick={handleModal} className="mt-6 bg-feather-blue hover:bg-highlight-orange font-bold py-2 px-4 rounded">Apply here</button>
                 </div>
@@ -43,12 +48,11 @@ export default function CareersPage() {
                         modalFunctions={modalFunctions}
                     />
                 )}
-//   const modalFunctions = {
-//     setShowApply: (shown) => setShowApply(shown),
-//   };
-//   const handleModal = () => {
-//     setShowApply(true);
-//   };
+            </div>
+        </>
+    );
+}
+
 
 //   return (
 //     <>
@@ -108,11 +112,6 @@ export default function CareersPage() {
 //           />
 //         )}
 
-        {/* <ResumeForm /> */}
-      </div>
-    </>
-  );
-}
 {/* <div className="flex flex-col justify-center items-center">
                         <h2>BLAH BLAH BLAH</h2>
                         <img className="rounded w-max h-52" src="/pexels-karolina-grabowska-4239091.jpg" />
