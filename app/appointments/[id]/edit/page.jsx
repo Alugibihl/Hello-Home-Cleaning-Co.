@@ -168,7 +168,7 @@ export default function Page({ params }) {
                     type="checkbox"
                     name="allergies"
                     checked={allergies}
-                    onChange={(e) => setFormData((e) => setAllergies(true))}
+                    onChange={(e) => setAllergies(true)}
                   />
                   Yes
                 </label>
@@ -177,7 +177,7 @@ export default function Page({ params }) {
                     type="checkbox"
                     name="allergies"
                     checked={!allergies}
-                    onChange={(e) => setFormData((e) => setAllergies(false))}
+                    onChange={(e) => setAllergies(false)}
                   />
                   No
                 </label>
