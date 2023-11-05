@@ -22,10 +22,10 @@ export async function GET(request, { params }) {
 export async function PUT(request, { params }) {
     try {
         const { id } = params;
-        const { newName: name, newImg: img, newAbout: about } = await request.json()
+        const { newName: name, newImg: img, newAbout: about, newPosition: position } = await request.json()
 
         await connectMongoDB();
-        await TeamMember.findByIdAndUpdate(id, { name, img, about });
+        await TeamMember.findByIdAndUpdate(id, { name, img, about, position });
 
         return NextResponse.json({ message: "Member Successfully Updated", status: 201 })
     } catch (error) {
