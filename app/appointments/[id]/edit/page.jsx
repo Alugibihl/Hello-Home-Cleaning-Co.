@@ -24,9 +24,10 @@ export default function Page({ params }) {
   const [isLoading, setIsLoading] = useState(true);
 
   const router = useRouter();
-  let user = session.data?.user;
+  let user = session?.data?.user;
+  console.log("USER: ", user);
 
-  // if (!session || user.role !== "admin") router.push("/");
+  if (!user || user.role !== "admin") router.push("/");
 
   useEffect(() => {
     setIsLoading(true);
