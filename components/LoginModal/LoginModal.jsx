@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import "./LoginModal.css";
 import { redirect } from "next/dist/server/api-utils";
 
-function LoginModal({ close, modalFunctions, values: quoteFormData }) {
+function LoginModal({ close, modalFunctions }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const session = useSession();
@@ -14,7 +14,6 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
   const [loginError, setLoginError] = useState("");
   const router = useRouter();
 
-  console.log(quoteFormData);
   // useEffect(() => {
   //   return () => {
   //     dispatch(clearSessionErrors());
@@ -43,26 +42,26 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
       if (ok) {
         setLoginError("");
         //if quoteFormData object is not empty, then this modal is being opened in the request quote page
-        if (Object.keys(quoteFormData).length > 0) {
-          const appointment = await fetch("/api/appointments", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name: quoteFormData.name,
-              phone: quoteFormData.phone,
-              userId: quoteFormData.userId,
-              address: quoteFormData.address,
-              stories: quoteFormData.stories,
-              rooms: quoteFormData.rooms,
-              pets: quoteFormData.pets,
-              noTouch: quoteFormData.noTouch,
-              areaInterest: quoteFormData.areaInterest,
-              allergies: quoteFormData.allergies,
-              frequency: quoteFormData.frequency,
-              refSource: quoteFormData.refSource,
-            }),
-          });
-        }
+        // if (Object.keys(quoteFormData).length > 0) {
+        //   const appointment = await fetch("/api/appointments", {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/json" },
+        //     body: JSON.stringify({
+        //       name: quoteFormData.name,
+        //       phone: quoteFormData.phone,
+        //       userId: quoteFormData.userId,
+        //       address: quoteFormData.address,
+        //       stories: quoteFormData.stories,
+        //       rooms: quoteFormData.rooms,
+        //       pets: quoteFormData.pets,
+        //       noTouch: quoteFormData.noTouch,
+        //       areaInterest: quoteFormData.areaInterest,
+        //       allergies: quoteFormData.allergies,
+        //       frequency: quoteFormData.frequency,
+        //       refSource: quoteFormData.refSource,
+        //     }),
+        //   });
+        // }
         close(false);
         router.refresh();
       } else if (error) {
