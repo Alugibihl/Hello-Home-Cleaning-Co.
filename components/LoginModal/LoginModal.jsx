@@ -123,7 +123,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
         </button> */}
       </form>
       <div className="login-switch-container flex justify-center mt-8 pb-2">
-        <span>Don&apost have an account yet?</span>
+        <span>Don{"'"}t have an account yet?</span>
         <button
           onClick={handleSwitchSignup}
           className="switch-loginmodal-button text-logo-blue hover:text-highlight-orange"

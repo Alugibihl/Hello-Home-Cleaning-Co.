@@ -217,7 +217,7 @@ export default function Page() {
                     name="allergies"
                     checked={allergies}
                     onChange={(e) => setAllergies(true)}
-                  />
+                  />{" "}
                   Yes
                 </label>
                 <label>
@@ -226,7 +226,7 @@ export default function Page() {
                     name="allergies"
                     checked={!allergies}
                     onChange={(e) => setAllergies(false)}
-                  />
+                  />{" "}
                   No
                 </label>
               </div>
