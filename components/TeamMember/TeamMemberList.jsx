@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import Loading from "@/components/Loding";
 
 
-console.log(blankProfile);
+
 
 export default function TeamMemberList() {
   const session = useSession();
@@ -85,4 +85,5 @@ export default function TeamMemberList() {
       </div>
     </>
   );
+
 }

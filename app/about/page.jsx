@@ -15,21 +15,21 @@ export default function Page() {
               About Hello Home Cleaning Company
             </h1>
           </div>
-          <p className="pt-8 text-center">
+          <p className="pt-8">
             At Hello Home Cleaning Company, we believe that everyone deserves to
             come home to a clean and comfortable space. That{"'"}s why we offer
             a wide range of home cleaning services to fit your needs and budget.
             Whether you need weekly, biweekly, or monthly cleaning, or you{"'"}
             re looking for a one-time deep clean, we have you covered.
           </p>
-          <p className="my-4 text-center">
+          <p className="my-4">
             We understand that your home is more than just a place to live; it
             {"'"}s a reflection of you and your family. That{"'"}s why we take
             the time to get to know your needs and preferences before developing
             a cleaning plan that{"'"}s tailored to your specific home. Our team
             of experienced and professional cleaners are experts in their field.{" "}
           </p>
-          <p className="text-center">
+          <p className="">
             We use only the highest quality cleaning products and equipment, and
             we{"'"}re committed to providing our customers with the best
             possible service. We{"'"}re also proud to be a green company. We use
@@ -50,7 +50,7 @@ export default function Page() {
               We offer a variety of services to fit your needs and budget.
             </li>
           </ol>
-          <p className="text-center">
+          <p className="">
             If you{"'"}re looking for a high-quality and reliable home cleaning
             company in Perrysburg, Ohio, then look no further than Hello Home
             Cleaning Company. Contact us today for a free consultation!

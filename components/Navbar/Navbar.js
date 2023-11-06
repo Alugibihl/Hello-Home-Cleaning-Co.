@@ -90,7 +90,7 @@ const Navbar = ({ session }) => {
           <div className="relative">
             <button
               id="user-menu-button"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+              className="bg-feather-blue hover:bg-highlight-orange focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded text-sm px-5 py-2.5 text-center inline-flex items-center"
               aria-haspopup="true"
               aria-expanded={showDropdown ? "true" : "false"}
               onClick={() => setShowDropdown(!showDropdown)}
@@ -114,8 +114,14 @@ const Navbar = ({ session }) => {
             </button>
 
             {showDropdown && (
-              <div id="user-menu-dropdown" className="origin-top-right absolute right-0 mt-2 w-30 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 z-10">
-                <ul className="py-2 text-sm text-gray-700" aria-labelledby="dropdownDefaultButton">
+              <div
+                id="user-menu-dropdown"
+                className="origin-top-right absolute right-0 mt-2 w-30 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 z-10"
+              >
+                <ul
+                  className="py-2 text-sm text-gray-700"
+                  aria-labelledby="dropdownDefaultButton"
+                >
                   {/* Include any other dropdown items here */}
                   <li>
                     <button
@@ -135,7 +141,7 @@ const Navbar = ({ session }) => {
         ) : (
           <button
             onClick={() => setShowLoginModal(true)}
-            className="text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center focus:outline-none focus:ring focus:border-blue-300"
+            className="bg-feather-blue hover:bg-highlight-orange font-bold rounded text-sm px-5 py-2.5 text-center inline-flex items-center focus:outline-none focus:ring focus:border-blue-300"
           >
             Sign in
           </button>

@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^2.0.2",
+    "@edgestore/react": "^0.1.4",
+    "@edgestore/server": "^0.1.4",
+
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@formspree/react": "^2.5.1",
@@ -45,6 +48,8 @@
     "styled-components": "^6.1.0",
     "swr": "^2.2.4",
     "touch-cli": "^0.0.1"
+    "typescript": "^5.2.2",
+    "zod": "^3.22.4"
   },
   "peerDependencies": {
     "react": "^17.0.0 || ^18.0.0",
