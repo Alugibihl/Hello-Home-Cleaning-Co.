@@ -137,13 +137,6 @@ export default function Page() {
               value={name}
               setValue={setName}
             />
-            {/* <InputField
-              label="Today's Date"
-              type="date"
-              name="date"
-              value={date}
-              setValue={setDate}
-            /> */}
             <InputField
               label="Phone Number"
               type="text"
@@ -246,14 +239,12 @@ export default function Page() {
               </select>
             </div>
           </div>
-
           <InputField
             type="text"
             label="Where did you hear about us?"
             value={refSource}
             setValue={setRefSource}
           />
-
           <div className="pl-3">
             <SubmitButton type="submit" buttonText="Create Appointment" />
           </div>
