@@ -16,6 +16,7 @@ export default function Page() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [loading, setLoading] = useState(true);
+
   const session = useSession();
 
   const [name, setName] = useState("");
@@ -30,9 +31,16 @@ export default function Page() {
   const [allergies, setAllergies] = useState(false);
   const [frequency, setFrequency] = useState("None");
   const [refSource, setRefSource] = useState("");
-  const router = useRouter();
   const [quoteFormData, setQuoteFormData] = useState({});
   const [errors, setErrors] = useState({});
+
+  const session = useSession();
+  const router = useRouter();
+
+  const userId = session.data?.user?.id;
+
+  const userEmail = session.data.user.email
+  console.log(name, userEmail, "====================================")
 
   useEffect(() => {
     setTimeout(() => {
@@ -83,9 +91,6 @@ export default function Page() {
   const handleSignin = () => {
     setShowLoginModal(true);
   };
-
-  const userId = session.data?.user?.id;
-
   // if (!session || !session.data?.user) router.push("/");
 
   const handleSubmit = async (e) => {
@@ -109,7 +114,9 @@ export default function Page() {
           allergies,
           frequency,
           refSource,
-        });
+        }),
+      });
+         });
         handleSignin();
       } else {
         await fetch("/api/appointments", {
@@ -130,6 +137,13 @@ export default function Page() {
             refSource,
           }),
         });
+        const response = await fetch('/api/send', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userEmail, name })
+      })
 
         router.push("/appointments");
       }

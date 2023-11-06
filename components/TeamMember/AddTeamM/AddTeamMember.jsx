@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import { useEdgeStore } from "@/libs/edgestore";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -13,6 +14,12 @@ export default function AddTeamMember() {
     const [position, setPosition] = useState('')
     const [about, setAbout] = useState('');
 
+    const session = useSession();
+
+    const router = useRouter();
+    const userEmail = session.data.user.email
+    const confirmBooking = true
+    
     const [file, setFile] = useState("")
     // const [urls, setUrls] = useState('')
     const { edgestore } = useEdgeStore()
@@ -47,6 +54,16 @@ export default function AddTeamMember() {
             router.push("/team");
             // return teamMember;
         }
+        const response = await fetch('/api/send', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, userEmail, confirmBooking })
+        })
+        console.log(confirmBooking, "+++++++++++++++++++++++")
+        router.push("/team");
+
 
     };
 

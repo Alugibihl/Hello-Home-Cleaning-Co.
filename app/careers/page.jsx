@@ -20,7 +20,7 @@ export default function CareersPage() {
                     <div className="text-6xl font-serif">Join Our Team</div>
                 </div> */}
         <div className="relative w-full">
-          <img src="/join3.jpg" className="h-fit min-w-full" alt="join3"></img>
+          <img src="/join11.jpg" className="h-fit min-w-full" alt="join3"></img>
           <div className="absolute top-1/3 left-0 right-0 mx-auto text-center font-serif">
             <h1 className="text-6xl text-white">Join Our Team</h1>
             <br></br>
