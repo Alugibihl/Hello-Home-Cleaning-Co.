@@ -26,10 +26,6 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
     return (e) => setState(e.currentTarget.value);
   };
 
-  async function test(data) {
-    console.log(data);
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoginError("");
@@ -45,6 +41,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
     };
     signIn("credentials", data).then(async ({ ok, error }) => {
       if (ok) {
+        setLoginError("");
         //if quoteFormData object is not empty, then this modal is being opened in the request quote page
         if (Object.keys(quoteFormData).length > 0) {
           const appointment = await fetch("/api/appointments", {
@@ -52,7 +49,6 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               name: quoteFormData.name,
-              date: quoteFormData.date,
               phone: quoteFormData.phone,
               userId: quoteFormData.userId,
               address: quoteFormData.address,
@@ -68,13 +64,15 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
           });
         }
         close(false);
-        // router.push("/appointments");
         router.refresh();
-      }
-      if (error) {
+      } else if (error) {
         setLoginError("Credentials do not match!");
+        return;
       }
     });
+    // if (!loginError) {
+    //   router.push("/appointments");
+    // }
   };
 
   // const handleClick = () => {

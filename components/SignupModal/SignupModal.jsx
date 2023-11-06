@@ -80,7 +80,6 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 name: quoteFormData.name,
-                date: quoteFormData.date,
                 phone: quoteFormData.phone,
                 userId: quoteFormData.userId,
                 address: quoteFormData.address,

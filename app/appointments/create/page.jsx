@@ -29,7 +29,7 @@ export default function Page() {
   const [frequency, setFrequency] = useState("None");
   const [refSource, setRefSource] = useState("");
   const router = useRouter();
-  let quoteFormData = {};
+  const [quoteFormData, setQuoteFormData] = useState({});
 
   useEffect(() => {
     setTimeout(() => {
@@ -95,9 +95,8 @@ export default function Page() {
     // }
 
     if (!session.data?.user) {
-      quoteFormData = {
+      setQuoteFormData({
         name,
-        date,
         phone,
         userId,
         address,
@@ -109,7 +108,7 @@ export default function Page() {
         allergies,
         frequency,
         refSource,
-      };
+      });
       handleSignin();
     } else {
       await fetch("/api/appointments", {
