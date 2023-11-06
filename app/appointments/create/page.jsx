@@ -92,7 +92,8 @@ export default function Page() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let errors = validateFields();
+    let errors = {};
+    errors = validateFields();
     if (Object.keys(errors).length > 0) {
       setErrors(errors);
       return;

@@ -14,8 +14,7 @@ export default function Page() {
   const [expandedRowId, setExpandedRowId] = useState(null);
   // const [loading, setLoading] = useState(true);
 
-  // checks if user is admin
-  if (session?.data?.user?.role !== "admin") router.push("/");
+  if (session?.data?.user?.role !== 'admin') router.push('/')
 
   const handleExpandClick = (rowId) => {
     setExpandedRowId(expandedRowId === rowId ? null : rowId);
@@ -25,15 +24,10 @@ export default function Page() {
     setFilter("status", e.target.value);
   };
 
-  const handlePaymentFilterChange = (e) => {
-    setFilter(
-      "paid",
-      e.target.value === "paid"
-        ? true
-        : e.target.value === "unpaid"
-        ? false
-        : undefined
-    );
+   const handlePaymentFilterChange = (e) => {
+    console.log(e.target.value);
+    setFilter('paid', e.target.value);
+
   };
 
   useEffect(() => {
@@ -53,14 +47,56 @@ export default function Page() {
         .then((res) => res.json())
         .then((data) => setAppointments(data.appointments));
     }
-  }, [session]);
+  }, []);
+
+  const fetchAppointments = () => {
+    const url = session.data.user.role === 'admin'
+      ? "/api/appointments"
+      : `/api/users/${session.data.user.id}/appointments`;
+
+    fetch(url, { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => setAppointments(data.appointments));
+  };
+
+  useEffect(() => {
+    if (session.data?.user) {
+      fetchAppointments(); // Use the fetchAppointments function here
+    }
+  }, [session.data?.user]);
+
+  const updateAppointment = async (id, data) => {
+    const response = await fetch(`/api/appointments/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    if (response.status === 200) {
+      return await response.json();
+    } else {
+      throw new Error(`Failed to update appointment: ${response.status}`);
+    }
+  };
+
+  const handleUpdateAppointment = async (updatedAppointment) => {
+    try {
+      const updatedData = await updateAppointment(updatedAppointment.id, updatedAppointment);
+      fetchAppointments();
+      console.log('Appointment updated successfully', updatedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "long", day: "numeric" };
     let formattedDate = date.toLocaleDateString("en-US", options);
 
-    const day = date.getDate();
+    const day = date.getDate() + 1;
     let suffix = "th";
     if (day % 10 === 1 && day !== 11) suffix = "st";
     else if (day % 10 === 2 && day !== 12) suffix = "nd";
@@ -128,8 +164,9 @@ export default function Page() {
       { Header: "Date", accessor: "date" },
       { Header: "Client", accessor: "name" },
       // { Header: 'Status', accessor: 'status' },
-      { Header: "Number", accessor: "phone" },
-      { Header: "Referred By", accessor: "refSource" },
+      { Header: 'Number', accessor: 'phone' },
+      { Header: 'Address', accessor: 'address'},
+      { Header: 'Referred By', accessor: 'refSource' },
       {
         Header: "Payment Status",
         accessor: "paid",
@@ -159,16 +196,23 @@ export default function Page() {
   );
 
   const data = React.useMemo(
-    () =>
-      appointments.map((app, index) => ({
-        id: index,
-        date: formatDate(app.date),
-        phone: formatNumber(app.phone),
-        status: app.status,
-        paid: app.paid,
-        name: app.name,
-        refSource: app.refSource,
-      })),
+    () => appointments.map((app, index) => ({
+      id: app._id,
+      date: formatDate(app.date),
+      phone: formatNumber(app.phone),
+      status: app.status,
+      rooms: app.rooms,
+      stories: app.stories,
+      noTouch: app.noTouch,
+      pets: app.pets,
+      areaInterest: app.areaInterest,
+      paid: app.paid,
+      name: app.name,
+      address: app.address,
+      refSource: app.refSource,
+      price: app.price,
+      frequency: app.frequency
+    })),
     [appointments]
   );
 
@@ -189,6 +233,7 @@ export default function Page() {
     useFilters
   );
 
+
   return (
     <div className="w-full pt-4 px-10">
       <div className="flex justify-between space-x-4 mb-4">
@@ -207,8 +252,8 @@ export default function Page() {
           className="w-40 h-12 p-2 text-lg text-center bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
         >
           <option value="">All</option>
-          <option value="paid">Paid</option>
-          <option value="unpaid">Unpaid</option>
+          <option value="true">Paid</option>
+          <option value="false">Unpaid</option>
         </select>
       </div>
       <table {...getTableProps()} className="w-full max-h-screen overflow-auto">
@@ -221,7 +266,7 @@ export default function Page() {
                   {...column.getHeaderProps()}
                   className="font-bold text-sm border-b border-gray-300 p-2"
                 >
-                  {column.render("Header")}
+                  {column.render('Header')}
                 </th>
               ))}
             </tr>
@@ -234,22 +279,15 @@ export default function Page() {
               <React.Fragment key={row.id}>
                 <tr {...row.getRowProps()} className="hover:bg-gray-100">
                   {row.cells.map((cell) => (
-                    <td
-                      key={cell.id}
-                      {...cell.getCellProps()}
-                      className="border border-gray-300 p-1"
-                    >
-                      {cell.render("Cell")}
+                    <td {...cell.getCellProps()} className="border border-gray-300 p-2">
+                      {cell.render('Cell')}
                     </td>
                   ))}
                 </tr>
                 {expandedRowId === row.id && (
                   <tr>
-                    <td
-                      colSpan={columns.length + 1}
-                      className="border border-gray-300 p-2"
-                    >
-                      <ExpandedRowContent appointment={row.original} />
+                    <td colSpan={columns.length + 1} className="border border-gray-300 p-2">
+                      <ExpandedRowContent appointment={row.original} updateAppointment={handleUpdateAppointment} />
                     </td>
                   </tr>
                 )}

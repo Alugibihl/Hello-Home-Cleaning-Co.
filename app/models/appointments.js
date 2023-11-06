@@ -8,8 +8,7 @@ const appointmentSchema = new Schema(
     },
     date: {
       type: String,
-      required: true,
-      default: "unscheduled",
+      default: Date.now()
     },
     phone: {
       type: Number,

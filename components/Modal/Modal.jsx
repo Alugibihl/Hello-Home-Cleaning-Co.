@@ -1,11 +1,6 @@
 import "./Modal.css";
 
-const Modal = ({
-  component: Component,
-  close,
-  modalFunctions,
-  values = {},
-}) => {
+const Modal = ({ component: Component, close, modalFunctions }) => {
   return (
     <div className="modal">
       <div className="modal-content">
@@ -15,11 +10,7 @@ const Modal = ({
           src="/CloseModal.png"
           onClick={() => close(false)}
         />
-        <Component
-          close={close}
-          modalFunctions={modalFunctions}
-          values={values}
-        />
+        <Component close={close} modalFunctions={modalFunctions} />
       </div>
     </div>
   );
