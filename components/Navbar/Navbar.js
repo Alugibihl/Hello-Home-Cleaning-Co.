@@ -67,6 +67,9 @@ const Navbar = ({ session }) => {
           <li className="mx-6">
             <Link href="/faq">FAQ</Link>
           </li>
+          <li className="mx-6">
+            <Link href="/team">MEET THE TEAM</Link>
+          </li>
           {session?.user?.role !== "admin" && (
             <>
               <li className="mx-6">
