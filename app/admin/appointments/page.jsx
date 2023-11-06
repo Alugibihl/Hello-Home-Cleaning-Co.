@@ -14,12 +14,7 @@ export default function Page() {
   const [expandedRowId, setExpandedRowId] = useState(null);
   // const [loading, setLoading] = useState(true);
 
-<<<<<<< HEAD
-  // checks if user is admin
-  if (session?.data?.user?.role !== "admin") router.push("/");
-=======
   if (session?.data?.user?.role !== 'admin') router.push('/')
->>>>>>> VincentBranch
 
   const handleExpandClick = (rowId) => {
     setExpandedRowId(expandedRowId === rowId ? null : rowId);
@@ -29,22 +24,10 @@ export default function Page() {
     setFilter("status", e.target.value);
   };
 
-<<<<<<< HEAD
-  const handlePaymentFilterChange = (e) => {
-    setFilter(
-      "paid",
-      e.target.value === "paid"
-        ? true
-        : e.target.value === "unpaid"
-        ? false
-        : undefined
-    );
-=======
    const handlePaymentFilterChange = (e) => {
     console.log(e.target.value);     
     setFilter('paid', e.target.value);
     
->>>>>>> VincentBranch
   };
 
   useEffect(() => {
@@ -181,14 +164,9 @@ export default function Page() {
       { Header: "Date", accessor: "date" },
       { Header: "Client", accessor: "name" },
       // { Header: 'Status', accessor: 'status' },
-<<<<<<< HEAD
-      { Header: "Number", accessor: "phone" },
-      { Header: "Referred By", accessor: "refSource" },
-=======
       { Header: 'Number', accessor: 'phone' },
       { Header: 'Address', accessor: 'address'},
       { Header: 'Referred By', accessor: 'refSource' },
->>>>>>> VincentBranch
       {
         Header: "Payment Status",
         accessor: "paid",
@@ -274,8 +252,8 @@ export default function Page() {
           className="w-40 h-12 p-2 text-lg text-center bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
         >
           <option value="">All</option>
-          <option value="paid">Paid</option>
-          <option value="unpaid">Unpaid</option>
+          <option value="true">Paid</option>
+          <option value="false">Unpaid</option>
         </select>
       </div>
       <table {...getTableProps()} className="w-full max-h-screen overflow-auto">
@@ -288,8 +266,7 @@ export default function Page() {
                   {...column.getHeaderProps()}
                   className="font-bold text-sm border-b border-gray-300 p-2"
                 >
-<<<<<<< HEAD
-                  {column.render("Header")}
+                  {column.render('Header')}
                 </th>
               ))}
             </tr>
@@ -302,22 +279,15 @@ export default function Page() {
               <React.Fragment key={row.id}>
                 <tr {...row.getRowProps()} className="hover:bg-gray-100">
                   {row.cells.map((cell) => (
-                    <td
-                      key={cell.id}
-                      {...cell.getCellProps()}
-                      className="border border-gray-300 p-1"
-                    >
-                      {cell.render("Cell")}
+                    <td {...cell.getCellProps()} className="border border-gray-300 p-2">
+                      {cell.render('Cell')}
                     </td>
                   ))}
                 </tr>
                 {expandedRowId === row.id && (
                   <tr>
-                    <td
-                      colSpan={columns.length + 1}
-                      className="border border-gray-300 p-2"
-                    >
-                      <ExpandedRowContent appointment={row.original} />
+                    <td colSpan={columns.length + 1} className="border border-gray-300 p-2">
+                      <ExpandedRowContent appointment={row.original} updateAppointment={handleUpdateAppointment} />
                     </td>
                   </tr>
                 )}
@@ -327,57 +297,5 @@ export default function Page() {
         </tbody>
       </table>
     </div>
-=======
-                <option value="">All</option>
-                <option value="new">New</option>
-                <option value="past">Past</option>
-                <option value="scheduled">Scheduled</option>
-              </select>
-              <div className="flex-grow"></div>
-              <select onChange={handlePaymentFilterChange}
-              className="w-40 h-12 p-2 text-lg text-center bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
-          >
-                <option value="">All</option>
-                <option value="true">Paid</option>
-                <option value="false">Unpaid</option>
-              </select>
-            </div>
-            <table {...getTableProps()}className="w-full max-h-screen overflow-auto">
-              <thead>
-                {headerGroups.map(headerGroup => (
-                  <tr {...headerGroup.getHeaderGroupProps()}>
-                    {headerGroup.headers.map(column => (
-                      <th {...column.getHeaderProps()} className="font-bold text-md border-b border-gray-300 p-2">
-                        {column.render('Header')}
-                      </th>
-                    ))}
-                  </tr>
-                ))}
-              </thead>
-              <tbody {...getTableBodyProps()}>
-                {rows.map(row => {
-                  prepareRow(row);
-                  return (
-                    <React.Fragment key={row._id}>
-                      <tr {...row.getRowProps()} className="hover:bg-gray-100">
-                        {row.cells.map(cell => (
-                          <td {...cell.getCellProps()}  className="border border-gray-300 p-2">{cell.render('Cell')}</td>
-                        ))}
-                      </tr>
-                      {expandedRowId === row.id && (
-                        <tr>
-                          <td colSpan={columns.length + 1} className="border border-gray-300 p-2">
-                            <ExpandedRowContent appointment={row.original} updateAppointment={handleUpdateAppointment}/>
-                          </td>
-                        </tr>
-                      )}
-                    </React.Fragment>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
->>>>>>> VincentBranch
-  );
+  );  
 }

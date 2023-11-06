@@ -94,13 +94,11 @@ export default function Page({ params }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // ERROR HANDLING
-<<<<<<< HEAD
     if (Object.values(errors).length) {
       SetSubmittedWithErrors(true);
       return;
     }
 
-=======
     const reversedDate = reverseFormatDate(date);
 
     console.log(
@@ -117,7 +115,6 @@ export default function Page({ params }) {
       frequency,
       refSource
     );
->>>>>>> VincentBranch
     await fetch(`/api/appointments/${params.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
