@@ -50,6 +50,32 @@ export default function Page() {
     }
   }, []);
 
+  const updateAppointment = async (id, data) => {
+    const response = await fetch(`/api/appointments/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+  
+    if (response.status === 200) {
+      return await response.json(); // Properly return the response data
+    } else {
+      throw new Error(`Failed to update appointment: ${response.status}`);
+    }
+  };
+
+  const handleUpdateAppointment = async (updatedAppointment) => {
+    try {
+      await updateAppointment(updatedAppointment.id, updatedAppointment);
+      // Here you can refresh the appointment list or show a success message
+      console.log('Appointment updated successfully');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
   function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -149,7 +175,7 @@ export default function Page() {
 
   const data = React.useMemo(
     () => appointments.map((app, index) => ({
-      id: index,
+      id: app._id,
       date: formatDate(app.date),
       phone: formatNumber(app.phone),
       status: app.status,
@@ -222,7 +248,7 @@ export default function Page() {
                 {rows.map(row => {
                   prepareRow(row);
                   return (
-                    <React.Fragment key={row.id}>
+                    <React.Fragment key={row._id}>
                       <tr {...row.getRowProps()} className="hover:bg-gray-100">
                         {row.cells.map(cell => (
                           <td {...cell.getCellProps()}  className="border border-gray-300 p-2">{cell.render('Cell')}</td>
@@ -231,7 +257,7 @@ export default function Page() {
                       {expandedRowId === row.id && (
                         <tr>
                           <td colSpan={columns.length + 1} className="border border-gray-300 p-2">
-                            <ExpandedRowContent appointment={row.original} />
+                            <ExpandedRowContent appointment={row.original} updateAppointment={handleUpdateAppointment}/>
                           </td>
                         </tr>
                       )}

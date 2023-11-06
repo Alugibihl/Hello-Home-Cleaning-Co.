@@ -29,6 +29,23 @@ export default function Page({ params }) {
 
   if (!user || user.role !== "admin") router.push("/");
 
+  function reverseFormatDate(formattedString) {
+    // Remove the ordinal suffix ('st', 'nd', 'rd', 'th') from the day
+    const dayRegex = /(\d+)(st|nd|rd|th)/;
+    const cleanedString = formattedString.replace(dayRegex, '$1');
+  
+    // Create a Date object from the cleaned string
+    const date = new Date(cleanedString);
+  
+    // Format the Date object into a string with format 'YYYY-MM-DD'
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
+  }
+  
+
   useEffect(() => {
     setIsLoading(true);
     fetch(`/api/appointments/${params.id}`, { cache: "no-store" })
@@ -37,7 +54,7 @@ export default function Page({ params }) {
         const { appointment } = data;
         console.log("CURRENT APPOINTMENT: ", appointment);
         setName(appointment.name);
-        setDate(appointment.date);
+        setDate(reverseFormatDate(appointment.date));
         setPhone(appointment.phone);
         setAddress(appointment.address);
         setStories(appointment.stories);
@@ -55,6 +72,8 @@ export default function Page({ params }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // ERROR HANDLING
+    const reversedDate = reverseFormatDate(date);
+
     console.log(
       name,
       date,
@@ -74,7 +93,7 @@ export default function Page({ params }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name,
-        date,
+        date: reversedDate,
         phone,
         address,
         stories,
@@ -112,13 +131,13 @@ export default function Page({ params }) {
               value={name}
               setValue={setName}
             />
-            {/* <InputField
-              label="Today's Date"
-              type="date"
-              name="date"
-              value={date}
-              setValue={setDate}
-            /> */}
+          <InputField
+          label="Appointment Date"
+            type="date"
+            name="date"
+            value={date}
+            setValue={setDate}
+          />
             <InputField
               label="Phone Number"
               type="text"
