@@ -92,6 +92,7 @@ export default function Page() {
   };
 
   function formatDate(dateString) {
+    if (dateString) {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "long", day: "numeric" };
     let formattedDate = date.toLocaleDateString("en-US", options);
@@ -103,6 +104,7 @@ export default function Page() {
     else if (day % 10 === 3 && day !== 13) suffix = "rd";
 
     return formattedDate.replace(/\d+/, `${day}${suffix}`);
+    }
   }
 
   function formatNumber(phoneNumber) {
@@ -117,6 +119,7 @@ export default function Page() {
   }
 
   function reverseFormatDate(formattedString) {
+    if (formattedString) {
     const dayRegex = /(\d+)(st|nd|rd|th)/;
     const cleanedString = formattedString.replace(dayRegex, '$1');
     const date = new Date(cleanedString);
@@ -125,6 +128,7 @@ export default function Page() {
     const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
     const day = date.getDate().toString().padStart(2, '0'); 
     return `${year}-${month}-${day}`;
+    }
   }
   
   

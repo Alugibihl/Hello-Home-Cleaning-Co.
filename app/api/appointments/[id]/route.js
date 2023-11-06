@@ -93,6 +93,7 @@ export async function PUT(request, { params }) {
   };
 
 function reverseFormatDate(formattedString) {
+  if (formattedString) {
   const dayRegex = /(\d+)(st|nd|rd|th)/;
   const cleanedString = formattedString.replace(dayRegex, '$1');
 
@@ -103,6 +104,7 @@ function reverseFormatDate(formattedString) {
   const day = date.getDate().toString().padStart(2, '0');
 
   return `${year}-${month}-${day}`;
+  }
 }
 
 
