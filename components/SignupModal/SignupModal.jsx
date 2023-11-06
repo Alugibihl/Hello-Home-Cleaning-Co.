@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import "./SignupModal.css";
 
-function SignupModal({ close, modalFunctions, values: quoteFormData }) {
+function SignupModal({ close, modalFunctions }) {
   const [errors, setErrors] = useState({});
   const router = useRouter();
   const [name, setName] = useState("");
@@ -74,26 +74,26 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
       signIn("credentials", data).then(async ({ ok, error }) => {
         if (ok) {
           //if quoteFormData object is not empty, then this modal is being opened in the request quote page
-          if (Object.keys(quoteFormData).length > 0) {
-            const appointment = await fetch("/api/appointments", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                name: quoteFormData.name,
-                phone: quoteFormData.phone,
-                userId: quoteFormData.userId,
-                address: quoteFormData.address,
-                stories: quoteFormData.stories,
-                rooms: quoteFormData.rooms,
-                pets: quoteFormData.pets,
-                noTouch: quoteFormData.noTouch,
-                areaInterest: quoteFormData.areaInterest,
-                allergies: quoteFormData.allergies,
-                frequency: quoteFormData.frequency,
-                refSource: quoteFormData.refSource,
-              }),
-            });
-          }
+          // if (Object.keys(quoteFormData).length > 0) {
+          //   const appointment = await fetch("/api/appointments", {
+          //     method: "POST",
+          //     headers: { "Content-Type": "application/json" },
+          //     body: JSON.stringify({
+          //       name: quoteFormData.name,
+          //       phone: quoteFormData.phone,
+          //       userId: quoteFormData.userId,
+          //       address: quoteFormData.address,
+          //       stories: quoteFormData.stories,
+          //       rooms: quoteFormData.rooms,
+          //       pets: quoteFormData.pets,
+          //       noTouch: quoteFormData.noTouch,
+          //       areaInterest: quoteFormData.areaInterest,
+          //       allergies: quoteFormData.allergies,
+          //       frequency: quoteFormData.frequency,
+          //       refSource: quoteFormData.refSource,
+          //     }),
+          //   });
+          // }
           close(false);
           // router.push("/appointments");
           router.refresh();
