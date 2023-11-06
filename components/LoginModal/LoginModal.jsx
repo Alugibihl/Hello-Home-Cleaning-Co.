@@ -14,6 +14,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
   const [loginError, setLoginError] = useState("");
   const router = useRouter();
 
+  console.log(quoteFormData);
   // useEffect(() => {
   //   return () => {
   //     dispatch(clearSessionErrors());
@@ -24,10 +25,6 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
     const setState = field === "email" ? setEmail : setPassword;
     return (e) => setState(e.currentTarget.value);
   };
-
-  async function test(data) {
-    console.log(data);
-  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,6 +41,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
     };
     signIn("credentials", data).then(async ({ ok, error }) => {
       if (ok) {
+        setLoginError("");
         //if quoteFormData object is not empty, then this modal is being opened in the request quote page
         if (Object.keys(quoteFormData).length > 0) {
           const appointment = await fetch("/api/appointments", {
@@ -51,7 +49,6 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               name: quoteFormData.name,
-              date: quoteFormData.date,
               phone: quoteFormData.phone,
               userId: quoteFormData.userId,
               address: quoteFormData.address,
@@ -67,13 +64,15 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
           });
         }
         close(false);
-        // router.push("/appointments");
         router.refresh();
-      }
-      if (error) {
+      } else if (error) {
         setLoginError("Credentials do not match!");
+        return;
       }
     });
+    // if (!loginError) {
+    //   router.push("/appointments");
+    // }
   };
 
   // const handleClick = () => {
@@ -124,7 +123,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
         </button> */}
       </form>
       <div className="login-switch-container flex justify-center mt-8 pb-2">
-        <span>Don't have an account yet?</span>
+        <span>Don{"'"}t have an account yet?</span>
         <button
           onClick={handleSwitchSignup}
           className="switch-loginmodal-button text-logo-blue hover:text-highlight-orange"

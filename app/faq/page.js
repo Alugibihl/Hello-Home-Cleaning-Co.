@@ -26,7 +26,7 @@ const FaqPage = () => {
 
                     <p>
                         A: We use eco-friendly cleaning products that are safe for your family and pets. We also avoid using harsh chemicals that could damage your furniture or surfaces.
-                        If you have any specific concerns about the cleaning products we use, please let us know, and we'll be happy to accommodate you.
+                        If you have any specific concerns about the cleaning products we use, please let us know, and we{"'"}ll be happy to accommodate you.
                     </p>
                 </section>
 
@@ -34,7 +34,7 @@ const FaqPage = () => {
                     <h2 className="text-xl font-semibold">Q: Are you insured and bonded?</h2>
 
                     <p>
-                        A: Yes, we are fully insured and bonded. You can rest assured that your home and belongings are protected while we're cleaning.
+                        A: Yes, we are fully insured and bonded. You can rest assured that your home and belongings are protected while we{"'"}re cleaning.
                     </p>
                 </section>
 
@@ -42,7 +42,7 @@ const FaqPage = () => {
                     <h2 className="text-xl font-semibold">Q: Do you offer a satisfaction guarantee?</h2>
 
                     <p>
-                        A: Yes, we offer a 100% satisfaction guarantee. We're not happy until you're happy. If you're not satisfied with our cleaning services for any reason, please let us know, and we'll come back and reclean your home at no additional charge.
+                        A: Yes, we offer a 100% satisfaction guarantee. We{"'"}re not happy until you{"'"}re happy. If you{"'"}re not satisfied with our cleaning services for any reason, please let us know, and we{"'"}ll come back and reclean your home at no additional charge.
                     </p>
                 </section>
 
@@ -50,7 +50,7 @@ const FaqPage = () => {
                     <h2 className="text-xl font-semibold">Q: How do I book a cleaning appointment?</h2>
 
                     <p>
-                        A: To book a cleaning appointment, please contact us by phone or email. We'll be happy to schedule a time that works for you.
+                        A: To book a cleaning appointment, please contact us by phone or email. We{"'"}ll be happy to schedule a time that works for you.
                     </p>
                 </section>
 

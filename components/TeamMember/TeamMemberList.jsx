@@ -1,30 +1,32 @@
-'use client'
+"use client";
 import Link from "next/link";
 import { HiPencilAlt } from "react-icons/hi";
-import blankProfile from '../../public/blank-profile-pic.png'
+import blankProfile from "../../public/blank-profile-pic.png";
 import AddTeamMember from "./AddTeamM/AddTeamMember";
 import DeleteTeamMemberButton from "./DeleteTeamM/DeleteTeamM";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
 
+
 export default function TeamMemberList() {
-    const session = useSession()
-    const [members, setMembers] = useState('')
-    const [loading, setLoading] = useState(false);
-    const [deleted, setDeleted] = useState(false)
-    // const {useEdgeStore} fro
+  const session = useSession();
+  const [members, setMembers] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [deleted, setDeleted] = useState(false);
 
-    useEffect(() => {
-        fetch("/api/teammembers", {
-            cache: "no-store",
-        })
-            .then((res) => res.json())
-            .then((data) => setMembers(data.members))
-            .then(() => setLoading(true))
-            .then(() => setDeleted(false))
+  useEffect(() => {
+    fetch("/api/teammembers", {
+      cache: "no-store",
+    })
+      .then((res) => res.json())
+      .then((data) => setMembers(data.members))
+      .then(() => setLoading(true))
+      .then(() => setDeleted(false));
+  }, [deleted]);
 
-    }, [deleted])
+  let user = session.data?.user;
+  if (!loading) return <h1>Loading</h1>;
 
 
     let user = session.data?.user
@@ -73,4 +75,5 @@ export default function TeamMemberList() {
             ))}
         </>
     );
+
 }
