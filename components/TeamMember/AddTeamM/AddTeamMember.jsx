@@ -104,32 +104,32 @@ export default function AddTeamMember() {
                 </div>
             </div>
             <div className="flex flex-wrap -mx-3 mb-6">
-                    <div className="w-full px-3">
-                        <label
-                            className="block text-gray-700 text-s font-bold mb-2"
+                <div className="w-full px-3">
+                    <label
+                        className="block text-gray-700 text-s font-bold mb-2"
 
-                        >
-                            Profile Picture
-                            <input
-                                name="img"
-                                // value={file}
-                                type="file"
-                                accept="image/png, image/jpeg"
-                                onChange={(e) => setFile(e.target.files?.[0])}
-                                className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            />
-                        </label>
+                    >
+                        Profile Picture
+                        <input
+                            name="img"
+                            // value={file}
+                            type="file"
+                            accept="image/png, image/jpeg"
+                            onChange={(e) => setFile(e.target.files?.[0])}
+                            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        />
+                    </label>
 
-                    </div>
                 </div>
+            </div>
             <button type="submit" className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Create Team Member
             </button>
         </form>
-    {/* <div>
-                {urls?.url && <Link href={urls.url} target="_blank">URL</Link>}
-                {urls?.thumbnailUrl && <Link href={urls.thumbnailUrl} target="_blank">URL</Link>}
+        // {/* <div>
+        //             {urls?.url && <Link href={urls.url} target="_blank">URL</Link>}
+        //             {urls?.thumbnailUrl && <Link href={urls.thumbnailUrl} target="_blank">URL</Link>}
 
-            </div> */}
+        //         </div> */}
     );
 }

@@ -82,11 +82,11 @@ export default function EditTeamMember({ id, name, img, about, position }) {
                             value={newAbout}
                             type="text"
                             onChange={(e) => setNewAbout(e.target.value)}
-                                        />
+                        />
                     </label>
                 </div>
             </div>
-    <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3">
                     <label
                         className="block text-gray-700 text-s font-bold mb-2"
@@ -133,7 +133,7 @@ export default function EditTeamMember({ id, name, img, about, position }) {
                                     //save your data here
                                 }
                             }}> set Picture</button> */}
-                        <img src={newImg ? newImg : img}></img>
+                        {/* <img src={newImg ? newImg : img}></img> */}
                     </label>
                 </div>
             </div>
@@ -143,7 +143,7 @@ export default function EditTeamMember({ id, name, img, about, position }) {
                     <label
                         className="block text-gray-700 text-s font-bold mb-2"
                     >
-                     Profile Picture
+                        Profile Picture
                         <input
                             name="img"
                             // value={file}
