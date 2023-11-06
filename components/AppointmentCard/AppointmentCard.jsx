@@ -3,6 +3,8 @@ import { MdPendingActions } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 import { BsFillCalendarCheckFill } from "react-icons/bs";
+import { useEffect, useState } from "react";
+import Payment from "../Payment/Payment";
 function getDay(string) {
   //   return string;
   const months = [
@@ -22,26 +24,15 @@ function getDay(string) {
   const [year, month, day] = string.split("T")[0].split("-");
   return `${months[month - 1]} ${day}`;
 }
-export default function AppointmentCard({ appointment }) {
+export default function AppointmentCard({ appointment, handleDelete }) {
   const router = useRouter();
+  // const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [isPaid, setIsPaid] = useState(appointment.paid);
 
   function handleUpdate(id) {
     router.push(`/appointments/${id}/edit`);
   }
-  const handlDelete = async (id) => {
-    console.log("APP ID: ", id);
-    const confirmed = confirm("Are you sure?");
-
-    if (confirmed) {
-      const res = await fetch(`/api/appointments/${id}`, {
-        method: "DELETE",
-      });
-      if (res.ok) {
-      }
-    }
-  };
-
-  function handlePayment(id) {}
+  useEffect(() => {}, [isPaid]);
 
   return (
     <div className="border-2 p-3 m-auto w-fit rounded-md max-w-3xl">
@@ -61,7 +52,7 @@ export default function AppointmentCard({ appointment }) {
             </p>
             <div className="flex gap-3 mt-1">
               <button
-                onClick={() => handlDelete(appointment._id)}
+                onClick={() => handleDelete(appointment._id)}
                 className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
               >
                 Cancel This Appointment
@@ -88,8 +79,7 @@ export default function AppointmentCard({ appointment }) {
               </h2>
             </div>
             <h2 className="font-roboto font-semibold text-xl text-green-800 mb-2">
-              Total Due:{" "}
-              {appointment.paid ? "Paid" : `$${appointment.price.toFixed(2)}`}
+              Total Due: {isPaid ? "Paid" : `$${appointment.price.toFixed(2)}`}
             </h2>
             <FcApproval />
           </span>
@@ -98,28 +88,15 @@ export default function AppointmentCard({ appointment }) {
               <strong>Appointment Confirmed:</strong> Your cleaning appointment
               is on {getDay(appointment.date)}. We look forward to helping you!
             </p>
-            <div className="flex gap-3 mt-1">
-              <button
-                onClick={() => handleUpdate(appointment._id)}
-                className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
-              >
-                Update This Appointment
-              </button>
-              {!appointment.paid && (
-                <button
-                  onClick={() => handlePayment(appointment._id)}
-                  className="shadow-sm py-1 px-2 rounded-sm bg-white hover:shadow-md"
-                >
-                  Pay for this appointment
-                </button>
-              )}
-            </div>
+            {!isPaid && (
+              <Payment appointment={appointment} setIsPaid={setIsPaid} />
+            )}
           </div>
         </div>
       )}
       <p>
-        If you have any questions about your appointment, please call us at
-        (419) 208-6265
+        If you have any questions about your appointment, please call us at{" "}
+        <a href="tel:4192086265">(419) 208-6265</a>
       </p>
     </div>
   );

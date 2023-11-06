@@ -66,7 +66,6 @@ export async function PUT(request, { params }) {
   const invalidFields = requestedFields.filter(
     (field) => !allowedFields.includes(field)
   );
-
   if (invalidFields.length > 0) {
     return NextResponse.json({
       message: `You are not authorized to update the following fields: ${invalidFields.join(
@@ -75,9 +74,37 @@ export async function PUT(request, { params }) {
       status: 403,
     });
   }
+  const {
+    name,
+    date,
+    phone,
+    address,
+    stories,
+    rooms,
+    pets,
+    noTouch,
+    focus,
+    allergies,
+    frequency,
+    refSource,
+  } = await request.json();
 
   await connectMongoDB();
-  const app = await Appointment.findByIdAndUpdate(id, request.body);
+
+  const app = await Appointment.findByIdAndUpdate(id, {
+    name,
+    date,
+    phone,
+    address,
+    stories,
+    rooms,
+    pets,
+    noTouch,
+    focus,
+    allergies,
+    frequency,
+    refSource,
+  });
   console.log("APPOINTMENT UPDATED: ", app);
 
   if (app) {

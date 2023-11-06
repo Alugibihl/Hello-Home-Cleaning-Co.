@@ -1,27 +1,12 @@
 'use client'
 import Link from "next/link";
 import { HiPencilAlt } from "react-icons/hi";
-import { blankProfile } from '../../public/blank-profile-pic.png'
+import blankProfile from '../../public/blank-profile-pic.png'
 import AddTeamMember from "./AddTeamM/AddTeamMember";
 import DeleteTeamMemberButton from "./DeleteTeamM/DeleteTeamM";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-// const getTeamMemberList = async () => {
-//     try {
-//         const res = await fetch("http://localhost:3000/api/teammembers", {
-//             cache: "no-store",
-//         });
-
-//         if (!res.ok) {
-//             throw new Error("Failed to fetch Team Members");
-//         }
-
-//         return res.json()
-//     } catch (error) {
-//         console.log("Error loading Team Members: ", error);
-//     }
-// };
 
 export default function TeamMemberList() {
     const session = useSession()
@@ -29,8 +14,6 @@ export default function TeamMemberList() {
     const [loading, setLoading] = useState(false);
     const [deleted, setDeleted] = useState(false)
     // const {useEdgeStore} fro
-
-
 
     useEffect(() => {
         fetch("/api/teammembers", {
@@ -42,8 +25,10 @@ export default function TeamMemberList() {
             .then(() => setDeleted(false))
 
     }, [deleted])
+
+
     let user = session.data?.user
-    // console.log(user)
+
     if (!loading) return <h1>Loading</h1>;
 
     return (
@@ -55,18 +40,25 @@ export default function TeamMemberList() {
             {members?.map((t) => (
                 <div
                     key={t._id}
-                    className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start"
-                >
-                    <div>
-                        <h2 className="font-bold text-2xl">{t.name}</h2>
-                        <img
-                            src={t.img}
-                            // className=""
-                            alt={t.name}
-                        // onError={(e) => { e.currentTarget.src = blankProfile }}
-                        >
-                        </img>
-                        <div>{t.about}</div>
+                    className="p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start">
+                    <div className="flex">
+                        <div className="w-72 h-72">
+                            <img
+                                src={t.img}
+                                className="rounded-full h-full w-full"
+                                alt={t.name}
+                                onError={(e) => { e.currentTarget.src = blankProfile.src }}
+                            >
+                            </img>
+                        </div>
+                        <div className="flex flex-col justify-center pl-4 font-serif">
+                            <h2 className="font-bold text-2xl pb-2">{t.name}</h2>
+                            <ul>
+                                <li className="font-bold pb-1">{t.position}</li>
+                                <li className="whitespace-break-spaces">{t.about}</li>
+                            </ul>
+
+                        </div>
                     </div>
                     {user && user.role == 'admin' ?
                         <div className="flex gap-2">

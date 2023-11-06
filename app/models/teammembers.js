@@ -11,6 +11,10 @@ const teamMembersSchema = new Schema(
             type: String,
             required: true
         },
+        position: {
+            type: String,
+            required: true
+        },
         about: {
             type: String,
             required: true

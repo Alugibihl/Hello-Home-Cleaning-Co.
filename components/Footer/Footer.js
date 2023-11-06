@@ -16,7 +16,7 @@ const Footer = () => {
       <ul className="flex gap-1 justify-around bg-slate-900 p-2">
         <FooterLink label={"Home Page"} link={"/"} />
         <FooterLink label={"Join Our Team"} link={"/careers"} />
-        <FooterLink label={"Log In"} link={"/signIn"} />
+        {/* <FooterLink label={"Log In"} link={"/signIn"} /> */}
         <FooterLink label={"Request a Quote"} link={"/appointments/create"} />
         <FooterLink label={"Meet The Team"} link={"/team"} />
       </ul>

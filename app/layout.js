@@ -38,6 +38,7 @@ export default async function RootLayout({ children }) {
             <Footer />
           </body>
         </EdgeStoreProvider>
+
       </SessionProvider>
     </html>
   );
