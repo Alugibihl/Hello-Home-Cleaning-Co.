@@ -15,7 +15,6 @@ export default function Page() {
   const [expandedRowId, setExpandedRowId] = useState(null);
   // const [loading, setLoading] = useState(true);
 
-  // checks if user is admin
   if (session?.data?.user?.role !== 'admin') router.push('/')
 
   const handleExpandClick = (rowId) => {
@@ -50,6 +49,22 @@ export default function Page() {
     }
   }, []);
 
+  const fetchAppointments = () => {
+    const url = session.data.user.role === 'admin'
+      ? "/api/appointments"
+      : `/api/users/${session.data.user.id}/appointments`;
+  
+    fetch(url, { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => setAppointments(data.appointments));
+  };
+  
+  useEffect(() => {
+    if (session.data?.user) {
+      fetchAppointments(); // Use the fetchAppointments function here
+    }
+  }, [session.data?.user]);
+
   const updateAppointment = async (id, data) => {
     const response = await fetch(`/api/appointments/${id}`, {
       method: "PUT",
@@ -60,7 +75,7 @@ export default function Page() {
     });
   
     if (response.status === 200) {
-      return await response.json(); // Properly return the response data
+      return await response.json(); 
     } else {
       throw new Error(`Failed to update appointment: ${response.status}`);
     }
@@ -68,9 +83,9 @@ export default function Page() {
 
   const handleUpdateAppointment = async (updatedAppointment) => {
     try {
-      await updateAppointment(updatedAppointment.id, updatedAppointment);
-      // Here you can refresh the appointment list or show a success message
-      console.log('Appointment updated successfully');
+      const updatedData = await updateAppointment(updatedAppointment.id, updatedAppointment);
+      fetchAppointments();
+      console.log('Appointment updated successfully', updatedData);
     } catch (error) {
       console.error(error);
     }

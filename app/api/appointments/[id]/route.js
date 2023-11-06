@@ -35,7 +35,6 @@ export async function PUT(request, { params }) {
     });
   }
 
-  // Create a list of roles and the fields that each role is allowed to update.
   const roles = {
     admin: {
       fields: [
@@ -87,20 +86,16 @@ export async function PUT(request, { params }) {
     });
   }
 
-  // Helper function to reformat the phone number
   const reformatPhoneNumber = (phoneNumber) => {
     return phoneNumber.replace(/\D/g, '');
   };
 
 function reverseFormatDate(formattedString) {
-  // Remove the ordinal suffix ('st', 'nd', 'rd', 'th') from the day
   const dayRegex = /(\d+)(st|nd|rd|th)/;
   const cleanedString = formattedString.replace(dayRegex, '$1');
 
-  // Create a Date object from the cleaned string
   const date = new Date(cleanedString);
 
-  // Format the Date object into a string with format 'YYYY-MM-DD'
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
@@ -109,7 +104,6 @@ function reverseFormatDate(formattedString) {
 }
 
 
-  // Reformat phone and date if present in the request
   if (requestBody.phone) {
     requestBody.phone = reformatPhoneNumber(requestBody.phone);
   }
@@ -131,7 +125,7 @@ function reverseFormatDate(formattedString) {
   if (app) {
     return NextResponse.json({
       message: "Appointment Successfully Updated",
-      status: 200, // Status 200 for a successful update
+      status: 200, 
     });
   }
   return NextResponse.json({

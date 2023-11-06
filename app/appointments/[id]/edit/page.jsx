@@ -30,14 +30,11 @@ export default function Page({ params }) {
   if (!user || user.role !== "admin") router.push("/");
 
   function reverseFormatDate(formattedString) {
-    // Remove the ordinal suffix ('st', 'nd', 'rd', 'th') from the day
     const dayRegex = /(\d+)(st|nd|rd|th)/;
     const cleanedString = formattedString.replace(dayRegex, '$1');
   
-    // Create a Date object from the cleaned string
     const date = new Date(cleanedString);
   
-    // Format the Date object into a string with format 'YYYY-MM-DD'
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');

@@ -14,7 +14,7 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    setEditedAppointment(appointment); // Reset changes
+    setEditedAppointment(appointment); 
   };
 
   const handleSaveClick = async (event) => {
@@ -35,6 +35,13 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
     }));
   };
 
+  const toDisplayKey = (key) => {
+    if (key === 'areaInterest') {
+      return 'Main Focus Areas';
+    }
+    return key.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+  };
+
   return (
     <div className="p-4 bg-white border border-gray-300 rounded-lg">
       <h3 className="text-lg font-bold mb-2">Appointment Details</h3>
@@ -42,10 +49,11 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
         <div className="grid grid-cols-2 gap-4">
           {Object.entries(editedAppointment).map(([key, value]) => {
             if (key === 'id') return null;
+            const displayKey = toDisplayKey(key);
             if (typeof value === 'boolean') {
               return (
                 <label key={key} className="flex items-center space-x-3">
-                  <span className="text-gray-700">{key}:</span>
+                  <span className="text-gray-700">{displayKey}:</span>
                   {isEditing ? (
                     <input
                       type="checkbox"
@@ -61,7 +69,7 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
             } else {
               return (
                 <label key={key} className="flex flex-col space-y-1">
-                  <span className="text-gray-700">{key}:</span>
+                  <span className="text-gray-700">{displayKey}:</span>
                   {isEditing ? (
                     <input
                       type="text"
