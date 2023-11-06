@@ -252,8 +252,8 @@ export default function Page() {
           className="w-40 h-12 p-2 text-lg text-center bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
         >
           <option value="">All</option>
-          <option value="paid">Paid</option>
-          <option value="unpaid">Unpaid</option>
+          <option value="true">Paid</option>
+          <option value="false">Unpaid</option>
         </select>
       </div>
       <table {...getTableProps()} className="w-full max-h-screen overflow-auto">
