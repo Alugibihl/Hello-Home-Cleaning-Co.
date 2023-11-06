@@ -17,6 +17,7 @@ export default function Page() {
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const session = useSession();
+
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [phone, setPhone] = useState("");
@@ -138,6 +139,7 @@ export default function Page() {
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-gray-50 p-6">
+
         <form
           onSubmit={handleSubmit}
           className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl"
