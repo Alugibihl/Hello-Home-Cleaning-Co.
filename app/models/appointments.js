@@ -75,6 +75,9 @@ const appointmentSchema = new Schema(
       type: Number,
       default: 200,
     },
+    review: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
