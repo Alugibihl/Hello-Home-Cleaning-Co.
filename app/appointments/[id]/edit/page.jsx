@@ -55,6 +55,20 @@ export default function Page({ params }) {
 
   if (session?.data?.status === "unauthenticated" || !user) router.push("/");
 
+  function reverseFormatDate(formattedString) {
+    const dayRegex = /(\d+)(st|nd|rd|th)/;
+    const cleanedString = formattedString.replace(dayRegex, '$1');
+  
+    const date = new Date(cleanedString);
+  
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
+  }
+  
+
   useEffect(() => {
     setIsLoading(true);
     fetch(`/api/appointments/${params.id}`, { cache: "no-store" })
@@ -62,7 +76,7 @@ export default function Page({ params }) {
       .then((data) => {
         const { appointment } = data;
         setName(appointment.name);
-        setDate(appointment.date);
+        setDate(reverseFormatDate(appointment.date));
         setPhone(appointment.phone);
         setAddress(appointment.address);
         setStories(appointment.stories);
@@ -80,17 +94,36 @@ export default function Page({ params }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // ERROR HANDLING
+<<<<<<< HEAD
     if (Object.values(errors).length) {
       SetSubmittedWithErrors(true);
       return;
     }
 
+=======
+    const reversedDate = reverseFormatDate(date);
+
+    console.log(
+      name,
+      date,
+      phone,
+      address,
+      stories,
+      rooms,
+      pets,
+      noTouch,
+      areaInterest,
+      allergies,
+      frequency,
+      refSource
+    );
+>>>>>>> VincentBranch
     await fetch(`/api/appointments/${params.id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         name,
-        date,
+        date: reversedDate,
         phone,
         address,
         stories,
@@ -120,102 +153,69 @@ export default function Page({ params }) {
             Update your Appointment
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <InputField
-                label="Full Name"
-                name="name"
-                type="text"
-                value={name}
-                setValue={setName}
-              />
-              {submittedWithErrors && errors.name && (
-                <ErrorText error={errors.name} margin={true} />
-              )}
-            </div>
-            <div>
-              <InputField
-                label="Phone Number"
-                type="text"
-                name="phone"
-                value={phone}
-                setValue={setPhone}
-              />
-              {submittedWithErrors && errors.phone && (
-                <ErrorText error={errors.phone} margin={true} />
-              )}
-            </div>
-            <div>
-              <InputField
-                label="Address"
-                type="text"
-                name="address"
-                value={address}
-                setValue={setAddress}
-              />
-              {submittedWithErrors && errors.address && (
-                <ErrorText error={errors.address} margin={true} />
-              )}
-            </div>
-            <div>
-              <InputField
-                label="How many stories does your home have?"
-                type="text"
-                name="stories"
-                value={stories}
-                setValue={setStories}
-              />
-              {submittedWithErrors && errors.stories && (
-                <ErrorText error={errors.stories} margin={true} />
-              )}
-            </div>
-            <div>
-              <InputField
-                label="How many bedrooms and bathrooms?"
-                type="text"
-                name="rooms"
-                value={rooms}
-                setValue={setRooms}
-              />
-              {submittedWithErrors && errors.rooms && (
-                <ErrorText error={errors.rooms} margin={true} />
-              )}
-            </div>
-            <div>
-              <InputField
-                label="Do you have any Pets?"
-                type="text"
-                name="pets"
-                value={pets}
-                setValue={setPets}
-              />
-              {submittedWithErrors && errors.pets && (
-                <ErrorText error={errors.pets} margin={true} />
-              )}
-            </div>
-            <div>
-              <InputField
-                label="Any areas you would like us to avoid?"
-                type="text"
-                name="noTouch"
-                value={noTouch}
-                setValue={setNoTouch}
-              />
-              {submittedWithErrors && errors.noTouch && (
-                <ErrorText error={errors.noTouch} margin={true} />
-              )}
-            </div>
-            <div>
-              <InputField
-                label="Any areas you would like us to focus on?"
-                type="text"
-                name="focus"
-                value={areaInterest}
-                setValue={setAreaInterest}
-              />
-              {submittedWithErrors && errors.areaInterest && (
-                <ErrorText error={errors.areaInterest} margin={true} />
-              )}
-            </div>
+            <InputField
+              label="Full Name"
+              name="name"
+              type="text"
+              value={name}
+              setValue={setName}
+            />
+          <InputField
+          label="Appointment Date"
+            type="date"
+            name="date"
+            value={date}
+            setValue={setDate}
+          />
+            <InputField
+              label="Phone Number"
+              type="text"
+              name="phone"
+              value={phone}
+              setValue={setPhone}
+            />
+            <InputField
+              label="Address"
+              type="text"
+              name="address"
+              value={address}
+              setValue={setAddress}
+            />
+            <InputField
+              label="How many stories does your home have?"
+              type="text"
+              name="stories"
+              value={stories}
+              setValue={setStories}
+            />
+            <InputField
+              label="How many bedrooms and bathrooms?"
+              type="text"
+              name="rooms"
+              value={rooms}
+              setValue={setRooms}
+            />
+            <InputField
+              label="Do you have any Pets?"
+              type="text"
+              name="pets"
+              value={pets}
+              setValue={setPets}
+            />
+            <InputField
+              label="Any areas you would like us to avoid?"
+              type="text"
+              name="noTouch"
+              value={noTouch}
+              setValue={setNoTouch}
+            />
+            <InputField
+              label="Any areas you would like us to focus on?"
+              type="text"
+              name="focus"
+              value={areaInterest}
+              setValue={setAreaInterest}
+            />
           </div>
           <div className="flex flex-wrap mb-6">
             <div className="w-full pl-4 pt-4">

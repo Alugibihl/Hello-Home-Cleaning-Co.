@@ -14,8 +14,12 @@ export default function Page() {
   const [expandedRowId, setExpandedRowId] = useState(null);
   // const [loading, setLoading] = useState(true);
 
+<<<<<<< HEAD
   // checks if user is admin
   if (session?.data?.user?.role !== "admin") router.push("/");
+=======
+  if (session?.data?.user?.role !== 'admin') router.push('/')
+>>>>>>> VincentBranch
 
   const handleExpandClick = (rowId) => {
     setExpandedRowId(expandedRowId === rowId ? null : rowId);
@@ -25,6 +29,7 @@ export default function Page() {
     setFilter("status", e.target.value);
   };
 
+<<<<<<< HEAD
   const handlePaymentFilterChange = (e) => {
     setFilter(
       "paid",
@@ -34,6 +39,12 @@ export default function Page() {
         ? false
         : undefined
     );
+=======
+   const handlePaymentFilterChange = (e) => {
+    console.log(e.target.value);     
+    setFilter('paid', e.target.value);
+    
+>>>>>>> VincentBranch
   };
 
   useEffect(() => {
@@ -53,8 +64,50 @@ export default function Page() {
         .then((res) => res.json())
         .then((data) => setAppointments(data.appointments));
     }
-  }, [session]);
+  }, []);
 
+  const fetchAppointments = () => {
+    const url = session.data.user.role === 'admin'
+      ? "/api/appointments"
+      : `/api/users/${session.data.user.id}/appointments`;
+  
+    fetch(url, { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => setAppointments(data.appointments));
+  };
+  
+  useEffect(() => {
+    if (session.data?.user) {
+      fetchAppointments(); // Use the fetchAppointments function here
+    }
+  }, [session.data?.user]);
+
+  const updateAppointment = async (id, data) => {
+    const response = await fetch(`/api/appointments/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+  
+    if (response.status === 200) {
+      return await response.json(); 
+    } else {
+      throw new Error(`Failed to update appointment: ${response.status}`);
+    }
+  };
+
+  const handleUpdateAppointment = async (updatedAppointment) => {
+    try {
+      const updatedData = await updateAppointment(updatedAppointment.id, updatedAppointment);
+      fetchAppointments();
+      console.log('Appointment updated successfully', updatedData);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
   function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -128,8 +181,14 @@ export default function Page() {
       { Header: "Date", accessor: "date" },
       { Header: "Client", accessor: "name" },
       // { Header: 'Status', accessor: 'status' },
+<<<<<<< HEAD
       { Header: "Number", accessor: "phone" },
       { Header: "Referred By", accessor: "refSource" },
+=======
+      { Header: 'Number', accessor: 'phone' },
+      { Header: 'Address', accessor: 'address'},
+      { Header: 'Referred By', accessor: 'refSource' },
+>>>>>>> VincentBranch
       {
         Header: "Payment Status",
         accessor: "paid",
@@ -159,16 +218,23 @@ export default function Page() {
   );
 
   const data = React.useMemo(
-    () =>
-      appointments.map((app, index) => ({
-        id: index,
-        date: formatDate(app.date),
-        phone: formatNumber(app.phone),
-        status: app.status,
-        paid: app.paid,
-        name: app.name,
-        refSource: app.refSource,
-      })),
+    () => appointments.map((app, index) => ({
+      id: app._id,
+      date: formatDate(app.date),
+      phone: formatNumber(app.phone),
+      status: app.status,
+      rooms: app.rooms,
+      stories: app.stories,
+      noTouch: app.noTouch,
+      pets: app.pets,
+      areaInterest: app.areaInterest,
+      paid: app.paid,
+      name: app.name,
+      address: app.address,
+      refSource: app.refSource,
+      price: app.price,
+      frequency: app.frequency
+    })),
     [appointments]
   );
 
@@ -188,6 +254,7 @@ export default function Page() {
     },
     useFilters
   );
+
 
   return (
     <div className="w-full pt-4 px-10">
@@ -221,6 +288,7 @@ export default function Page() {
                   {...column.getHeaderProps()}
                   className="font-bold text-sm border-b border-gray-300 p-2"
                 >
+<<<<<<< HEAD
                   {column.render("Header")}
                 </th>
               ))}
@@ -259,5 +327,57 @@ export default function Page() {
         </tbody>
       </table>
     </div>
+=======
+                <option value="">All</option>
+                <option value="new">New</option>
+                <option value="past">Past</option>
+                <option value="scheduled">Scheduled</option>
+              </select>
+              <div className="flex-grow"></div>
+              <select onChange={handlePaymentFilterChange}
+              className="w-40 h-12 p-2 text-lg text-center bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
+          >
+                <option value="">All</option>
+                <option value="true">Paid</option>
+                <option value="false">Unpaid</option>
+              </select>
+            </div>
+            <table {...getTableProps()}className="w-full max-h-screen overflow-auto">
+              <thead>
+                {headerGroups.map(headerGroup => (
+                  <tr {...headerGroup.getHeaderGroupProps()}>
+                    {headerGroup.headers.map(column => (
+                      <th {...column.getHeaderProps()} className="font-bold text-md border-b border-gray-300 p-2">
+                        {column.render('Header')}
+                      </th>
+                    ))}
+                  </tr>
+                ))}
+              </thead>
+              <tbody {...getTableBodyProps()}>
+                {rows.map(row => {
+                  prepareRow(row);
+                  return (
+                    <React.Fragment key={row._id}>
+                      <tr {...row.getRowProps()} className="hover:bg-gray-100">
+                        {row.cells.map(cell => (
+                          <td {...cell.getCellProps()}  className="border border-gray-300 p-2">{cell.render('Cell')}</td>
+                        ))}
+                      </tr>
+                      {expandedRowId === row.id && (
+                        <tr>
+                          <td colSpan={columns.length + 1} className="border border-gray-300 p-2">
+                            <ExpandedRowContent appointment={row.original} updateAppointment={handleUpdateAppointment}/>
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+>>>>>>> VincentBranch
   );
 }
