@@ -8,44 +8,41 @@ import "./SignupModal.css";
 function SignupModal({ close, modalFunctions, values: quoteFormData }) {
   const [errors, setErrors] = useState({});
   const router = useRouter();
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    address: "",
-  });
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [address, setAddress] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  // const handleChange = (e) => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.value });
+  // };
 
   const validateSignUpForm = () => {
     // Validate email
-    if (!formData.email.includes("@") || !formData.email.includes(".")) {
+    if (!email.includes("@") || !email.includes(".")) {
       return "Invalid email address";
     }
     // Validate phone number
-    if (!formData.phone.match(/\d{10}/)) {
+    if (!phone.match(/\d{10}/)) {
       return "Invalid phone number";
     }
     // Validate password
-    if (formData.password.length < 8) {
+    if (password.length < 8) {
       return "Password must be at least 8 characters long";
     }
     // Validate confirm password
-    if (formData.password !== formData.confirmPassword) {
+    if (password !== confirmPassword) {
       return "Passwords do not match";
     }
-    if (!formData.address) return "Adress Required";
+    if (!address) return "Adress Required";
 
     return null;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form Data: ", formData);
     // Validate the form
     const error = validateSignUpForm();
     if (error) {
@@ -58,13 +55,20 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({
+        name,
+        email,
+        phone,
+        password,
+        confirmPassword,
+        address,
+      }),
     });
     // Check the response status
     if (response.ok) {
       const data = {
-        email: formData.email,
-        password: formData.password,
+        email: email,
+        password: password,
         redirect: false,
       };
       signIn("credentials", data).then(async ({ ok, error }) => {
@@ -121,8 +125,8 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
               name="name"
               label="Name"
               placeholder="John Doe"
-              value={formData.name}
-              setValue={handleChange}
+              value={name}
+              setValue={setName}
               className=""
             />
             <InputField
@@ -130,8 +134,8 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
               name="email"
               label="Email"
               placeholder="email@email.com"
-              value={formData.email}
-              setValue={handleChange}
+              value={email}
+              setValue={setEmail}
               className=""
             />
           </div>
@@ -141,8 +145,8 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
               name="phone"
               label="Phone"
               placeholder="Phone number"
-              value={formData.phone}
-              setValue={handleChange}
+              value={phone}
+              setValue={setPhone}
               className=""
             />
             <InputField
@@ -150,8 +154,8 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
               name="address"
               label="Address"
               placeholder="Address"
-              value={formData.address}
-              setValue={handleChange}
+              value={address}
+              setValue={setAddress}
               className=""
             />
           </div>
@@ -161,8 +165,8 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
               name="password"
               label="Password"
               placeholder="Password"
-              value={formData.password}
-              setValue={handleChange}
+              value={password}
+              setValue={setPassword}
               className=""
             />
             <InputField
@@ -170,8 +174,8 @@ function SignupModal({ close, modalFunctions, values: quoteFormData }) {
               label="Confirm Password"
               name="confirmPassword"
               placeholder="Confirm Password"
-              value={formData.confirmPassword}
-              setValue={handleChange}
+              value={confirmPassword}
+              setValue={setConfirmPassword}
               className=""
             />
           </div>

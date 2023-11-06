@@ -14,6 +14,7 @@ function LoginModal({ close, modalFunctions, values: quoteFormData }) {
   const [loginError, setLoginError] = useState("");
   const router = useRouter();
 
+  console.log(quoteFormData);
   // useEffect(() => {
   //   return () => {
   //     dispatch(clearSessionErrors());

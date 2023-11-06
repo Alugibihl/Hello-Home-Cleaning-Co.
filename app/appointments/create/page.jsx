@@ -29,6 +29,7 @@ export default function Page() {
   const [frequency, setFrequency] = useState("None");
   const [refSource, setRefSource] = useState("");
   const router = useRouter();
+  let quoteFormData = {};
 
   useEffect(() => {
     setTimeout(() => {
@@ -94,6 +95,21 @@ export default function Page() {
     // }
 
     if (!session.data?.user) {
+      quoteFormData = {
+        name,
+        date,
+        phone,
+        userId,
+        address,
+        stories,
+        rooms,
+        pets,
+        noTouch,
+        areaInterest,
+        allergies,
+        frequency,
+        refSource,
+      };
       handleSignin();
     } else {
       await fetch("/api/appointments", {
@@ -263,7 +279,7 @@ export default function Page() {
             component={LoginModal}
             close={() => setShowLoginModal(false)}
             modalFunctions={modalFunctions}
-            values={formData}
+            values={quoteFormData}
           />
         )}
         {showSignupModal && (
@@ -271,7 +287,7 @@ export default function Page() {
             component={SignupModal}
             close={(shown) => setShowSignupModal(shown)}
             modalFunctions={modalFunctions}
-            values={formData}
+            values={quoteFormData}
           />
         )}
       </div>
