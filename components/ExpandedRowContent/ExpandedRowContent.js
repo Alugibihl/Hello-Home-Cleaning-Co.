@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const ExpandedRowContent = ({ appointment, updateAppointment }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -14,7 +14,7 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    setEditedAppointment(appointment); 
+    setEditedAppointment(appointment);
   };
 
   const handleSaveClick = async (event) => {
@@ -23,7 +23,7 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
       await updateAppointment(editedAppointment);
       setIsEditing(false);
     } catch (error) {
-      console.error('Failed to update appointment:', error);
+      console.error("Failed to update appointment:", error);
     }
   };
 
@@ -31,15 +31,17 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
     const { name, value, type, checked } = event.target;
     setEditedAppointment((prevState) => ({
       ...prevState,
-      [name]: type === 'checkbox' ? checked : value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const toDisplayKey = (key) => {
-    if (key === 'areaInterest') {
-      return 'Main Focus Areas';
+    if (key === "areaInterest") {
+      return "Main Focus Areas";
     }
-    return key.replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase());
+    return key
+      .replace(/_/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase());
   };
 
   return (
@@ -48,9 +50,27 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
       <form onSubmit={handleSaveClick}>
         <div className="grid grid-cols-2 gap-4">
           {Object.entries(editedAppointment).map(([key, value]) => {
-            if (key === 'id') return null;
+            if (key === "id") return null;
             const displayKey = toDisplayKey(key);
-            if (typeof value === 'boolean') {
+            if (key === "date") {
+              return (
+                <label key={key} className="flex flex-col space-y-1">
+                  <span className="text-gray-700">{displayKey}:</span>
+                  {isEditing ? (
+                    <input
+                      type="date"
+                      name={key}
+                      value={value}
+                      onChange={handleChange}
+                      className="border-2 border-gray-200 rounded px-2 py-1 text-black"
+                    />
+                  ) : (
+                    <span>{value}</span>
+                  )}
+                </label>
+              );
+            }
+            if (typeof value === "boolean") {
               return (
                 <label key={key} className="flex items-center space-x-3">
                   <span className="text-gray-700">{displayKey}:</span>
@@ -62,7 +82,7 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
                       onChange={handleChange}
                     />
                   ) : (
-                    <span>{value ? 'Yes' : 'No'}</span>
+                    <span>{value ? "Yes" : "No"}</span>
                   )}
                 </label>
               );

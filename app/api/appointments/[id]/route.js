@@ -68,6 +68,8 @@ export async function PUT(request, { params }) {
         "areaInterest",
         "allergies",
         "frequency",
+        "refSource",
+        "date"
       ],
     },
   };
@@ -99,7 +101,7 @@ function reverseFormatDate(formattedString) {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
-  
+
   return `${year}-${month}-${day}`;
 }
 
@@ -125,7 +127,7 @@ function reverseFormatDate(formattedString) {
   if (app) {
     return NextResponse.json({
       message: "Appointment Successfully Updated",
-      status: 200, 
+      status: 200,
     });
   }
   return NextResponse.json({
