@@ -96,7 +96,7 @@ export default function Page() {
     const options = { year: "numeric", month: "long", day: "numeric" };
     let formattedDate = date.toLocaleDateString("en-US", options);
 
-    const day = date.getDate() + 1;
+    const day = date.getDate();
     let suffix = "th";
     if (day % 10 === 1 && day !== 11) suffix = "st";
     else if (day % 10 === 2 && day !== 12) suffix = "nd";
@@ -115,6 +115,19 @@ export default function Page() {
     }
     return null;
   }
+
+  function reverseFormatDate(formattedString) {
+    const dayRegex = /(\d+)(st|nd|rd|th)/;
+    const cleanedString = formattedString.replace(dayRegex, '$1');
+    const date = new Date(cleanedString);
+    date.setDate(date.getDate() + 1);    
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+    const day = date.getDate().toString().padStart(2, '0'); 
+    return `${year}-${month}-${day}`;
+  }
+  
+  
 
   const columns = React.useMemo(
     () => [
@@ -198,7 +211,7 @@ export default function Page() {
   const data = React.useMemo(
     () => appointments.map((app, index) => ({
       id: app._id,
-      date: formatDate(app.date),
+      date: (app.date),
       phone: formatNumber(app.phone),
       status: app.status,
       rooms: app.rooms,
@@ -287,7 +300,7 @@ export default function Page() {
                 {expandedRowId === row.id && (
                   <tr>
                     <td colSpan={columns.length + 1} className="border border-gray-300 p-2">
-                      <ExpandedRowContent appointment={row.original} updateAppointment={handleUpdateAppointment} />
+                      <ExpandedRowContent appointment={row.original} updateAppointment={handleUpdateAppointment} reverseFormatDate={reverseFormatDate}/>
                     </td>
                   </tr>
                 )}

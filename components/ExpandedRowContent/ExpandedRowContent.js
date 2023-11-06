@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-const ExpandedRowContent = ({ appointment, updateAppointment }) => {
+const ExpandedRowContent = ({ appointment, updateAppointment, reverseFormatDate }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedAppointment, setEditedAppointment] = useState(appointment);
 
@@ -75,6 +75,7 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
                 </label>
               );
             } else if (key === "date") {
+              const formattedDateForDisplay = reverseFormatDate(value)
               return (
                 <label key={key} className="flex flex-col space-y-1">
                   <span className="text-gray-700">{displayKey}:</span>
@@ -82,7 +83,7 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
                     <input
                       type="date"
                       name={key}
-                      value={value}
+                      value={formattedDateForDisplay}
                       onChange={handleChange}
                       className="border-2 border-gray-200 rounded px-2 py-1 text-black"
                     />

@@ -58,16 +58,16 @@ export default function Page({ params }) {
   function reverseFormatDate(formattedString) {
     const dayRegex = /(\d+)(st|nd|rd|th)/;
     const cleanedString = formattedString.replace(dayRegex, '$1');
-
+  
     const date = new Date(cleanedString);
-
+  
     const year = date.getFullYear();
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
-
+    
     return `${year}-${month}-${day}`;
   }
-
+  
 
   useEffect(() => {
     setIsLoading(true);
@@ -90,7 +90,7 @@ export default function Page({ params }) {
       })
       .then(() => setIsLoading(false));
   }, []);
-  
+  console.log("ERRORS: ", errors);
   const handleSubmit = async (e) => {
     e.preventDefault();
     // ERROR HANDLING
@@ -157,13 +157,13 @@ export default function Page({ params }) {
               value={name}
               setValue={setName}
             />
-          {user.role === 'admin' && <InputField
+          <InputField
           label="Appointment Date"
             type="date"
             name="date"
             value={date}
             setValue={setDate}
-          /> }
+          />
             <InputField
               label="Phone Number"
               type="text"
