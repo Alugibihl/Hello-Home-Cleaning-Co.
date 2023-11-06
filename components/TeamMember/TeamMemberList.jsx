@@ -75,7 +75,7 @@ export default function TeamMemberList() {
                 <Link href={`/team/edit/${t._id}`}>
                   <HiPencilAlt size={24} />
                 </Link>
-                <DeleteTeamMemberButton id={t._id} setDeleted={setDeleted} />
+                <DeleteTeamMemberButton id={t._id} urlD={t.img} setDeleted={setDeleted} />
               </div>
             ) : (
               <></>

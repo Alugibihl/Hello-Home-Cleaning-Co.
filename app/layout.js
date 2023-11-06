@@ -35,7 +35,7 @@ export default async function RootLayout({ children }) {
             </Head>
             <Navbar session={session} />
             {children}
-            <Footer />
+            {/* <Footer /> */}
           </body>
         </EdgeStoreProvider>
 

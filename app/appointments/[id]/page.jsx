@@ -2,7 +2,7 @@
 import RemoveBtn from "@/components/RemoveButton/RemoveButton";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Loading from "@/components/loading"
+import Loading from "@/components/Loding"
 
 
 export default function Page({ params }) {

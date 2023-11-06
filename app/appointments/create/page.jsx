@@ -17,8 +17,6 @@ export default function Page() {
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const session = useSession();
-
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [phone, setPhone] = useState("");
@@ -40,7 +38,6 @@ export default function Page() {
   const userId = session.data?.user?.id;
 
   const userEmail = session.data.user.email
-  console.log(name, userEmail, "====================================")
 
   useEffect(() => {
     setTimeout(() => {
@@ -115,9 +112,8 @@ export default function Page() {
           frequency,
           refSource,
         }),
-      });
-         });
-        handleSignin();
+
+          handleSignin();
       } else {
         await fetch("/api/appointments", {
           method: "POST",
@@ -138,12 +134,12 @@ export default function Page() {
           }),
         });
         const response = await fetch('/api/send', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ userEmail, name })
-      })
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userEmail, name })
+        })
 
         router.push("/appointments");
       }

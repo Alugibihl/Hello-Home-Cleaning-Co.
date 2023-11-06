@@ -19,14 +19,11 @@ export default function AddTeamMember() {
     const router = useRouter();
     const userEmail = session.data.user.email
     const confirmBooking = true
-    
+
     const [file, setFile] = useState("")
     // const [urls, setUrls] = useState('')
     const { edgestore } = useEdgeStore()
 
-
-    const router = useRouter();
-    console.log(file)
 
     const check = (file) => {
         if (file) {
@@ -132,6 +129,7 @@ export default function AddTeamMember() {
                         <input
                             name="img"
                             // value={file}
+                            required={true}
                             type="file"
                             accept="image/png, image/jpeg"
                             onChange={(e) => setFile(e.target.files?.[0])}

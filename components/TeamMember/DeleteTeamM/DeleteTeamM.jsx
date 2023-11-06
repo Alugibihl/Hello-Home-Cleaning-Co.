@@ -8,6 +8,7 @@ export default function DeleteTeamMemberButton({ id, setDeleted, urlD }) {
     const deleteMemeber = async () => {
         const confirmed = confirm("Are you sure you want to delete team member?")
         try {
+            console.log(urlD)
             await edgestore.myPublicsImages.delete({
                 url: urlD,
             });

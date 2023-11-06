@@ -20,7 +20,7 @@ export default function EditTeamMember({ id, name, img, about, position }) {
     const [newName, setNewName] = useState(name);
     const [newImg, setNewImg] = useState(img);
     const [newAbout, setNewAbout] = useState(about);
-    const [newPosition, setNewPosition] = useState(position || "");
+    const [newPosition, setNewPosition] = useState(position);
 
     const [file, setFile] = useState("")
     const { edgestore } = useEdgeStore()
