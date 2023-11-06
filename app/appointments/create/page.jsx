@@ -93,7 +93,8 @@ export default function Page() {
     // if (Object.keys(errors).length > 0) {
     //   return;
     // }
-
+    const userEmail = session.data.user.email
+    console.log(userEmail)
     if (!session.data?.user) {
       setQuoteFormData({
         name,
@@ -129,6 +130,13 @@ export default function Page() {
           refSource,
         }),
       });
+      // const response = await fetch('/api/send', {
+      //   method: "POST",
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(name, userEmail)
+      // })
 
       router.push("/appointments");
     }
