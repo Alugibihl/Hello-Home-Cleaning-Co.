@@ -96,7 +96,7 @@ export default function Page() {
     const options = { year: "numeric", month: "long", day: "numeric" };
     let formattedDate = date.toLocaleDateString("en-US", options);
 
-    const day = date.getDate();
+    const day = date.getDate() + 1;
     let suffix = "th";
     if (day % 10 === 1 && day !== 11) suffix = "st";
     else if (day % 10 === 2 && day !== 12) suffix = "nd";
@@ -198,7 +198,7 @@ export default function Page() {
   const data = React.useMemo(
     () => appointments.map((app, index) => ({
       id: app._id,
-      date: app.date,
+      date: formatDate(app.date),
       phone: formatNumber(app.phone),
       status: app.status,
       rooms: app.rooms,
