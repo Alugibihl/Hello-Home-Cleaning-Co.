@@ -47,6 +47,9 @@ export default function Page() {
       .then((data) => {
         setAppointments(data.appointments);
         setIsLoading(false);
+      })
+      .then(() => {
+        setIsLoading(false);
       });
   }, [session]);
 
@@ -66,7 +69,7 @@ export default function Page() {
       }
     }
   };
-
+  if (isLoading) return <Loading />;
   return (
     <div className="flex flex-col gap-5 mt-8">
       {appointments.length != 0 ? (
