@@ -16,6 +16,7 @@ export default function Page() {
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const session = useSession();
+
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [phone, setPhone] = useState("");
@@ -122,6 +123,7 @@ export default function Page() {
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-gray-50 p-6">
+
         <form
           onSubmit={handleSubmit}
           className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl"
@@ -134,6 +136,7 @@ export default function Page() {
               label="Full Name"
               name="name"
               type="text"
+
               value={name}
               setValue={setName}
             />
@@ -148,6 +151,7 @@ export default function Page() {
               label="Phone Number"
               type="text"
               name="phone"
+
               value={phone}
               setValue={setPhone}
             />
@@ -155,6 +159,7 @@ export default function Page() {
               label="Address"
               type="text"
               name="address"
+
               value={address}
               setValue={setAddress}
             />
@@ -162,6 +167,7 @@ export default function Page() {
               label="How many stories does your home have?"
               type="text"
               name="stories"
+
               value={stories}
               setValue={setStories}
             />
@@ -169,6 +175,7 @@ export default function Page() {
               label="How many bedrooms and bathrooms?"
               type="text"
               name="rooms"
+
               value={rooms}
               setValue={setRooms}
             />
@@ -176,6 +183,7 @@ export default function Page() {
               label="Do you have any Pets?"
               type="text"
               name="pets"
+
               value={pets}
               setValue={setPets}
             />
@@ -183,6 +191,7 @@ export default function Page() {
               label="Any areas you would like us to avoid?"
               type="text"
               name="noTouch"
+
               value={noTouch}
               setValue={setNoTouch}
             />
@@ -190,6 +199,7 @@ export default function Page() {
               label="Any areas you would like us to focus on?"
               type="text"
               name="focus"
+
               value={areaInterest}
               setValue={setAreaInterest}
             />

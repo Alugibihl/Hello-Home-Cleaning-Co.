@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useEdgeStore } from "@/libs/edgestore"
 
 async function editMember(id, { newName, newImg, newAbout, newPosition }) {
 
@@ -21,10 +22,31 @@ export default function EditTeamMember({ id, name, img, about, position }) {
     const [newAbout, setNewAbout] = useState(about);
     const [newPosition, setNewPosition] = useState(position || "");
 
+    const [file, setFile] = useState("")
+    const { edgestore } = useEdgeStore()
+
     const router = useRouter();
+
+    useEffect(() => {
+        if (file) {
+            console.log(edgestore.myPublicsImages, img)
+            edgestore.myPublicsImages.upload({
+                file,
+                options: {
+                    replaceTargetUrl: img,
+                },
+            }).then(res => (setNewImg(res.url)))
+            //save your data here
+        }
+
+
+    }, [file,
+        // newImg
+    ])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         await editMember(id, { newName, newImg, newAbout, newPosition });
         router.push("/team");
     };
@@ -53,6 +75,21 @@ export default function EditTeamMember({ id, name, img, about, position }) {
                 <div className="w-full px-3">
                     <label
                         className="block text-gray-700 text-s font-bold mb-2"
+                    >
+                        About
+                        <textarea
+                            name="about"
+                            value={newAbout}
+                            type="text"
+                            onChange={(e) => setNewAbout(e.target.value)}
+                                        />
+                    </label>
+                </div>
+            </div>
+    <div className="flex flex-wrap -mx-3 mb-6">
+                <div className="w-full px-3">
+                    <label
+                        className="block text-gray-700 text-s font-bold mb-2"
                     >Position
                         <input
                             required={true}
@@ -71,6 +108,7 @@ export default function EditTeamMember({ id, name, img, about, position }) {
                 <div className="w-full px-3">
                     <label
                         className="block text-gray-700 text-s font-bold mb-2"
+
                     >
                         About
                         <textarea
@@ -81,21 +119,37 @@ export default function EditTeamMember({ id, name, img, about, position }) {
                             onChange={(e) => setNewAbout(e.target.value)}
                             className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         />
+                        {/* <button
+                            className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                            type="button" onClick={async => {
+                                if (file) {
+                                    console.log(edgestore.myPublicsImages, img)
+                                    edgestore.myPublicsImages.upload({
+                                        file,
+                                        options: {
+                                            replaceTargetUrl: img,
+                                        },
+                                    }).then(res => (setNewImg(res.url)))
+                                    //save your data here
+                                }
+                            }}> set Picture</button> */}
+                        <img src={newImg ? newImg : img}></img>
                     </label>
                 </div>
             </div>
+
             <div className="flex flex-wrap -mx-3 mb-6">
                 <div className="w-full px-3">
                     <label
                         className="block text-gray-700 text-s font-bold mb-2"
                     >
-                        Profile Picture
+                     Profile Picture
                         <input
                             name="img"
-                            value={newImg}
-                            type="text"
-                            onChange={(e) => setNewImg(e.target.value)}
-                            className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                            // value={file}
+                            type="file"
+                            accept="image/png, image/jpeg"
+                            onChange={(e) => setFile(e.target.files?.[0])}
                         />
                     </label>
                 </div>

@@ -7,13 +7,13 @@ import DeleteTeamMemberButton from "./DeleteTeamM/DeleteTeamM";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 
-console.log(blankProfile)
 
 export default function TeamMemberList() {
     const session = useSession()
     const [members, setMembers] = useState('')
     const [loading, setLoading] = useState(false);
     const [deleted, setDeleted] = useState(false)
+    // const {useEdgeStore} fro
 
     useEffect(() => {
         fetch("/api/teammembers", {
@@ -28,6 +28,7 @@ export default function TeamMemberList() {
 
 
     let user = session.data?.user
+
     if (!loading) return <h1>Loading</h1>;
 
     return (
@@ -64,7 +65,7 @@ export default function TeamMemberList() {
                             <Link href={`/team/edit/${t._id}`}>
                                 <HiPencilAlt size={24} />
                             </Link>
-                            <DeleteTeamMemberButton id={t._id} setDeleted={setDeleted} />
+                            <DeleteTeamMemberButton id={t._id} setDeleted={setDeleted} urlD={t.img} />
                         </div>
                         : <></>
                     }
