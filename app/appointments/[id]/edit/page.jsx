@@ -129,7 +129,7 @@ export default function Page({ params }) {
                 setValue={setName}
               />
               {submittedWithErrors && errors.name && (
-                <ErrorText error={errors.name} />
+                <ErrorText error={errors.name} margin={true} />
               )}
             </div>
             <div>
@@ -141,7 +141,7 @@ export default function Page({ params }) {
                 setValue={setPhone}
               />
               {submittedWithErrors && errors.phone && (
-                <ErrorText error={errors.phone} />
+                <ErrorText error={errors.phone} margin={true} />
               )}
             </div>
             <div>
@@ -153,7 +153,7 @@ export default function Page({ params }) {
                 setValue={setAddress}
               />
               {submittedWithErrors && errors.address && (
-                <ErrorText error={errors.address} />
+                <ErrorText error={errors.address} margin={true} />
               )}
             </div>
             <div>
@@ -165,7 +165,7 @@ export default function Page({ params }) {
                 setValue={setStories}
               />
               {submittedWithErrors && errors.stories && (
-                <ErrorText error={errors.stories} />
+                <ErrorText error={errors.stories} margin={true} />
               )}
             </div>
             <div>
@@ -177,7 +177,7 @@ export default function Page({ params }) {
                 setValue={setRooms}
               />
               {submittedWithErrors && errors.rooms && (
-                <ErrorText error={errors.rooms} />
+                <ErrorText error={errors.rooms} margin={true} />
               )}
             </div>
             <div>
@@ -189,7 +189,7 @@ export default function Page({ params }) {
                 setValue={setPets}
               />
               {submittedWithErrors && errors.pets && (
-                <ErrorText error={errors.pets} />
+                <ErrorText error={errors.pets} margin={true} />
               )}
             </div>
             <div>
@@ -201,7 +201,7 @@ export default function Page({ params }) {
                 setValue={setNoTouch}
               />
               {submittedWithErrors && errors.noTouch && (
-                <ErrorText error={errors.noTouch} />
+                <ErrorText error={errors.noTouch} margin={true} />
               )}
             </div>
             <div>
@@ -213,7 +213,7 @@ export default function Page({ params }) {
                 setValue={setAreaInterest}
               />
               {submittedWithErrors && errors.areaInterest && (
-                <ErrorText error={errors.areaInterest} />
+                <ErrorText error={errors.areaInterest} margin={true} />
               )}
             </div>
           </div>
@@ -277,7 +277,7 @@ export default function Page({ params }) {
               setValue={setRefSource}
             />
             {submittedWithErrors && errors.refSource && (
-              <ErrorText error={errors.refSource} />
+              <ErrorText error={errors.refSource} margin={true} />
             )}
           </div>
 
