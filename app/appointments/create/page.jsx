@@ -92,7 +92,7 @@ export default function Page() {
     // if (Object.keys(errors).length > 0) {
     //   return;
     // }
-
+    const userEmail = session.data.user.email
     if (!session.data?.user) {
       handleSignin();
     } else {
@@ -115,11 +115,18 @@ export default function Page() {
           refSource,
         }),
       });
+      const response = await fetch('/api/send', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(name, userEmail)
+      })
 
       router.push("/appointments");
     }
   };
- 
+
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-gray-50 p-6">
