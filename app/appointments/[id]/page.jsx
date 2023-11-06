@@ -2,12 +2,14 @@
 import RemoveBtn from "@/components/RemoveButton/RemoveButton";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Loading from "@/components/Loding"
 
 
 export default function Page({ params }) {
   const { id } = params;
   const [appointment, setAppointment] = useState();
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     setLoading(true);

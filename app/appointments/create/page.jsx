@@ -16,7 +16,7 @@ export default function Page() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [loading, setLoading] = useState(true);
-  const session = useSession();
+
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [phone, setPhone] = useState("");
@@ -29,9 +29,15 @@ export default function Page() {
   const [allergies, setAllergies] = useState(false);
   const [frequency, setFrequency] = useState("None");
   const [refSource, setRefSource] = useState("");
-  const router = useRouter();
   const [quoteFormData, setQuoteFormData] = useState({});
   const [errors, setErrors] = useState({});
+
+  const session = useSession();
+  const router = useRouter();
+
+  const userId = session.data?.user?.id;
+
+  const userEmail = session.data.user.email
 
   useEffect(() => {
     setTimeout(() => {
@@ -82,9 +88,6 @@ export default function Page() {
   const handleSignin = () => {
     setShowLoginModal(true);
   };
-
-  const userId = session.data?.user?.id;
-
   // if (!session || !session.data?.user) router.push("/");
 
   const handleSubmit = async (e) => {
@@ -108,8 +111,9 @@ export default function Page() {
           allergies,
           frequency,
           refSource,
-        });
-        handleSignin();
+        }),
+
+          handleSignin();
       } else {
         await fetch("/api/appointments", {
           method: "POST",
@@ -129,6 +133,13 @@ export default function Page() {
             refSource,
           }),
         });
+        const response = await fetch('/api/send', {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ userEmail, name })
+        })
 
         router.push("/appointments");
       }
@@ -138,6 +149,7 @@ export default function Page() {
   return (
     <>
       <div className="flex justify-center items-center min-h-screen bg-gray-50 p-6">
+
         <form
           onSubmit={handleSubmit}
           className="bg-white p-8 rounded-lg shadow-lg w-full max-w-3xl"

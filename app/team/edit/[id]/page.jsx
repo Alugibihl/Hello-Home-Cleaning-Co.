@@ -1,4 +1,5 @@
 import EditTeamMember from "@/components/TeamMember/EditTeamM/EditTeamMemeber";
+import { position } from "stylis";
 
 
 const getTeamMemberById = async (id) => {
@@ -22,11 +23,11 @@ const getTeamMemberById = async (id) => {
 export default async function EditMember({ params }) {
     const { id } = params;
     const { member } = await getTeamMemberById(id);
-    const { name, img, about } = member
+    const { name, img, about, position } = member
 
     return (
         <EditTeamMember
-            id={id} name={name} img={img} about={about}
+            id={id} name={name} img={img} about={about} position={position}
         />
 
     )
