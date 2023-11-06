@@ -15,7 +15,6 @@ export default function Page() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
   const [loading, setLoading] = useState(true);
-  const session = useSession();
   const [name, setName] = useState("");
   const [date, setDate] = useState("");
   const [phone, setPhone] = useState("");
@@ -28,8 +27,15 @@ export default function Page() {
   const [allergies, setAllergies] = useState(false);
   const [frequency, setFrequency] = useState("None");
   const [refSource, setRefSource] = useState("");
-  const router = useRouter();
   const [quoteFormData, setQuoteFormData] = useState({});
+
+  const session = useSession();
+  const router = useRouter();
+
+  const userId = session.data?.user?.id;
+
+  const userEmail = session.data.user.email
+  console.log(name, userEmail, "====================================")
 
   useEffect(() => {
     setTimeout(() => {
@@ -81,9 +87,6 @@ export default function Page() {
   const handleSignin = () => {
     setShowLoginModal(true);
   };
-
-  const userId = session.data?.user?.id;
-
   // if (!session || !session.data?.user) router.push("/");
 
   const handleSubmit = async (e) => {
@@ -93,8 +96,6 @@ export default function Page() {
     // if (Object.keys(errors).length > 0) {
     //   return;
     // }
-    const userEmail = session.data.user.email
-    console.log(userEmail)
     if (!session.data?.user) {
       setQuoteFormData({
         name,
@@ -112,7 +113,8 @@ export default function Page() {
       });
       handleSignin();
     } else {
-      await fetch("/api/appointments", {
+
+      const res = await fetch("/api/appointments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -130,13 +132,14 @@ export default function Page() {
           refSource,
         }),
       });
-      // const response = await fetch('/api/send', {
-      //   method: "POST",
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(name, userEmail)
-      // })
+      const response = await fetch('/api/send', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ userEmail, name })
+      })
+
 
       router.push("/appointments");
     }

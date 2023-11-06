@@ -14,6 +14,7 @@ export default function AddTeamMember() {
 
     const router = useRouter();
     const userEmail = session.data.user.email
+    const confirmBooking = true
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -32,9 +33,9 @@ export default function AddTeamMember() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ name, userEmail })
+            body: JSON.stringify({ name, userEmail, confirmBooking })
         })
-        console.log(response)
+        console.log(confirmBooking, "+++++++++++++++++++++++")
         router.push("/team");
     };
 
