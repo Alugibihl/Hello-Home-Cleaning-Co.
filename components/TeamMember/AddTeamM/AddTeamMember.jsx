@@ -126,7 +126,7 @@ export default function AddTeamMember() {
             <button
                 type="button"
                 onClick={async () => check(file)}
-                className="mb-6 justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Set Picture
+                className="mb-4 justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Set Picture
             </button>
             <button type="submit" className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Create Team Member

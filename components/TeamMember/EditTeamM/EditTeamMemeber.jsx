@@ -141,7 +141,7 @@ export default function EditTeamMember({ id, name, img, about, position }) {
             <button
                 type="button"
                 onClick={async () => check(file)}
-                className="mb-6 justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Set New Picture
+                className="mb-4 justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Set New Picture
             </button>
             <button className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Edit Team Member
