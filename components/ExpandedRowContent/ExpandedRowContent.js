@@ -52,7 +52,29 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
           {Object.entries(editedAppointment).map(([key, value]) => {
             if (key === "id") return null;
             const displayKey = toDisplayKey(key);
-            if (key === "date") {
+            if (key === "status") {
+              return (
+                <label key={key} className="flex flex-col space-y-1">
+                  <span className="text-gray-700">{displayKey}:</span>
+                  {isEditing ? (
+                    <select
+                      type="select"
+                      name={key}
+                      value={value}
+                      onChange={handleChange}
+                      className="border-2 border-gray-200 rounded px-2 py-1 text-black"
+                    >
+                      <option value="New">New</option>
+                      <option value="Scheduled">Scheduled</option>
+                      <option value="Past">Past</option>
+
+                    </select>
+                  ) : (
+                    <span>{value}</span>
+                  )}
+                </label>
+              );
+            } else if (key === "date") {
               return (
                 <label key={key} className="flex flex-col space-y-1">
                   <span className="text-gray-700">{displayKey}:</span>
@@ -69,8 +91,7 @@ const ExpandedRowContent = ({ appointment, updateAppointment }) => {
                   )}
                 </label>
               );
-            }
-            if (typeof value === "boolean") {
+            } else if (typeof value === "boolean") {
               return (
                 <label key={key} className="flex items-center space-x-3">
                   <span className="text-gray-700">{displayKey}:</span>
