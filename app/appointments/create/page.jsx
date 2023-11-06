@@ -29,6 +29,7 @@ export default function Page() {
   const [frequency, setFrequency] = useState("None");
   const [refSource, setRefSource] = useState("");
   const router = useRouter();
+  const [quoteFormData, setQuoteFormData] = useState({});
 
   useEffect(() => {
     setTimeout(() => {
@@ -94,6 +95,20 @@ export default function Page() {
     // }
 
     if (!session.data?.user) {
+      setQuoteFormData({
+        name,
+        phone,
+        userId,
+        address,
+        stories,
+        rooms,
+        pets,
+        noTouch,
+        areaInterest,
+        allergies,
+        frequency,
+        refSource,
+      });
       handleSignin();
     } else {
       await fetch("/api/appointments", {
@@ -201,7 +216,7 @@ export default function Page() {
                     type="checkbox"
                     name="allergies"
                     checked={allergies}
-                    onChange={(e) => setFormData((e) => setAllergies(true))}
+                    onChange={(e) => setAllergies(true)}
                   />
                   Yes
                 </label>
@@ -210,7 +225,7 @@ export default function Page() {
                     type="checkbox"
                     name="allergies"
                     checked={!allergies}
-                    onChange={(e) => setFormData((e) => setAllergies(false))}
+                    onChange={(e) => setAllergies(false)}
                   />
                   No
                 </label>
@@ -254,7 +269,7 @@ export default function Page() {
             component={LoginModal}
             close={() => setShowLoginModal(false)}
             modalFunctions={modalFunctions}
-            values={formData}
+            values={quoteFormData}
           />
         )}
         {showSignupModal && (
@@ -262,7 +277,7 @@ export default function Page() {
             component={SignupModal}
             close={(shown) => setShowSignupModal(shown)}
             modalFunctions={modalFunctions}
-            values={formData}
+            values={quoteFormData}
           />
         )}
       </div>
