@@ -18,7 +18,7 @@ export default function AddTeamMember() {
 
     const router = useRouter();
     const userEmail = session.data.user.email
-    const confirmBooking = true
+    // const confirmBooking = true
 
     const [file, setFile] = useState("")
     // const [urls, setUrls] = useState('')
@@ -51,14 +51,14 @@ export default function AddTeamMember() {
             router.push("/team");
             // return teamMember;
         }
-        const response = await fetch('/api/send', {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ name, userEmail, confirmBooking })
-        })
-        console.log(confirmBooking, "+++++++++++++++++++++++")
+        // const response = await fetch('/api/send', {
+        //     method: "POST",
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({ name, userEmail, confirmBooking })
+        // })
+        // console.log(confirmBooking, "+++++++++++++++++++++++")
         router.push("/team");
 
 
