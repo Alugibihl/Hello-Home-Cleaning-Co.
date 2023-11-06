@@ -1,4 +1,5 @@
 "use client";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -9,7 +10,10 @@ export default function AddTeamMember() {
     const [position, setPosition] = useState('')
     const [about, setAbout] = useState('');
 
+    const session = useSession();
+
     const router = useRouter();
+    const userEmail = session.data.user.email
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,6 +27,14 @@ export default function AddTeamMember() {
             // return teamMember;
 
         }
+        const response = await fetch('/api/send', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ name, userEmail })
+        })
+        console.log(response)
         router.push("/team");
     };
 

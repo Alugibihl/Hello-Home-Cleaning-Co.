@@ -116,13 +116,13 @@ export default function Page() {
           refSource,
         }),
       });
-      const response = await fetch('/api/send', {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(name, userEmail)
-      })
+      // const response = await fetch('/api/send', {
+      //   method: "POST",
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(name, userEmail)
+      // })
 
       router.push("/appointments");
     }
