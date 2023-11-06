@@ -37,7 +37,7 @@ export default function Page() {
 
   const userId = session.data?.user?.id;
 
-  const userEmail = session.data.user.email
+  const userEmail = session?.data?.user?.email
 
   useEffect(() => {
     setTimeout(() => {
