@@ -25,9 +25,9 @@ export default function Page() {
   };
 
    const handlePaymentFilterChange = (e) => {
-    console.log(e.target.value);     
+    console.log(e.target.value);
     setFilter('paid', e.target.value);
-    
+
   };
 
   useEffect(() => {
@@ -53,12 +53,12 @@ export default function Page() {
     const url = session.data.user.role === 'admin'
       ? "/api/appointments"
       : `/api/users/${session.data.user.id}/appointments`;
-  
+
     fetch(url, { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => setAppointments(data.appointments));
   };
-  
+
   useEffect(() => {
     if (session.data?.user) {
       fetchAppointments(); // Use the fetchAppointments function here
@@ -73,9 +73,9 @@ export default function Page() {
       },
       body: JSON.stringify(data)
     });
-  
+
     if (response.status === 200) {
-      return await response.json(); 
+      return await response.json();
     } else {
       throw new Error(`Failed to update appointment: ${response.status}`);
     }
@@ -90,7 +90,7 @@ export default function Page() {
       console.error(error);
     }
   };
-  
+
   function formatDate(dateString) {
     const date = new Date(dateString);
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -198,7 +198,7 @@ export default function Page() {
   const data = React.useMemo(
     () => appointments.map((app, index) => ({
       id: app._id,
-      date: formatDate(app.date),
+      date: app.date,
       phone: formatNumber(app.phone),
       status: app.status,
       rooms: app.rooms,
@@ -297,5 +297,5 @@ export default function Page() {
         </tbody>
       </table>
     </div>
-  );  
+  );
 }

@@ -109,11 +109,11 @@ function reverseFormatDate(formattedString) {
   if (requestBody.phone) {
     requestBody.phone = reformatPhoneNumber(requestBody.phone);
   }
-  if (requestBody.date) {
-    console.log(requestBody.date)
-    requestBody.date = reverseFormatDate(requestBody.date);
-    console.log(requestBody.date)
-  }
+  // if (requestBody.date) {
+  //   console.log(requestBody.date)
+  //   requestBody.date = reverseFormatDate(requestBody.date);
+  //   console.log(requestBody.date)
+  // }
 
   await connectMongoDB();
 
