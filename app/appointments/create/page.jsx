@@ -93,6 +93,7 @@ export default function Page() {
     //   return;
     // }
     const userEmail = session.data.user.email
+    console.log(userEmail)
     if (!session.data?.user) {
       handleSignin();
     } else {
