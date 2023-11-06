@@ -13,6 +13,7 @@ export default function AddTeamMember() {
     const [img, setImg] = useState('');
     const [position, setPosition] = useState('')
     const [about, setAbout] = useState('');
+    const [progress, setProgress] = useState(0)
 
     const session = useSession();
 
@@ -25,10 +26,17 @@ export default function AddTeamMember() {
     const { edgestore } = useEdgeStore()
 
 
+
     const check = (file) => {
         if (file) {
             console.log(edgestore.myPublicsImages)
-            edgestore.myPublicsImages.upload({ file })
+            edgestore.myPublicsImages.upload({
+                file,
+                onProgressChange: (progress) => {
+                    // you can use this to show a progress bar
+                    setProgress(progress)
+                },
+            })
                 .then(res => setImg(res.url))
             //save your data here
         }
@@ -136,6 +144,13 @@ export default function AddTeamMember() {
                             className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         />
                     </label>
+                    <div className="h-[9px] w-55 border-2 rounded overflow-hidden">
+                        <div className="h-full bg-black transition-all duration-150"
+                            style={{
+                                width: `${progress}%`
+                            }}>
+                        </div>
+                    </div>
                 </div>
             </div>
             <button
@@ -143,9 +158,21 @@ export default function AddTeamMember() {
                 onClick={async () => check(file)}
                 className="mb-4 justify-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Set Picture
             </button>
-            <button type="submit" className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Create Team Member
-            </button>
+            {progress === 100 ?
+                <button
+                    type="submit" className="mb-6 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Create Team Member
+                </button>
+
+                :
+                <button
+                    disabled={true}
+                    type="submit" className="mb-6 bg-slate-500  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Create Team Member
+                </button>
+            }
+
+
         </form>
         // {/* <div>
         //             {urls?.url && <Link href={urls.url} target="_blank">URL</Link>}

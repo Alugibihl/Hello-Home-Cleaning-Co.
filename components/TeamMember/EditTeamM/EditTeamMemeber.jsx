@@ -21,6 +21,8 @@ export default function EditTeamMember({ id, name, img, about, position }) {
     const [newImg, setNewImg] = useState(img);
     const [newAbout, setNewAbout] = useState(about);
     const [newPosition, setNewPosition] = useState(position);
+    const [progress, setProgress] = useState(0)
+
 
     const [file, setFile] = useState("")
     const { edgestore } = useEdgeStore()
@@ -50,6 +52,10 @@ export default function EditTeamMember({ id, name, img, about, position }) {
                 file,
                 options: {
                     replaceTargetUrl: img,
+                },
+                onProgressChange: (progress) => {
+                    // you can use this to show a progress bar
+                    setProgress(progress)
                 },
             }).then(res => (setNewImg(res.url)))
             //save your data here
@@ -135,6 +141,13 @@ export default function EditTeamMember({ id, name, img, about, position }) {
                             className="appearance-none block w-72 bg-white text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         />
                     </label>
+                    <div className="h-[9px] w-55 border-2 rounded overflow-hidden">
+                        <div className="h-full bg-black transition-all duration-150"
+                            style={{
+                                width: `${progress}%`
+                            }}>
+                        </div>
+                    </div>
                 </div>
             </div>
 
