@@ -14,7 +14,7 @@ export default function Page() {
   const [expandedRowId, setExpandedRowId] = useState(null);
   // const [loading, setLoading] = useState(true);
 
-  if (session?.data?.user?.role !== 'admin') router.push('/')
+  if (session?.data?.user?.role !== "admin") router.push("/");
 
   const handleExpandClick = (rowId) => {
     setExpandedRowId(expandedRowId === rowId ? null : rowId);
@@ -24,10 +24,9 @@ export default function Page() {
     setFilter("status", e.target.value);
   };
 
-   const handlePaymentFilterChange = (e) => {
+  const handlePaymentFilterChange = (e) => {
     console.log(e.target.value);
-    setFilter('paid', e.target.value);
-
+    setFilter("paid", e.target.value);
   };
 
   useEffect(() => {
@@ -50,9 +49,10 @@ export default function Page() {
   }, []);
 
   const fetchAppointments = () => {
-    const url = session.data.user.role === 'admin'
-      ? "/api/appointments"
-      : `/api/users/${session.data.user.id}/appointments`;
+    const url =
+      session.data.user.role === "admin"
+        ? "/api/appointments"
+        : `/api/users/${session.data.user.id}/appointments`;
 
     fetch(url, { cache: "no-store" })
       .then((res) => res.json())
@@ -69,9 +69,9 @@ export default function Page() {
     const response = await fetch(`/api/appointments/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
 
     if (response.status === 200) {
@@ -83,9 +83,12 @@ export default function Page() {
 
   const handleUpdateAppointment = async (updatedAppointment) => {
     try {
-      const updatedData = await updateAppointment(updatedAppointment.id, updatedAppointment);
+      const updatedData = await updateAppointment(
+        updatedAppointment.id,
+        updatedAppointment
+      );
       fetchAppointments();
-      console.log('Appointment updated successfully', updatedData);
+      console.log("Appointment updated successfully", updatedData);
     } catch (error) {
       console.error(error);
     }
@@ -93,17 +96,17 @@ export default function Page() {
 
   function formatDate(dateString) {
     if (dateString) {
-    const date = new Date(dateString);
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    let formattedDate = date.toLocaleDateString("en-US", options);
+      const date = new Date(dateString);
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      let formattedDate = date.toLocaleDateString("en-US", options);
 
-    const day = date.getDate();
-    let suffix = "th";
-    if (day % 10 === 1 && day !== 11) suffix = "st";
-    else if (day % 10 === 2 && day !== 12) suffix = "nd";
-    else if (day % 10 === 3 && day !== 13) suffix = "rd";
+      const day = date.getDate();
+      let suffix = "th";
+      if (day % 10 === 1 && day !== 11) suffix = "st";
+      else if (day % 10 === 2 && day !== 12) suffix = "nd";
+      else if (day % 10 === 3 && day !== 13) suffix = "rd";
 
-    return formattedDate.replace(/\d+/, `${day}${suffix}`);
+      return formattedDate.replace(/\d+/, `${day}${suffix}`);
     }
   }
 
@@ -120,18 +123,16 @@ export default function Page() {
 
   function reverseFormatDate(formattedString) {
     if (formattedString) {
-    const dayRegex = /(\d+)(st|nd|rd|th)/;
-    const cleanedString = formattedString.replace(dayRegex, '$1');
-    const date = new Date(cleanedString);
-    date.setDate(date.getDate() + 1);    
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
-    const day = date.getDate().toString().padStart(2, '0'); 
-    return `${year}-${month}-${day}`;
+      const dayRegex = /(\d+)(st|nd|rd|th)/;
+      const cleanedString = formattedString.replace(dayRegex, "$1");
+      const date = new Date(cleanedString);
+      date.setDate(date.getDate() + 1);
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
+      return `${year}-${month}-${day}`;
     }
   }
-  
-  
 
   const columns = React.useMemo(
     () => [
@@ -181,9 +182,9 @@ export default function Page() {
       { Header: "Date", accessor: "date" },
       { Header: "Client", accessor: "name" },
       // { Header: 'Status', accessor: 'status' },
-      { Header: 'Number', accessor: 'phone' },
-      { Header: 'Address', accessor: 'address'},
-      { Header: 'Referred By', accessor: 'refSource' },
+      { Header: "Number", accessor: "phone" },
+      { Header: "Address", accessor: "address" },
+      { Header: "Referred By", accessor: "refSource" },
       {
         Header: "Payment Status",
         accessor: "paid",
@@ -213,23 +214,24 @@ export default function Page() {
   );
 
   const data = React.useMemo(
-    () => appointments.map((app, index) => ({
-      id: app._id,
-      date: (app.date),
-      phone: formatNumber(app.phone),
-      status: app.status,
-      rooms: app.rooms,
-      stories: app.stories,
-      noTouch: app.noTouch,
-      pets: app.pets,
-      areaInterest: app.areaInterest,
-      paid: app.paid,
-      name: app.name,
-      address: app.address,
-      refSource: app.refSource,
-      price: app.price,
-      frequency: app.frequency
-    })),
+    () =>
+      appointments.map((app, index) => ({
+        id: app._id,
+        date: app.date,
+        phone: formatNumber(app.phone),
+        status: app.status,
+        rooms: app.rooms,
+        stories: app.stories,
+        noTouch: app.noTouch,
+        pets: app.pets,
+        areaInterest: app.areaInterest,
+        paid: app.paid,
+        name: app.name,
+        address: app.address,
+        refSource: app.refSource,
+        price: app.price,
+        frequency: app.frequency,
+      })),
     [appointments]
   );
 
@@ -249,7 +251,6 @@ export default function Page() {
     },
     useFilters
   );
-
 
   return (
     <div className="w-full pt-4 px-10">
@@ -283,7 +284,7 @@ export default function Page() {
                   {...column.getHeaderProps()}
                   className="font-bold text-sm border-b border-gray-300 p-2"
                 >
-                  {column.render('Header')}
+                  {column.render("Header")}
                 </th>
               ))}
             </tr>
@@ -296,15 +297,26 @@ export default function Page() {
               <React.Fragment key={row.id}>
                 <tr {...row.getRowProps()} className="hover:bg-gray-100">
                   {row.cells.map((cell) => (
-                    <td {...cell.getCellProps()} className="border border-gray-300 p-2">
-                      {cell.render('Cell')}
+                    <td
+                      key={cell.id}
+                      {...cell.getCellProps()}
+                      className="border border-gray-300 p-2"
+                    >
+                      {cell.render("Cell")}
                     </td>
                   ))}
                 </tr>
                 {expandedRowId === row.id && (
                   <tr>
-                    <td colSpan={columns.length + 1} className="border border-gray-300 p-2">
-                      <ExpandedRowContent appointment={row.original} updateAppointment={handleUpdateAppointment} reverseFormatDate={reverseFormatDate}/>
+                    <td
+                      colSpan={columns.length + 1}
+                      className="border border-gray-300 p-2"
+                    >
+                      <ExpandedRowContent
+                        appointment={row.original}
+                        updateAppointment={handleUpdateAppointment}
+                        reverseFormatDate={reverseFormatDate}
+                      />
                     </td>
                   </tr>
                 )}
