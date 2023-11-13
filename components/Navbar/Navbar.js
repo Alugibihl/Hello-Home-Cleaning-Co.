@@ -57,8 +57,8 @@ const Navbar = ({ session }) => {
             alt="Hello Home Cleaning Co. Logo"
           />
         </Link>
-        <ul className="flex items-center font-roboto font-bold text-md text-gray-700 space-x-4 lg:space-x-6 ">
-          <li className="mx-6">
+        <ul className="flex items-center font-roboto font-bold text-lg text-gray-700 space-x-10 lg:space-x-12 ">
+          <li className="">
             <Link href="/">HOME</Link>
           </li>
           <li className="mx-6">

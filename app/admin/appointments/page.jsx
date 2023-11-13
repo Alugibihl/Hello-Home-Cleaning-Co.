@@ -1,9 +1,8 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useTable, useFilters } from "react-table";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 
 import ExpandedRowContent from "@/components/ExpandedRowContent/ExpandedRowContent";
 
@@ -12,6 +11,16 @@ export default function Page() {
   const router = useRouter();
   const [appointments, setAppointments] = useState([]);
   const [expandedRowId, setExpandedRowId] = useState(null);
+  const [searchText, setSearchText] = useState("");
+
+  const [statusFilter, setStatusFilter] = useState(null);
+  const [paymentFilter, setPaymentFilter] = useState(null);
+
+  const [filteredAppointments, setFilteredAppointments] = useState([])
+
+
+  // const [filteredAppointments, setFilteredAppointments] = useState(appointments);
+
   // const [loading, setLoading] = useState(true);
 
   if (session?.data?.user?.role !== 'admin') router.push('/')
@@ -22,12 +31,15 @@ export default function Page() {
 
   const handleFilterChange = (e) => {
     setFilter("status", e.target.value);
+    // setStatusFilter(e.target.value); 
   };
 
    const handlePaymentFilterChange = (e) => {
-    console.log(e.target.value);
     setFilter('paid', e.target.value);
+  };
 
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
   };
 
   useEffect(() => {
@@ -61,7 +73,7 @@ export default function Page() {
 
   useEffect(() => {
     if (session.data?.user) {
-      fetchAppointments(); // Use the fetchAppointments function here
+      fetchAppointments(); 
     }
   }, [session.data?.user]);
 
@@ -212,26 +224,62 @@ export default function Page() {
     [expandedRowId]
   );
 
-  const data = React.useMemo(
-    () => appointments.map((app, index) => ({
-      id: app._id,
-      date: (app.date),
-      phone: formatNumber(app.phone),
-      status: app.status,
-      rooms: app.rooms,
-      stories: app.stories,
-      noTouch: app.noTouch,
-      pets: app.pets,
-      areaInterest: app.areaInterest,
-      paid: app.paid,
-      name: app.name,
-      address: app.address,
-      refSource: app.refSource,
-      price: app.price,
-      frequency: app.frequency
-    })),
-    [appointments]
-  );
+  // const filteredAppointments = useMemo(() => {
+  //   return searchText
+  //     ? appointments.filter((appointment) =>
+  //         appointment.name.toLowerCase().includes(searchText.toLowerCase())
+  //       )
+  //     : appointments;
+  // }, [searchText, appointments]);
+
+
+   const data = React.useMemo(() => {
+    // Filter appointments based on search text. If searchText is empty, return all appointments.
+    // The useMemo for data should consider both searchText and statusFilter
+      // Start with all appointments
+      let filtered = [...appointments];
+
+      if (searchText ) {
+        filtered = filtered.filter(appointment =>
+          appointment.name.toLowerCase().includes(searchText.toLowerCase())
+        );
+      }
+  
+      // First, filter by status if there is a status filter applied
+      if (statusFilter) {
+        filtered = filtered.filter(appointment => appointment.status === statusFilter);
+      }
+
+      if (paymentFilter) {
+        filtered = filtered.filter(appointment => appointment.paid === paymentFilter);
+      }
+
+  
+      // Finally, map the filtered appointments to the required format
+      return filtered.map((app) => ({
+        id: app._id,
+        date: app.date,
+        phone: formatNumber(app.phone),
+        status: app.status,
+        rooms: app.rooms,
+        stories: app.stories,
+        noTouch: app.noTouch,
+        pets: app.pets,
+        areaInterest: app.areaInterest,
+        paid: app.paid,
+        name: app.name,
+        address: app.address,
+        refSource: app.refSource,
+        price: app.price,
+        frequency: app.frequency
+      }));
+    }, [appointments, searchText, statusFilter, paymentFilter]); // Depend on appointments and searchText
+
+    // Map the filtered appointments to the format expected by the table
+ 
+
+  
+
 
   const {
     getTableProps,
@@ -256,6 +304,7 @@ export default function Page() {
       <div className="flex justify-between space-x-4 mb-4">
         <select
           onChange={handleFilterChange}
+          placeholder="Filter Status..."
           className="w-40 h-12 p-2 text-lg text-center bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
         >
           <option value="">All</option>
@@ -264,8 +313,17 @@ export default function Page() {
           <option value="scheduled">Scheduled</option>
         </select>
         <div className="flex-grow"></div>
+        <input
+          type="text"
+          value={searchText}
+          onChange={handleSearchChange}
+          placeholder="Search clients..."
+          className="w-60 h-12 p-2 text-lg text-center bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
+        />
+        <div className="flex-grow"></div>
         <select
           onChange={handlePaymentFilterChange}
+          placeholder="Filter Payment..."
           className="w-40 h-12 p-2 text-lg text-center bg-gray-200 border border-gray-300 rounded-lg shadow-sm appearance-none hover:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
         >
           <option value="">All</option>
@@ -273,6 +331,9 @@ export default function Page() {
           <option value="false">Unpaid</option>
         </select>
       </div>
+      {data.length === 0 ? (
+      <p className="text-black-500 text-2xl text-center py-20">No Appointments Found</p>
+    ) : (
       <table {...getTableProps()} className="w-full max-h-screen overflow-auto">
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -309,10 +370,11 @@ export default function Page() {
                   </tr>
                 )}
               </React.Fragment>
-            );
+            ); 
           })}
         </tbody>
       </table>
+    )}
     </div>
   );
 }

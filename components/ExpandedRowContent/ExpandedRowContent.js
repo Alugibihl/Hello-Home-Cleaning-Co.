@@ -45,102 +45,106 @@ const ExpandedRowContent = ({ appointment, updateAppointment, reverseFormatDate 
   };
 
   return (
-    <div className="p-4 bg-white border border-gray-300 rounded-lg">
-      <h3 className="text-lg font-bold mb-2">Appointment Details</h3>
+    <div className="p-6 bg-white border border-gray-200 shadow-sm rounded-lg">
+      <h3 className="text-xl font-semibold mb-4 text-gray-800">Appointment Details</h3>
       <form onSubmit={handleSaveClick}>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {Object.entries(editedAppointment).map(([key, value]) => {
             if (key === "id") return null;
             const displayKey = toDisplayKey(key);
+  
+            const InputComponent = ({ children }) => (
+              <label key={key} className="flex flex-col space-y-2">
+                <span className="text-gray-700 font-medium">{displayKey}:</span>
+                {children}
+              </label>
+            );
+  
             if (key === "status") {
               return (
-                <label key={key} className="flex flex-col space-y-1">
-                  <span className="text-gray-700">{displayKey}:</span>
+                <InputComponent>
                   {isEditing ? (
                     <select
                       type="select"
                       name={key}
                       value={value}
                       onChange={handleChange}
-                      className="border-2 border-gray-200 rounded px-2 py-1 text-black"
+                      className="border border-gray-300 rounded-lg px-4 py-2 bg-white shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     >
                       <option value="New">New</option>
                       <option value="Scheduled">Scheduled</option>
                       <option value="Past">Past</option>
-
                     </select>
                   ) : (
-                    <span>{value}</span>
+                    <span className="text-black">{value}</span>
                   )}
-                </label>
+                </InputComponent>
               );
             } else if (key === "date") {
-              const formattedDateForDisplay = reverseFormatDate(value)
+              const formattedDateForDisplay = reverseFormatDate(value);
               return (
-                <label key={key} className="flex flex-col space-y-1">
-                  <span className="text-gray-700">{displayKey}:</span>
+                <InputComponent>
                   {isEditing ? (
                     <input
                       type="date"
                       name={key}
                       value={formattedDateForDisplay}
                       onChange={handleChange}
-                      className="border-2 border-gray-200 rounded px-2 py-1 text-black"
+                      className="border border-gray-300 rounded-lg px-4 py-2 bg-white shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     />
                   ) : (
-                    <span>{value}</span>
+                    <span className="text-black">{value}</span>
                   )}
-                </label>
+                </InputComponent>
               );
             } else if (typeof value === "boolean") {
               return (
-                <label key={key} className="flex items-center space-x-3">
-                  <span className="text-gray-700">{displayKey}:</span>
+                <InputComponent>
                   {isEditing ? (
                     <input
                       type="checkbox"
                       name={key}
                       checked={value}
                       onChange={handleChange}
+                      className="rounded text-blue-500 focus:ring-blue-500"
                     />
                   ) : (
                     <span>{value ? "Yes" : "No"}</span>
                   )}
-                </label>
+                </InputComponent>
               );
             } else {
               return (
-                <label key={key} className="flex flex-col space-y-1">
-                  <span className="text-gray-700">{displayKey}:</span>
+                <InputComponent>
                   {isEditing ? (
                     <input
                       type="text"
                       name={key}
                       value={value}
                       onChange={handleChange}
-                      className="border-2 border-gray-200 rounded px-2 py-1 text-black"
+                      className="border border-gray-300 rounded-lg px-4 py-2 bg-white shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     />
                   ) : (
-                    <span>{value}</span>
+                    <span className="text-black">{value}</span>
                   )}
-                </label>
+                </InputComponent>
               );
             }
           })}
         </div>
-        <div className="flex justify-end space-x-4 mt-4">
+        <div className="flex justify-end space-x-4 mt-6">
           {isEditing ? (
             <>
               <button
                 type="button"
                 onClick={handleCancelClick}
-                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                className="text-gray-600 bg-white border border-gray-300 font-semibold py-2 px-6 rounded-lg shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               >
                 Save
               </button>
@@ -149,7 +153,7 @@ const ExpandedRowContent = ({ appointment, updateAppointment, reverseFormatDate 
             <button
               type="button"
               onClick={handleEditClick}
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+              className="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
             >
               Edit
             </button>

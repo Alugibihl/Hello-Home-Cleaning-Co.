@@ -13,83 +13,47 @@ export default function Home() {
   const data = session.data;
 
   return (
-    <div>
-      <div className="relative w-full">
+    <div className="font-sans">
+      <div className="relative w-full overflow-hidden ">
         <img
           src="/cleaning1.jpg"
-          className="h-auto max-w-full"
+          className="object-cover max-h-screen"
           alt="cleaning"
-        ></img>
-        <div className="absolute top-1/3 left-0 right-0 mx-auto text-center">
-          <p className="text-md md:text-5xl text-white">
+        />
+        <div className="absolute top-1/4 left-0 right-0 mx-auto text-center transform translate-y-10 translate-x-5">
+          <h1 className="text-xl md:text-6xl font-bold text-white shadow-md">
             Let us leave your home sparkling clean.
-          </p>
+          </h1>
           <button
-            onClick={() => {
-              router.push("/appointments/create");
-            }}
-            className="mt-6 bg-feather-blue hover:bg-highlight-orange font-bold py-2 px-4 rounded"
+            onClick={() => router.push("/appointments/create")}
+            className="mt-8 bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-8 rounded-full transition duration-300"
           >
             Book Now
           </button>
         </div>
       </div>
-      <div className="flex w-full flex-col md:flex-row  justify-center bg-light-blue pb-32">
-        <div className="m-6 w-1/2 md:w-1/5 bg-white pb-8">
-          <img
-            src="/cleaning2.jpg"
-            className="h-auto max-w-full"
-            alt="cleaning2"
-          ></img>
-          <p className="m-6 mx-8 font-bold h-10 leading-4">
-            We use non toxic cleaners safe for humans, pets, and children. Great
-            for the environment!
-          </p>
-          <button
-            onClick={() => {
-              router.push("/appointments/create");
-            }}
-            className="font-bold text-logo-blue ml-8 mt-12 md:mt-0 hover:text-highlight-orange"
-          >
-            Sign Up Today
-          </button>
-        </div>
-        <div className="m-6 w-1/2 md:w-1/5 bg-white">
-          <img
-            src="/cleaning3.jpg"
-            className="h-auto max-w-full"
-            alt="cleaning3"
-          ></img>
-          <p className="m-6 mx-8 font-bold h-10 leading-4">
-            We will clean and organize your home too!
-          </p>
-          <button
-            onClick={() => {
-              router.push("/appointments/create");
-            }}
-            className="font-bold text-logo-blue ml-8 hover:text-highlight-orange"
-          >
-            Let Us Help
-          </button>
-        </div>
-        <div className="m-6 w-1/2 md:w-1/5 bg-white">
-          <img
-            src="/cleaning5.jpg"
-            className="h-auto max-w-full"
-            alt="cleaning5"
-          ></img>
-          <p className="m-6 mx-8 font-bold h-10 leading-4">
-            We are up for any task and any occasion!
-          </p>
-          <button
-            onClick={() => {
-              router.push("/appointments/create");
-            }}
-            className="font-bold text-logo-blue ml-8 hover:text-highlight-orange"
-          >
-            Book Us For Your Next Party
-          </button>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 justify-center bg-pastel-blue py-12 px-4 md:px-0">
+        {[1, 2, 5].map((num) => (
+          <div key={num} className="m-12 mt-5 max-w-sm bg-white rounded-lg shadow-md overflow-hidden">
+            
+            <img
+              src={`/cleaning${num}.jpg`}
+              className="w-full h-64 object-cover"
+              alt={`cleaning${num}`}
+            />
+            <div className="p-6">
+              <p className="font-semibold text-lg leading-tight">
+                Discover our all-natural cleaning approach.
+              </p>
+              <button
+                onClick={() => router.push("/appointments/create")}
+                className="mt-4 text-indigo-600 hover:text-indigo-700 transition duration-300"
+              >
+                Learn More
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
