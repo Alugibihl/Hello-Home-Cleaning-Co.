@@ -8,7 +8,7 @@ import { redirect } from "next/dist/server/api-utils";
 export async function POST(request) {
   const { user } = await getServerSession(options);
 
-  if (!user) return redirect("/");
+  if (!user) return NextResponse.redirect("/");
   const {
     name,
     date,
@@ -52,7 +52,7 @@ export async function POST(request) {
 export async function GET() {
   const { user } = await getServerSession(options);
 
-  if (!user || user.role !== "admin") return redirect("/");
+  if (!user || user.role !== "admin") return NextResponse.redirect("/");
 
   try {
     await connectMongoDB();

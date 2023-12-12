@@ -35,7 +35,6 @@ export default function Page() {
     }
   }, [session, router]);
 
-
   const fetchAppointments = () => {
     fetch("/api/appointments", { cache: "no-store" })
       .then((res) => res.json())
@@ -284,7 +283,11 @@ export default function Page() {
             prepareRow(row);
             return (
               <>
-                <tr key={row.id}{...row.getRowProps()} className="hover:bg-gray-100">
+                <tr
+                  key={row.id}
+                  {...row.getRowProps()}
+                  className="hover:bg-gray-100"
+                >
                   {row.cells.map((cell) => (
                     <td
                       key={cell.id}

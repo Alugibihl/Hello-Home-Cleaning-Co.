@@ -5,15 +5,8 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import bcrypt from "bcrypt";
 
-
 export const options = {
   providers: [
-    //     GoogleProvider({
-    //       clientId: process.env.GOOGLE_CLIENT_ID,
-    //       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    //     },
-    //       // async authorize
-    // ),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -23,13 +16,13 @@ export const options = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           // throw new Error("Invalid Credentials");
-          return null
+          return null;
         }
         await connectMongoDB();
         const user = await User.findOne({ email: credentials.email });
         if (!user || !user?.hashedPassword) {
           // throw new Error("Invalid Credentials");
-          return null
+          return null;
         }
         const isCorrectPassword = await bcrypt.compare(
           credentials.password,
@@ -38,7 +31,7 @@ export const options = {
         console.log("USER: ", user);
         if (!isCorrectPassword) {
           // throw new Error("Invalid Credentials");
-          return null
+          return null;
         }
         return user;
       },
@@ -46,7 +39,7 @@ export const options = {
   ],
   pages: {
     signIn: "/signIn",
-    newUser: "/signUp"
+    newUser: "/signUp",
   },
   // debug: process.env.NODE_ENV === "development",
   session: {
@@ -61,8 +54,8 @@ export const options = {
           id: user._id,
           address: user.address,
           role: user.role,
-          phone: user.phone
-        }
+          phone: user.phone,
+        };
       }
       return token;
     },
