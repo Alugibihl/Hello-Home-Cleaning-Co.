@@ -35,35 +35,16 @@ export default function Page() {
     }
   }, [session, router]);
 
-  useEffect(() => {
-    if (session.data?.user) {
-      const url =
-        session.data.user.role === "admin"
-          ? "/api/appointments"
-          : `/api/users/${session.data.user.id}/appointments`;
-
-      fetch(url, { cache: "no-store" })
-        .then((res) => res.json())
-        .then((data) => setAppointments(data.appointments));
-    }
-  }, []);
 
   const fetchAppointments = () => {
-    const url =
-      session.data.user.role === "admin"
-        ? "/api/appointments"
-        : `/api/users/${session.data.user.id}/appointments`;
-
-    fetch(url, { cache: "no-store" })
+    fetch("/api/appointments", { cache: "no-store" })
       .then((res) => res.json())
       .then((data) => setAppointments(data.appointments));
   };
 
   useEffect(() => {
-    if (session.data?.user) {
-      fetchAppointments(); // Use the fetchAppointments function here
-    }
-  }, [session.data?.user]);
+    fetchAppointments();
+  }, []);
 
   const updateAppointment = async (id, data) => {
     const response = await fetch(`/api/appointments/${id}`, {
@@ -87,7 +68,15 @@ export default function Page() {
         updatedAppointment.id,
         updatedAppointment
       );
-      fetchAppointments();
+      setAppointments((apps) =>
+        apps.map((app) => {
+          console.log(app, updatedData);
+          if (app._id === updatedData._id) return updatedData;
+          // else return app
+          return app;
+        })
+      );
+      // fetchAppointments();
       console.log("Appointment updated successfully", updatedData);
     } catch (error) {
       console.error(error);
@@ -294,8 +283,8 @@ export default function Page() {
           {rows.map((row) => {
             prepareRow(row);
             return (
-              <React.Fragment key={row.id}>
-                <tr {...row.getRowProps()} className="hover:bg-gray-100">
+              <>
+                <tr key={row.id}{...row.getRowProps()} className="hover:bg-gray-100">
                   {row.cells.map((cell) => (
                     <td
                       key={cell.id}
@@ -320,7 +309,7 @@ export default function Page() {
                     </td>
                   </tr>
                 )}
-              </React.Fragment>
+              </>
             );
           })}
         </tbody>

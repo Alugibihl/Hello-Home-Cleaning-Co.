@@ -49,19 +49,19 @@ export async function POST(request) {
   });
 }
 
-// export async function GET(request) {
-//   const { user } = await getServerSession(options);
+export async function GET() {
+  const { user } = await getServerSession(options);
 
-//   if (!user || user.role !== "admin") return redirect("/");
+  if (!user || user.role !== "admin") return redirect("/");
 
-//   try {
-//     await connectMongoDB();
-//     const appointments = await Appointment.find();
-//     return NextResponse.json({ appointments });
-//   } catch (error) {
-//     return NextResponse.json({
-//       message: "Appointment retrieval failed",
-//       status: 400
-//     });
-//   }
-// }
+  try {
+    await connectMongoDB();
+    const appointments = await Appointment.find();
+    return NextResponse.json({ appointments });
+  } catch (error) {
+    return NextResponse.json({
+      message: "Appointment retrieval failed",
+      status: 400
+    });
+  }
+}

@@ -69,7 +69,7 @@ export async function PUT(request, { params }) {
         "allergies",
         "frequency",
         "refSource",
-        "date"
+        "date",
       ],
     },
   };
@@ -83,30 +83,31 @@ export async function PUT(request, { params }) {
 
   if (invalidFields.length > 0) {
     return NextResponse.json({
-      message: `You are not authorized to update the following fields: ${invalidFields.join(", ")}`,
+      message: `You are not authorized to update the following fields: ${invalidFields.join(
+        ", "
+      )}`,
       status: 403,
     });
   }
 
   const reformatPhoneNumber = (phoneNumber) => {
-    return phoneNumber.replace(/\D/g, '');
+    return phoneNumber.replace(/\D/g, "");
   };
 
-function reverseFormatDate(formattedString) {
-  if (formattedString) {
-  const dayRegex = /(\d+)(st|nd|rd|th)/;
-  const cleanedString = formattedString.replace(dayRegex, '$1');
+  function reverseFormatDate(formattedString) {
+    if (formattedString) {
+      const dayRegex = /(\d+)(st|nd|rd|th)/;
+      const cleanedString = formattedString.replace(dayRegex, "$1");
 
-  const date = new Date(cleanedString);
+      const date = new Date(cleanedString);
 
-  const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
-  const day = date.getDate().toString().padStart(2, '0');
+      const year = date.getFullYear();
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const day = date.getDate().toString().padStart(2, "0");
 
-  return `${year}-${month}-${day}`;
+      return `${year}-${month}-${day}`;
+    }
   }
-}
-
 
   if (requestBody.phone) {
     requestBody.phone = reformatPhoneNumber(requestBody.phone);
@@ -120,24 +121,22 @@ function reverseFormatDate(formattedString) {
   await connectMongoDB();
 
   const updatedFields = Object.fromEntries(
-    requestedFields.map(field => [field, requestBody[field]])
+    requestedFields.map((field) => [field, requestBody[field]])
   );
 
-  const app = await Appointment.findByIdAndUpdate(id, updatedFields, { new: true });
+  const app = await Appointment.findByIdAndUpdate(id, updatedFields, {
+    new: true,
+  });
   console.log("APPOINTMENT UPDATED: ", app);
 
   if (app) {
-    return NextResponse.json({
-      message: "Appointment Successfully Updated",
-      status: 200,
-    });
+    return NextResponse.json(app);
   }
   return NextResponse.json({
     error: "Appointment update failed",
     status: 500,
   });
 }
-
 
 export async function DELETE(request, { params }) {
   try {
